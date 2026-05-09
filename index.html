@@ -1,0 +1,1179 @@
+<!DOCTYPE html>
+<html lang="id" class="dark">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1, maximum-scale=1, user-scalable=yes" />
+<title>AI Trading Basic - Platform Analisis Crypto Forex</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script>
+tailwind.config = {
+  darkMode: "class",
+  theme: {
+    extend: {
+      fontFamily: { inter: ['Inter', 'system-ui', 'sans-serif'] },
+      animation: {
+        'glow': 'glow 2s ease-in-out infinite',
+        'float': 'float 3s ease-in-out infinite',
+        'shimmer': 'shimmer 2s linear infinite',
+        'slide-up': 'slideUp 0.5s ease-out',
+        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+      }
+    }
+  }
+}
+</script>
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: radial-gradient(ellipse at 20% 30%, #0a0f1e, #06090f);
+  color: #ffffff;
+  font-family: 'Inter', sans-serif;
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+  padding-bottom: 2rem;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    repeating-linear-gradient(90deg, rgba(34,197,94,0.03) 0px, rgba(34,197,94,0.03) 1px, transparent 1px, transparent 100px),
+    repeating-linear-gradient(0deg, rgba(34,197,94,0.03) 0px, rgba(34,197,94,0.03) 1px, transparent 1px, transparent 100px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: #1e293b; border-radius: 10px; }
+::-webkit-scrollbar-thumb { background: linear-gradient(135deg, #22c55e, #3b82f6); border-radius: 10px; }
+
+/* ==================== HEADER (logo kiri, akurasi kanan) ==================== */
+.header-premium {
+  background: linear-gradient(135deg, rgba(10,15,30,0.98), rgba(15,23,42,0.98));
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(34,197,94,0.3);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 100;
+  box-shadow: 0 10px 30px -10px rgba(0,0,0,0.5);
+}
+
+.header-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0.75rem 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+.logo-area {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.logo-icon {
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s ease;
+}
+
+.logo-icon:hover {
+  transform: scale(1.05);
+}
+
+.logo-icon img {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+  border-radius: 10px;
+  filter: drop-shadow(0 0 8px rgba(34,197,94,0.3));
+}
+
+.logo-text h1 {
+  font-size: 1.3rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, #22c55e, #3b82f6, #8b5cf6);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  letter-spacing: -0.5px;
+}
+
+.logo-text p {
+  font-size: 0.6rem;
+  color: #94a3b8;
+  letter-spacing: 1px;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+}
+
+.header-stat {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: rgba(34,197,94,0.08);
+  border-radius: 2rem;
+  border: 1px solid rgba(34,197,94,0.2);
+  transition: all 0.2s;
+}
+
+.header-stat:hover {
+  background: rgba(34,197,94,0.15);
+  transform: translateY(-2px);
+}
+
+.header-stat i {
+  color: #22c55e;
+  font-size: 0.875rem;
+}
+
+.header-stat .stat-label {
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: #94a3b8;
+}
+
+.header-stat .stat-value {
+  color: #22c55e;
+  font-weight: 700;
+  font-size: 0.875rem;
+  margin-left: 0.25rem;
+}
+
+/* Responsive header */
+@media (max-width: 768px) {
+  .header-container { flex-direction: column; gap: 0.5rem; }
+  .logo-area { justify-content: center; }
+  .header-right { justify-content: center; }
+  .logo-icon { width: 36px; height: 36px; }
+  .logo-icon img { width: 32px; height: 32px; }
+  .logo-text h1 { font-size: 1.1rem; }
+  .logo-text p { font-size: 0.5rem; }
+}
+
+/* ==================== FOOTER (tidak fixed) ==================== */
+.footer-premium {
+  width: 100%;
+  text-align: center;
+  padding: 1rem 0;
+  background: rgba(15,23,42,0.95);
+  backdrop-filter: blur(10px);
+  color: #64748b;
+  font-size: 0.75rem;
+  margin-top: 2rem;
+  border-top: 1px solid rgba(34,197,94,0.2);
+  position: relative;
+  bottom: 0;
+}
+
+.footer-premium .footer-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.footer-premium .license-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.25rem 0.75rem;
+  background: rgba(59,130,246,0.1);
+  border-radius: 2rem;
+  border: 1px solid rgba(59,130,246,0.3);
+}
+
+.footer-premium .license-badge i { color: #3b82f6; font-size: 0.7rem; }
+
+@media (max-width: 768px) {
+  .footer-premium .footer-content { flex-direction: column; gap: 0.5rem; }
+}
+
+/* ==================== CARD UMUM ==================== */
+.glass-card {
+  background: rgba(15, 23, 42, 0.7);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(34, 197, 94, 0.15);
+  border-radius: 1.5rem;
+  transition: all 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+
+.glass-card:hover {
+  border-color: rgba(34, 197, 94, 0.4);
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.5);
+}
+
+/* ==================== QUOTA CARD SEDERHANA ==================== */
+.quota-simple {
+  background: linear-gradient(135deg, #1a2332, #0f172a);
+  border-radius: 1.5rem;
+  padding: 1.5rem;
+  border: 1px solid rgba(34, 197, 94, 0.3);
+  text-align: center;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+}
+
+.quota-simple .quota-icon {
+  font-size: 2rem;
+  color: #22c55e;
+  margin-bottom: 0.5rem;
+}
+
+.quota-simple .quota-label {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: #94a3b8;
+  margin-bottom: 0.5rem;
+}
+
+.quota-simple .quota-value {
+  font-size: 3rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, #22c55e, #4ade80);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  line-height: 1;
+  margin-bottom: 1rem;
+}
+
+.btn-buy-premium {
+  background: linear-gradient(135deg, #22c55e, #16a34a);
+  border: none;
+  border-radius: 0.75rem;
+  padding: 0.8rem 1.5rem;
+  font-weight: 700;
+  color: white;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  width: 100%;
+  justify-content: center;
+}
+.btn-buy-premium:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(34,197,94,0.3); background: linear-gradient(135deg, #16a34a, #15803d); }
+
+/* ==================== KONDISI PASAR ==================== */
+.trend-modern {
+  background: linear-gradient(135deg, rgba(34,197,94,0.05), rgba(59,130,246,0.05));
+  border-radius: 1.25rem;
+  padding: 1rem;
+  text-align: center;
+  border: 1px solid rgba(34,197,94,0.2);
+  transition: all 0.3s;
+}
+
+.trend-status {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  font-size: 1.2rem;
+  font-weight: 700;
+  padding: 0.5rem;
+  border-radius: 2rem;
+}
+.trend-status i { font-size: 1.5rem; }
+.trend-bullish { background: rgba(34,197,94,0.15); color: #22c55e; border: 1px solid #22c55e; }
+.trend-bearish { background: rgba(239,68,68,0.15); color: #ef4444; border: 1px solid #ef4444; }
+.trend-sideways { background: rgba(245,158,11,0.15); color: #f59e0b; border: 1px solid #f59e0b; }
+.trend-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 0.5rem; color: #94a3b8; }
+
+/* ==================== STATISTIK ==================== */
+.stats-modern {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+.stat-card-interactive {
+  background: linear-gradient(145deg, #1e293b, #0f172a);
+  border-radius: 1rem;
+  padding: 1.2rem;
+  text-align: center;
+  border: 1px solid rgba(34,197,94,0.2);
+  transition: all 0.2s;
+  cursor: pointer;
+}
+.stat-card-interactive:hover {
+  transform: translateY(-3px);
+  border-color: #22c55e;
+  background: linear-gradient(145deg, #2a3a4e, #1a2538);
+}
+.stat-icon { font-size: 1.5rem; color: #22c55e; margin-bottom: 0.5rem; }
+.stat-value { font-size: 1.6rem; font-weight: 800; background: linear-gradient(135deg, #22c55e, #4ade80); -webkit-background-clip: text; background-clip: text; color: transparent; line-height: 1.2; }
+.stat-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1.5px; color: #94a3b8; margin-top: 0.5rem; }
+
+/* ==================== SIGNAL CARD ==================== */
+.signal-premium {
+  background: linear-gradient(145deg, #1e293b, #0f172a);
+  border-radius: 1.5rem;
+  overflow: hidden;
+}
+.signal-header {
+  background: linear-gradient(135deg, #22c55e20, #3b82f620);
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid rgba(34,197,94,0.2);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.signal-badge-premium {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1.25rem;
+  border-radius: 2rem;
+  font-weight: 700;
+  font-size: 0.875rem;
+}
+.signal-buy-premium { background: linear-gradient(135deg, #22c55e, #16a34a); box-shadow: 0 0 15px rgba(34,197,94,0.4); }
+.signal-sell-premium { background: linear-gradient(135deg, #ef4444, #dc2626); box-shadow: 0 0 15px rgba(239,68,68,0.4); }
+.signal-wait-premium { background: linear-gradient(135deg, #f59e0b, #d97706); box-shadow: 0 0 15px rgba(245,158,11,0.4); }
+.signal-body { padding: 1.5rem; }
+
+.winrate-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+.winrate-circle { position: relative; width: 100px; height: 100px; }
+.winrate-svg { transform: rotate(-90deg); }
+.winrate-circle-bg { stroke: #1e293b; stroke-width: 8; fill: none; }
+.winrate-circle-fill { stroke: #22c55e; stroke-width: 8; fill: none; stroke-linecap: round; transition: stroke-dasharray 0.5s; }
+.winrate-text { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; }
+.winrate-percent { font-size: 1.5rem; font-weight: 800; color: #22c55e; }
+.winrate-label { font-size: 0.6rem; color: #94a3b8; }
+.winrate-legend { display: flex; gap: 1rem; flex-wrap: wrap; }
+.legend-item { display: flex; align-items: center; gap: 0.5rem; font-size: 0.7rem; color: #94a3b8; }
+.legend-dot { width: 8px; height: 8px; border-radius: 50%; }
+.legend-dot.weak { background: #ef4444; }
+.legend-dot.medium { background: #f59e0b; }
+.legend-dot.strong { background: #22c55e; }
+
+.level-cards {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+.level-card-premium {
+  background: rgba(0,0,0,0.3);
+  border-radius: 1rem;
+  padding: 1rem;
+  text-align: center;
+  border: 1px solid #334155;
+  transition: all 0.2s;
+}
+.level-card-premium:hover { border-color: #22c55e; transform: translateY(-2px); }
+.level-icon { font-size: 1.25rem; color: #22c55e; margin-bottom: 0.5rem; }
+.level-title { font-size: 0.7rem; color: #94a3b8; text-transform: uppercase; letter-spacing: 1px; }
+.level-value { font-size: 1rem; font-weight: 700; font-family: monospace; color: #22c55e; }
+
+.trading-style-card {
+  background: linear-gradient(135deg, #22c55e10, #3b82f610);
+  border-radius: 1rem;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  border: 1px solid rgba(34,197,94,0.2);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.trading-style-label { font-size: 0.7rem; color: #94a3b8; text-transform: uppercase; display: flex; align-items: center; gap: 0.5rem; }
+.trading-style-value { font-size: 1rem; font-weight: 700; color: #22c55e; }
+
+/* Input Modern */
+.input-modern, .select-modern {
+  width: 100%;
+  background: rgba(15, 23, 42, 0.9);
+  border: 1px solid #334155;
+  border-radius: 1rem;
+  padding: 0.875rem 1rem;
+  color: #ffffff;
+  transition: all 0.2s;
+}
+.input-modern:focus, .select-modern:focus {
+  outline: none;
+  border-color: #22c55e;
+  box-shadow: 0 0 0 3px rgba(34,197,94,0.1);
+}
+.btn-modern-primary {
+  background: linear-gradient(135deg, #22c55e, #16a34a);
+  border: none;
+  border-radius: 1rem;
+  padding: 0.875rem;
+  font-weight: 700;
+  color: white;
+  cursor: pointer;
+  width: 100%;
+  transition: all 0.2s;
+}
+.btn-modern-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 25px -5px rgba(34,197,94,0.4); }
+.btn-modern-danger {
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+  border: none;
+  border-radius: 1rem;
+  padding: 0.875rem;
+  font-weight: 700;
+  color: white;
+  cursor: pointer;
+  width: 100%;
+}
+.btn-modern-danger:hover { transform: translateY(-2px); }
+
+/* Modal */
+.modal-modern {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.95);
+  backdrop-filter: blur(20px);
+  z-index: 10001;
+  overflow-y: auto;
+  padding: 1rem;
+}
+.modal-modern.show { display: flex; align-items: center; justify-content: center; }
+.modal-content-modern {
+  max-width: 550px;
+  width: 100%;
+  background: linear-gradient(145deg, #1e293b, #0f172a);
+  border-radius: 1.5rem;
+  padding: 1.5rem;
+  border: 1px solid rgba(34,197,94,0.3);
+}
+.qris-container-modern {
+  background: linear-gradient(145deg, #0f172a, #0a0f1e);
+  border-radius: 1.25rem;
+  padding: 1.5rem;
+  text-align: center;
+  border: 1px solid #334155;
+}
+.qr-code-modern {
+  background: white;
+  padding: 1rem;
+  border-radius: 1.25rem;
+  display: inline-block;
+}
+.unique-code-modern {
+  font-family: monospace;
+  font-size: 2rem;
+  font-weight: 800;
+  color: #f59e0b;
+  background: rgba(0,0,0,0.3);
+  padding: 0.5rem 1rem;
+  border-radius: 1rem;
+  letter-spacing: 8px;
+  display: inline-block;
+}
+
+/* Chart */
+.chart-float-btn {
+  position: fixed;
+  bottom: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10000;
+}
+.chart-float-btn button {
+  background: linear-gradient(135deg, #22c55e, #16a34a);
+  border: none;
+  padding: 12px 28px;
+  border-radius: 40px;
+  font-weight: 700;
+  color: white;
+  cursor: pointer;
+  box-shadow: 0 10px 25px -5px rgba(34,197,94,0.4);
+}
+.chart-container-modern {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%) translateY(100%);
+  width: 100%;
+  max-width: 1000px;
+  height: 500px;
+  background: #0f172a;
+  border-radius: 1.5rem 1.5rem 0 0;
+  overflow: hidden;
+  transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  z-index: 9999;
+  border-top: 2px solid #22c55e;
+}
+.chart-container-modern.show { transform: translateX(-50%) translateY(0); }
+
+/* Loading Overlay */
+.loading-overlay-premium {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.92);
+  backdrop-filter: blur(15px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  flex-direction: column;
+  gap: 1.5rem;
+  transition: all 0.3s ease;
+}
+.loading-overlay-premium.hidden { display: none; }
+.loading-candles { display: flex; gap: 8px; align-items: flex-end; height: 80px; }
+.candle { width: 12px; background: #22c55e; border-radius: 2px; transition: height 0.2s ease; position: relative; }
+.candle.red { background: #ef4444; }
+.candle .wick { position: absolute; width: 2px; height: 20px; background: #94a3b8; left: 50%; transform: translateX(-50%); top: -10px; }
+.loading-progress { width: 200px; height: 2px; background: #334155; border-radius: 2px; overflow: hidden; }
+.loading-progress-bar { width: 0%; height: 100%; background: linear-gradient(90deg, #22c55e, #3b82f6); transition: width 0.2s linear; }
+.loading-stats { display: flex; gap: 2rem; font-family: monospace; font-size: 0.8rem; }
+.loading-stats span { color: #22c55e; font-weight: 700; }
+.loading-text { font-size: 0.9rem; letter-spacing: 2px; color: #cbd5e1; }
+
+@media (max-width: 768px) {
+  .stats-modern { grid-template-columns: 1fr; }
+  .quota-simple .quota-value { font-size: 2rem; }
+  .winrate-container { flex-direction: column; align-items: center; }
+  .level-cards { grid-template-columns: 1fr; }
+  .trading-style-card { flex-direction: column; text-align: center; }
+  .signal-header { flex-direction: column; text-align: center; }
+}
+.grid-responsive { display: grid; grid-template-columns: 1fr; gap: 1rem; }
+@media (min-width: 768px) { .grid-responsive-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; } }
+
+/* Spacer untuk fixed header */
+.header-spacer { height: 80px; }
+@media (max-width: 768px) { .header-spacer { height: 120px; } }
+
+/* Toast */
+.toast-modern {
+  position: fixed;
+  bottom: 100px;
+  right: 20px;
+  background: rgba(30,41,59,0.95);
+  backdrop-filter: blur(10px);
+  border-left: 4px solid #22c55e;
+  padding: 1rem 1.5rem;
+  border-radius: 1rem;
+  color: white;
+  z-index: 10001;
+  animation: slideInRight 0.3s ease;
+}
+@keyframes slideInRight {
+  from { transform: translateX(100%); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER (logo kiri, akurasi kanan) -->
+<header class="header-premium">
+  <div class="header-container">
+    <div class="logo-area">
+      <div class="logo-icon">
+        <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh9YQmaIHSrk0AT8IpfU-nDQ2NmGo700YpMQSj3Lvo-_7kX4G6xyX_pd5KyxCznX6r0Tl2vYvZkZf797uCgHXQflFsDW5-HThG2rIg3PCR1LXrhuU3GDndJkLyyfdhC5LfsQuw2TFnwTAePABrvRF-PVrOF3ZTqBqMNYZ-ErDcXvCW5sCzLGcIkWzO_6YwN/s1024/1000832791.png" alt="AI Trading Basic Logo">
+      </div>
+      <div class="logo-text">
+        <h1>AI TRADING BASIC</h1>
+        <p>Advanced Crypto Forex Intelligence</p>
+      </div>
+    </div>
+    <div class="header-right">
+      <div class="header-stat"><i class="fas fa-trophy"></i><span class="stat-label">Akurasi</span><span class="stat-value">80%</span></div>
+    </div>
+  </div>
+</header>
+<div class="header-spacer"></div>
+
+<!-- DATA STATUS -->
+<div id="dataStatus" class="glass-card mb-4 flex items-center justify-center gap-2 text-sm p-3">
+  <div class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></div>
+  <span>Sistem Siap | Menunggu analisa</span>
+</div>
+
+<!-- QUOTA CARD SEDERHANA (hanya sisa limit) -->
+<div class="quota-simple mb-4">
+  <div class="quota-icon"><i class="fas fa-chart-line"></i></div>
+  <div class="quota-label">Sisa Limit</div>
+  <div class="quota-value" id="quotaDisplay">13</div>
+  <button id="buyQuotaBtn" class="btn-buy-premium"><i class="fas fa-plus-circle"></i> Tambah Limit</button>
+</div>
+
+<!-- TRADINGVIEW WIDGET -->
+<div class="glass-card mb-4 p-0 overflow-hidden">
+  <div class="tradingview-widget-container">
+    <div class="tradingview-widget-container__widget"></div>
+    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-market-overview.js" async>
+    {
+      "colorTheme": "dark", "dateRange": "12M", "locale": "id", "largeChartUrl": "", "isTransparent": true, "showFloatingTooltip": true,
+      "tabs": [{"title": "Market","symbols":[{"s":"CMCMARKETS:GOLD","d":"Gold"},{"s":"BITSTAMP:BTCUSD","d":"Bitcoin"}]}],
+      "backgroundColor": "transparent", "width": "100%", "height": 400, "showSymbolLogo": true, "showChart": true
+    }
+    </script>
+  </div>
+</div>
+
+<!-- KONDISI PASAR - AWALNYA TERSEMBUNYI -->
+<div id="trendContainer" class="mb-4" style="display: none;">
+  <div class="glass-card">
+    <div class="trend-modern">
+      <div class="trend-label">KONDISI PASAR SAAT INI</div>
+      <div id="trendDisplay" class="trend-status">
+        <i class="fas fa-chart-line"></i>
+        <span id="trendTextSimple">--</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MESIN ANALISA & SINYAL -->
+<div class="grid-responsive md:grid-cols-2 gap-4 mb-4">
+  <div class="glass-card">
+    <h3 class="font-bold mb-3 text-gray-300 flex items-center gap-2"><i class="fas fa-microchip text-emerald-400"></i> Mesin Analisa</h3>
+    <div class="mb-3"><label class="block text-xs text-gray-400 mb-1 uppercase tracking-wide">Pasangan</label><select id="pair" class="select-modern"><option value="BTC/USD">₿ BTC/USD - Bitcoin</option><option value="XAU/USD" selected>🥇 XAU/USD - Emas</option></select></div>
+    <div class="mb-4"><label class="block text-xs text-gray-400 mb-1 uppercase tracking-wide">Kerangka Waktu</label><select id="timeframe" class="select-modern"><option value="1m">1 Menit</option><option value="5m">5 Menit</option><option value="15m" selected>15 Menit</option><option value="1h">1 Jam</option><option value="4h">4 Jam</option><option value="1d">1 Hari</option></select></div>
+    <button id="analyzeBtn" class="btn-modern-primary mb-2"><i class="fas fa-brain mr-2"></i> Analisa Sekarang</button>
+    <button id="resetAnalysisBtn" class="btn-modern-danger"><i class="fas fa-sync-alt mr-2"></i> Reset</button>
+  </div>
+  <div class="glass-card">
+    <h3 class="font-bold mb-4 text-gray-300 flex items-center gap-2"><i class="fas fa-chart-pie text-emerald-400"></i> Manajemen Risiko</h3>
+    <div class="mb-3"><label class="block text-xs text-gray-400 mb-1">Modal Awal (Rp)</label><input type="number" id="mmCapital" placeholder="Contoh: 10000000" class="input-modern"></div>
+    <div class="mb-4"><label class="block text-xs text-gray-400 mb-1">Level Risiko</label><select id="mmLevel" class="select-modern"><option value="easy">Konservatif (1%)</option><option value="medium">Moderate (2%)</option><option value="aggressive">Agresif (5%)</option></select></div>
+    <button id="mmCalculateBtn" class="btn-modern-primary mb-2"><i class="fas fa-calculator mr-2"></i> Hitung Risiko</button>
+    <button id="mmResetBtn" class="btn-modern-danger"><i class="fas fa-undo-alt mr-2"></i> Reset</button>
+    <div id="mmResults" class="grid grid-cols-2 gap-2 mt-4" style="display:none;">
+      <div class="bg-black/30 rounded-xl p-2 text-center"><p class="text-xs text-gray-400">Max Posisi</p><p class="text-lg font-bold text-emerald-400" id="mmMaxPositions">—</p></div>
+      <div class="bg-black/30 rounded-xl p-2 text-center"><p class="text-xs text-gray-400">Target Harian</p><p class="text-lg font-bold text-emerald-400" id="mmDailyProfit">—</p></div>
+      <div class="bg-black/30 rounded-xl p-2 text-center"><p class="text-xs text-gray-400">Max Loss/Hari</p><p class="text-lg font-bold text-red-400" id="mmDailyLoss">—</p></div>
+      <div class="bg-black/30 rounded-xl p-2 text-center"><p class="text-xs text-gray-400">Proyeksi 30 Hari</p><p class="text-lg font-bold text-emerald-400" id="mm30DaysProfit">—</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- SIGNAL CARD -->
+<div id="signalCard" class="signal-premium mb-4" style="display: none;">
+  <div class="signal-header"><h3><i class="fas fa-chart-simple"></i> Rekomendasi Entry</h3><div id="signalBadge" class="signal-badge-premium signal-wait-premium"><i class="fas fa-clock"></i> TUNGGU</div></div>
+  <div class="signal-body">
+    <div class="winrate-container">
+      <div class="winrate-circle"><svg width="100" height="100" class="winrate-svg"><circle cx="50" cy="50" r="42" class="winrate-circle-bg"></circle><circle cx="50" cy="50" r="42" class="winrate-circle-fill" id="winrateCircle" stroke-dasharray="0, 264"></circle></svg><div class="winrate-text"><div class="winrate-percent" id="winratePercent">0%</div><div class="winrate-label">Akurasi</div></div></div>
+      <div class="winrate-legend"><div class="legend-item"><div class="legend-dot weak"></div><span>Lemah (&lt;40%)</span></div><div class="legend-item"><div class="legend-dot medium"></div><span>Sedang (40-60%)</span></div><div class="legend-item"><div class="legend-dot strong"></div><span>Kuat (&gt;60%)</span></div></div>
+    </div>
+    <div class="level-cards"><div class="level-card-premium"><div class="level-icon"><i class="fas fa-shield-haltered"></i></div><div class="level-title">Order Block (OB)</div><div class="level-value" id="obValue">—</div></div><div class="level-card-premium"><div class="level-icon"><i class="fas fa-chart-gantt"></i></div><div class="level-title">Fair Value Gap (FVG)</div><div class="level-value" id="fvgValue">—</div></div></div>
+    <div class="trading-style-card"><div class="trading-style-label"><i class="fas fa-flag-checkered"></i> Gaya Trading Rekomendasi</div><div class="trading-style-value" id="tradingStyleText">—</div></div>
+  </div>
+</div>
+
+<!-- ECONOMIC CALENDAR -->
+<div class="glass-card mb-4"><h3 class="font-bold mb-3 text-gray-300 flex items-center gap-2"><i class="fas fa-calendar-alt text-emerald-400"></i> Kalender Ekonomi</h3><div class="tradingview-widget-container"><div class="tradingview-widget-container__widget"></div><script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-events.js" async>{"colorTheme":"dark","isTransparent":true,"locale":"id","width":"100%","height":400}</script></div></div>
+
+<!-- STATISTIK REAL-TIME -->
+<div class="glass-card mb-4">
+  <h3 class="font-bold mb-4 text-gray-300 flex items-center gap-2"><i class="fas fa-chart-line text-emerald-400"></i> Statistik Real-Time</h3>
+  <div class="stats-modern">
+    <div class="stat-card-interactive"><div class="stat-icon"><i class="fas fa-users"></i></div><div class="stat-value" id="totalUsers">400</div><div class="stat-label">Total Pengguna</div></div>
+    <div class="stat-card-interactive"><div class="stat-icon"><i class="fas fa-circle-user"></i></div><div class="stat-value" id="onlineUsers">28</div><div class="stat-label">Online</div></div>
+    <div class="stat-card-interactive"><div class="stat-icon"><i class="fas fa-chart-line"></i></div><div class="stat-value" id="profitTotal">Rp8.2Jt</div><div class="stat-label">Total Profit</div></div>
+    <div class="stat-card-interactive"><div class="stat-icon"><i class="fas fa-repeat"></i></div><div class="stat-value" id="profitTransaksi">180</div><div class="stat-label">Transaksi</div></div>
+  </div>
+</div>
+
+<!-- SUPPORTED BY -->
+<div class="glass-card mb-4 text-center">
+  <h3 class="font-bold mb-3 text-gray-300">Didukung Oleh</h3>
+  <div class="flex justify-center items-center gap-6 flex-wrap">
+    <div class="flex flex-col items-center opacity-70 hover:opacity-100 transition"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjl1apjJhjfGFCzp4i3L_S4fRVYqTTWPqri-pjxGDHoUYiqbDENzGE415Kxx5EWLw8EovJN1GvZY-ZO4jr4cXO5WmnsFOFjffMx3AvneCM7dvlvsduWzCxzsnYIiMCFC8IoumwgZ_Ta8ZS164gXst0tneV2AtHL-4s7ZTaUtsz6UqdrkR3Mp3CsyddJYeO8/s300/1000626602.png" class="h-8"><span class="text-xs text-gray-500 mt-1">TradingView</span></div>
+    <div class="flex flex-col items-center opacity-70 hover:opacity-100 transition"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEj_-QcFdqt68PylKH-k7PUMiMJKC59Vo8DBeP5z6MSmNbbgp_tuV4b5KTUmp4FoWRZOP5VZ_s5jZI5fIz94es9miNr1jaR-Zo7GKvrKGaHHxT_yxCEgxI8PgvupINceiVGlQ_xQiaTHH7kjepI9agthr98xPo_KVuM2mPb100-cKYYiJJvIrvxDKQmL8Q_q/s509/1000626603.png" class="h-8"><span class="text-xs text-gray-500 mt-1">MetaTrader 5</span></div>
+    <div class="flex flex-col items-center opacity-70 hover:opacity-100 transition"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiEayCuw9T12qTYwYuYj-nq8B7H3czP9nLcQ53dT-fl_0ydkSrpYfsb1IWspeSeyRw-z1p9aVeZmlt0x4IR4us3xZWs0y3-Rb8aBiw0U3-P_vLXd0wB6i9KTELl0AyzMYdG-yF2FTXpex6QYQ1m32G3HC4s0SRZdV6fWSm7sCbMW16nHiqEMqsM3p2mcIdH/s2000/1000629390.png" class="h-8"><span class="text-xs text-gray-500 mt-1">Binance</span></div>
+  </div>
+</div>
+
+<!-- CHART BUTTON -->
+<div class="chart-float-btn"><button id="toggleChartBtn"><i class="fas fa-chart-line mr-2"></i> Buka Chart</button></div>
+<div id="chartContainer" class="chart-container-modern"><div class="tradingview-widget-container h-full"><div id="tradingview_chart" class="h-full"></div></div></div>
+
+<!-- LOADING OVERLAY -->
+<div id="loadingOverlay" class="loading-overlay-premium hidden">
+  <div class="loading-candles" id="candleContainer"></div>
+  <div class="loading-progress"><div class="loading-progress-bar" id="loadingProgressBar"></div></div>
+  <div class="loading-stats"><div>Analisa: <span id="loadingStatus">0%</span></div><div>Estimasi: <span id="loadingEstimate">0</span> dtk</div></div>
+  <div class="loading-text" id="loadingMessage">Mengambil data pasar...</div>
+</div>
+
+<!-- FOOTER (tidak fixed) -->
+<footer class="footer-premium">
+  <div class="footer-content">
+    <div class="license-badge"><i class="fas fa-shield-alt"></i><span>Lisensi: AI-TB/2025/001</span></div>
+    <div class="copyright"><i class="far fa-copyright"></i><span>2025 AI TRADING BASIC - Platform Analisis Crypto Forex | Seluruh Hak Dilindungi</span></div>
+  </div>
+</footer>
+
+<!-- QRIS MODAL -->
+<div id="qrisModal" class="modal-modern"><div class="modal-content-modern"><div class="flex justify-between items-center mb-4"><h3 class="font-bold text-xl flex items-center gap-2"><i class="fas fa-qrcode text-emerald-400"></i> Pembayaran QRIS</h3><button id="closeModalBtn" class="text-gray-400 hover:text-white text-2xl">&times;</button></div>
+<div id="paymentStep1"><div class="qris-container-modern"><p class="text-sm text-gray-300 mb-3">Scan QR Code di bawah untuk melakukan pembayaran</p><div class="qr-code-modern"><img id="qrisImage" src="https://blogger.googleusercontent.com/img/a/AVvXsEhH0Z6ewE2H7V-Maa0448YScMvF2qjha4Xt6uKlioFSJeUXHSzYesEbB2CsWE1LRdJSN7QxwYW1yGRDN2uyYVY6DtaTfKn_727s9cC2dWr3mNoezeKIFci6rRK6HzbQzCE1DYg8q1F5DWOm9RbypUNB5ipKcIDbXL0GW9d9SRIQ3QePOqw_lcEL4t1Wh_DK" alt="QRIS" class="w-48 h-48 object-contain"></div></div><div class="bg-gradient-to-r from-emerald-900/30 to-blue-900/30 rounded-xl p-4 my-4 text-center"><p class="text-xs text-gray-400">Total Pembayaran</p><p class="text-3xl font-bold text-orange-400" id="totalPayment">Rp0</p><p class="text-xs text-gray-400 mt-2">Kode Unik (3 digit yang harus ditambahkan)</p><div class="unique-code-modern" id="uniqueCode">000</div><p class="text-xs text-gray-500 mt-2">* Transfer total harga + kode unik 3 digit di atas</p></div><button id="nextToConfirmationBtn" class="btn-modern-primary flex items-center justify-center gap-2"><i class="fas fa-check-circle"></i> Saya Sudah Bayar</button></div>
+<div id="paymentStep2" style="display:none;"><p class="text-sm text-gray-300 mb-4">Masukkan detail pembayaran Anda untuk verifikasi</p><div class="mb-3"><label class="text-xs text-gray-400 block mb-1">Alamat Email</label><input type="email" id="userEmail" class="input-modern" placeholder="anda@email.com"></div><div class="mb-3"><label class="text-xs text-gray-400 block mb-1">Sumber Dana</label><select id="sourceFund" class="select-modern"><option value="">Pilih Bank / Wallet</option><option value="BCA">BCA</option><option value="Mandiri">Mandiri</option><option value="BNI">BNI</option><option value="BRI">BRI</option><option value="CIMB Niaga">CIMB Niaga</option><option value="OVO">OVO</option><option value="GoPay">GoPay</option><option value="DANA">DANA</option><option value="ShopeePay">ShopeePay</option></select></div><div class="mb-3"><label class="text-xs text-gray-400 block mb-1">Nomor Transaksi / Referensi</label><input type="text" id="transactionNo" class="input-modern" placeholder="Contoh: TRX20250404001"></div><div class="mb-3"><label class="text-xs text-gray-400 block mb-1">RRN (Request Reference Number)</label><input type="text" id="rrn" class="input-modern" placeholder="Contoh: 123456789012"></div><div class="mb-4"><label class="text-xs text-gray-400 block mb-2">Panduan Transaksi</label><div class="flex gap-2 justify-center flex-wrap"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiCKtWd3W2whyxbomxiajeZpHzatXj-gWdTclEhmTJvKXTlrmdXlwFsIrncxfP6miDfZaGbqmjvETaw9JOQyUXjFazkNaggnaWbz_9uu9hOAgGGvOvw02QE34i1fPiMXuztCe6pU2mB6oEh6QtIFscRji68s93WJJAfhKpQUZ2MOD68yRYUmrDrSSQlGoqx/s1280/IMG-20260404-WA0007.jpg" class="h-24 rounded-lg border border-gray-700 cursor-pointer hover:opacity-80" onclick="window.open(this.src)"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgxk9soM4YJW0TqcDDhhSftpNPOfhRw4-csdOPvHQWlMKrF5P2Mx6Qbimx1CFR_O5AVZJEoYAGgT-1tB_LVl5JYPB95Ha3MlFPqQd9C8wVziuHcpf8met34IG4FshjHJ_o_kdGyZOU-lhsT2BhlsCnI1fMbZnlQJsp8qQ2t0-B_PRHYxxJ69Zi4EaSUOoMO/s934/IMG-20260404-WA0008.jpg" class="h-24 rounded-lg border border-gray-700 cursor-pointer hover:opacity-80" onclick="window.open(this.src)"></div></div><div class="flex flex-col gap-2"><button id="submitPaymentBtn" class="btn-modern-primary flex items-center justify-center gap-2"><i class="fas fa-check-double"></i> Konfirmasi Pembayaran</button><button id="backToQRBtn" class="btn-modern-danger" style="background:#475569;">Kembali ke QR Code</button></div></div></div></div>
+
+<script>
+// ==================== KONFIGURASI ====================
+const apiKey = "6b80b1aab6174949bdf77eade950c8fa";
+const intervalMap = { "1m":"1min","5m":"5min","15m":"15min","1h":"1h","4h":"4h","1d":"1day" };
+const tvIntervalMap = { "1m":"1","5m":"5","15m":"15","1h":"60","4h":"240","1d":"D" };
+const HARGA_PER_LIMIT = 8499;
+const MAKSIMAL_BELI = 10;
+const LIMIT_AWAL_FREE = 13;
+
+// Struktur data limit (real, disimpan di localStorage)
+let freeInitial = LIMIT_AWAL_FREE;
+let paid = 0;
+let dailyFree = 0;
+let lastDailyDate = '';
+
+function loadLimitData() {
+  const userId = 'cfa_user_' + (localStorage.getItem('userId') || (() => {
+    const id = 'user_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+    localStorage.setItem('userId', id);
+    return id;
+  })());
+  const saved = localStorage.getItem(`limitData_${userId}`);
+  if (saved) {
+    const data = JSON.parse(saved);
+    freeInitial = data.freeInitial !== undefined ? data.freeInitial : LIMIT_AWAL_FREE;
+    paid = data.paid || 0;
+    dailyFree = data.dailyFree || 0;
+    lastDailyDate = data.lastDailyDate || '';
+  } else {
+    freeInitial = LIMIT_AWAL_FREE;
+    paid = 0;
+    dailyFree = 0;
+    lastDailyDate = '';
+    saveLimitData();
+  }
+  const today = new Date().toISOString().slice(0,10);
+  if (lastDailyDate !== today) {
+    dailyFree = 1;
+    lastDailyDate = today;
+    saveLimitData();
+  }
+}
+
+function saveLimitData() {
+  const userId = localStorage.getItem('userId');
+  localStorage.setItem(`limitData_${userId}`, JSON.stringify({
+    freeInitial, paid, dailyFree, lastDailyDate
+  }));
+}
+
+function getTotalLimit() {
+  return freeInitial + paid + dailyFree;
+}
+
+function useLimit() {
+  if (paid > 0) {
+    paid--;
+  } else if (dailyFree > 0) {
+    dailyFree--;
+  } else if (freeInitial > 0) {
+    freeInitial--;
+  } else {
+    return false;
+  }
+  saveLimitData();
+  updateQuotaUI();
+  return true;
+}
+
+function addPaidLimit(amount) {
+  paid += amount;
+  saveLimitData();
+  updateQuotaUI();
+}
+
+function updateQuotaUI() {
+  const total = getTotalLimit();
+  document.getElementById('quotaDisplay').innerText = total;
+  const analyzeBtn = document.getElementById('analyzeBtn');
+  if (analyzeBtn) analyzeBtn.disabled = (total <= 0);
+}
+
+// ==================== FUNGSI LAIN ====================
+function showToast(message, isError = false) {
+  const toast = document.createElement('div');
+  toast.className = 'toast-modern';
+  toast.style.borderLeftColor = isError ? '#ef4444' : '#22c55e';
+  toast.innerHTML = `<i class="fas ${isError ? 'fa-exclamation-triangle' : 'fa-check-circle'} mr-2"></i> ${message}`;
+  document.body.appendChild(toast);
+  setTimeout(() => toast.remove(), 3000);
+}
+
+let loadingInterval = null;
+function startLoadingAnimation() {
+  const overlay = document.getElementById('loadingOverlay');
+  const progressBar = document.getElementById('loadingProgressBar');
+  const statusSpan = document.getElementById('loadingStatus');
+  const estimateSpan = document.getElementById('loadingEstimate');
+  const messageSpan = document.getElementById('loadingMessage');
+  const container = document.getElementById('candleContainer');
+  container.innerHTML = '';
+  const candles = [];
+  for (let i = 0; i < 7; i++) {
+    const candle = document.createElement('div');
+    candle.className = 'candle';
+    const wick = document.createElement('div');
+    wick.className = 'wick';
+    candle.appendChild(wick);
+    container.appendChild(candle);
+    candles.push(candle);
+  }
+  let progress = 0;
+  let estimate = 3;
+  const steps = ['Mengambil data pasar...', 'Menganalisa SMC...', 'Menganalisa ICT...', 'Menganalisa CRT...', 'Menganalisa Volume...', 'Menyusun rekomendasi...'];
+  let stepIndex = 0;
+  if (loadingInterval) clearInterval(loadingInterval);
+  loadingInterval = setInterval(() => {
+    progress += Math.random() * 15 + 5;
+    if (progress >= 100) progress = 100;
+    progressBar.style.width = progress + '%';
+    statusSpan.innerText = Math.floor(progress) + '%';
+    estimate = Math.max(1, Math.ceil((100 - progress) / 25));
+    estimateSpan.innerText = estimate;
+    candles.forEach((candle, idx) => {
+      const height = 20 + Math.random() * 60;
+      candle.style.height = height + 'px';
+      candle.style.background = Math.random() > 0.5 ? '#22c55e' : '#ef4444';
+    });
+    if (progress >= 100) {
+      clearInterval(loadingInterval);
+      loadingInterval = null;
+    }
+  }, 200);
+  const msgInterval = setInterval(() => {
+    if (!overlay.classList.contains('hidden')) {
+      messageSpan.innerText = steps[stepIndex % steps.length];
+      stepIndex++;
+    } else {
+      clearInterval(msgInterval);
+    }
+  }, 1200);
+}
+
+function stopLoadingAnimation() {
+  if (loadingInterval) { clearInterval(loadingInterval); loadingInterval = null; }
+  document.getElementById('loadingOverlay').classList.add('hidden');
+}
+
+// ==================== FUNGSI ANALISIS (REAL API) ====================
+async function fetchOHLC(pair, interval, output_size=100) {
+  const symbol = pair.replace("/","/");
+  const url = `https://api.twelvedata.com/time_series?symbol=${encodeURIComponent(symbol)}&interval=${interval}&outputsize=${output_size}&apikey=${apiKey}`;
+  const res = await fetch(url);
+  const data = await res.json();
+  if(data && data.values) return data.values.map(v=>({time:v.datetime,open:parseFloat(v.open),high:parseFloat(v.high),low:parseFloat(v.low),close:parseFloat(v.close),volume:v.volume?parseFloat(v.volume):0}));
+  throw new Error(data.message||"Gagal ambil data");
+}
+function analyzeSMC(ohlc){ if(!ohlc||ohlc.length<4) return "TUNGGU"; const last=ohlc[0].close, prevHigh=Math.max(...ohlc.slice(1,4).map(c=>c.high)); return last>prevHigh?"BELI":"JUAL"; }
+function analyzeCRT(ohlc){ if(!ohlc||ohlc.length<5) return "TUNGGU"; const avg=ohlc.reduce((a,b)=>a+b.close,0)/ohlc.length; return ohlc[0].close>avg?"BELI":"JUAL"; }
+function analyzeICT(ohlc){ if(!ohlc||ohlc.length<4) return "TUNGGU"; const last=ohlc[0].close, prevLow=Math.min(...ohlc.slice(1,4).map(c=>c.low)); return last<prevLow?"JUAL":"BELI"; }
+function analyzeVolume(ohlc){ if(!ohlc||ohlc.length<5) return "TUNGGU"; const lastVol=ohlc[0].volume||0, avgVol=ohlc.slice(1,15).reduce((a,b)=>a+(b.volume||0),0)/Math.min(14,ohlc.length-1); if(avgVol===0) return "TUNGGU"; if(lastVol>avgVol*1.2) return ohlc[0].close>ohlc[1].close?"BELI":"JUAL"; return "TUNGGU"; }
+function calculateWinrate(ohlc){ if(!ohlc||ohlc.length<20) return 0; let success=0,total=0; for(let i=1;i<=Math.min(ohlc.length-16,50);i++){ const slice=ohlc.slice(i,i+15); const smc=analyzeSMC(slice), crt=analyzeCRT(slice), ict=analyzeICT(slice), vol=analyzeVolume(slice); const votes=[smc,crt,ict,vol]; const buy=votes.filter(v=>v==="BELI").length, sell=votes.filter(v=>v==="JUAL").length; let pred="TUNGGU"; if(buy>=2) pred="BELI"; else if(sell>=2) pred="JUAL"; const next=ohlc[i-1].close; if(pred==="BELI"&&next>slice[0].close) success++; if(pred==="JUAL"&&next<slice[0].close) success++; if(pred!=="TUNGGU") total++; } return total>0?success/total*100:0; }
+function getLevelPoints(ohlc){ let ob=null,fvg=null; for(let i=1;i<Math.min(ohlc.length,12);i++) if(ohlc[i].close<ohlc[i].open){ ob=`${ohlc[i].high.toFixed(2)} / ${ohlc[i].low.toFixed(2)}`; break; } for(let i=0;i<Math.min(ohlc.length-2,3);i++){ const s=ohlc[i+1], t=ohlc[i+2]; const sLow=Math.min(s.open,s.close), sHigh=Math.max(s.open,s.close), tLow=Math.min(t.open,t.close), tHigh=Math.max(t.open,t.close); if(sLow>tHigh) fvg=`${tHigh.toFixed(2)} - ${sLow.toFixed(2)}`; if(sHigh<tLow) fvg=`${sHigh.toFixed(2)} - ${tLow.toFixed(2)}`; if(fvg) break; } return {ob:ob||'—',fvg:fvg||'—'}; }
+function updateSignalResult(finalSignal, winrate, levels){
+  const badge=document.getElementById('signalBadge'), circle=document.getElementById('winrateCircle'), circumference=2*Math.PI*42, offset=circumference-(winrate/100)*circumference;
+  circle.style.strokeDasharray=`${circumference} ${circumference}`; circle.style.strokeDashoffset=offset;
+  document.getElementById('winratePercent').innerHTML=`${Math.round(winrate)}%`;
+  document.getElementById('obValue').innerText=levels.ob; document.getElementById('fvgValue').innerText=levels.fvg;
+  if(finalSignal==='BELI'){ badge.className='signal-badge-premium signal-buy-premium'; badge.innerHTML='<i class="fas fa-arrow-up"></i> BELI'; }
+  else if(finalSignal==='JUAL'){ badge.className='signal-badge-premium signal-sell-premium'; badge.innerHTML='<i class="fas fa-arrow-down"></i> JUAL'; }
+  else{ badge.className='signal-badge-premium signal-wait-premium'; badge.innerHTML='<i class="fas fa-clock"></i> TUNGGU'; }
+  let style='Scalping'; if(winrate>=60) style='Swing'; else if(winrate>=45) style='Day Trading'; document.getElementById('tradingStyleText').innerHTML=style;
+}
+
+async function fetchRealTimeMarketCondition() {
+  const pair = document.getElementById('pair').value;
+  const tf = "15min";
+  try {
+    const ohlc = await fetchOHLC(pair, tf, 20);
+    if (ohlc && ohlc.length >= 5) {
+      const closes = ohlc.slice(0,5).map(c => c.close);
+      let naik = 0, turun = 0;
+      for (let i = 0; i < closes.length-1; i++) {
+        if (closes[i+1] > closes[i]) naik++;
+        else if (closes[i+1] < closes[i]) turun++;
+      }
+      if (naik > turun && naik >= 2) return "Bullish";
+      if (turun > naik && turun >= 2) return "Bearish";
+      return "Sideways";
+    }
+  } catch(e) { console.warn(e); }
+  return "Sideways";
+}
+
+function updateTrendDisplay(trend) {
+  const container = document.getElementById('trendContainer');
+  const displayDiv = document.getElementById('trendDisplay');
+  const textSpan = document.getElementById('trendTextSimple');
+  displayDiv.classList.remove('trend-bullish', 'trend-bearish', 'trend-sideways');
+  if (trend === 'Bullish') {
+    displayDiv.classList.add('trend-bullish');
+    textSpan.innerHTML = '<i class="fas fa-arrow-up"></i> BULLISH';
+  } else if (trend === 'Bearish') {
+    displayDiv.classList.add('trend-bearish');
+    textSpan.innerHTML = '<i class="fas fa-arrow-down"></i> BEARISH';
+  } else {
+    displayDiv.classList.add('trend-sideways');
+    textSpan.innerHTML = '<i class="fas fa-minus"></i> SIDEWAYS';
+  }
+  if (container.style.display === 'none') container.style.display = 'block';
+}
+
+async function runAnalysis(){
+  if (getTotalLimit() <= 0) {
+    showToast('Limit habis! Beli limit atau tunggu besok untuk limit harian.', true);
+    Swal.fire({
+      title: 'Limit Habis',
+      html: `Anda tidak memiliki limit.<br>Dapatkan limit gratis harian besok atau beli sekarang.<br>Harga: <strong class="text-orange-400">Rp${HARGA_PER_LIMIT.toLocaleString()}/limit</strong>`,
+      icon: 'warning',
+      confirmButtonText: 'Beli Limit',
+      background: '#1e293b',
+      confirmButtonColor: '#22c55e'
+    }).then(() => document.getElementById('buyQuotaBtn').click());
+    return;
+  }
+  
+  const pair = document.getElementById('pair').value;
+  const tf = document.getElementById('timeframe').value;
+  const apiInterval = intervalMap[tf] || "15min";
+  
+  document.getElementById('signalCard').style.display = 'none';
+  document.getElementById('loadingOverlay').classList.remove('hidden');
+  startLoadingAnimation();
+  document.getElementById('dataStatus').innerHTML = '<div class="w-2 h-2 rounded-full bg-yellow-500 animate-pulse mr-2"></div><span>Menganalisa...</span>';
+  
+  try {
+    const ohlc = await fetchOHLC(pair, apiInterval, 200);
+    if (!ohlc || ohlc.length < 10) throw new Error("Data tidak cukup");
+    
+    if (!useLimit()) throw new Error("Gagal menggunakan limit");
+    
+    const smc = analyzeSMC(ohlc);
+    const crt = analyzeCRT(ohlc);
+    const ict = analyzeICT(ohlc);
+    const vol = analyzeVolume(ohlc);
+    const votes = [smc, crt, ict, vol];
+    const buyCount = votes.filter(v => v === "BELI").length;
+    const sellCount = votes.filter(v => v === "JUAL").length;
+    let finalSignal = "TUNGGU";
+    if (buyCount >= 2) finalSignal = "BELI";
+    else if (sellCount >= 2) finalSignal = "JUAL";
+    const winrate = calculateWinrate(ohlc);
+    const levels = getLevelPoints(ohlc);
+    updateSignalResult(finalSignal, winrate, levels);
+    
+    const marketTrend = await fetchRealTimeMarketCondition();
+    updateTrendDisplay(marketTrend);
+    
+    document.getElementById('signalCard').style.display = 'block';
+    document.getElementById('dataStatus').innerHTML = `<div class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse mr-2"></div><span>Analisa selesai | Sisa limit: ${getTotalLimit()}</span>`;
+    showToast(`Analisa berhasil! Sisa limit: ${getTotalLimit()}`);
+  } catch(e) {
+    showToast('Gagal: ' + e.message, true);
+    document.getElementById('dataStatus').innerHTML = '<div class="w-2 h-2 rounded-full bg-red-500 animate-pulse mr-2"></div><span>Gagal ambil data</span>';
+  } finally {
+    stopLoadingAnimation();
+  }
+}
+
+// ==================== MONEY MANAGEMENT ====================
+function formatRupiahShort(num){ if(num>=1e6) return 'Rp'+(num/1e6).toFixed(1)+'M'; if(num>=1e3) return 'Rp'+(num/1e3).toFixed(0)+'K'; return 'Rp'+num.toLocaleString('id-ID'); }
+function calculateMM(){ const capital=parseFloat(document.getElementById('mmCapital').value); if(isNaN(capital)||capital<=0){ showToast('Modal valid!',true); return; } const level=document.getElementById('mmLevel').value; let riskPerTrade,maxPositions; if(level==='easy'){ riskPerTrade=0.01; maxPositions=3; }else if(level==='medium'){ riskPerTrade=0.02; maxPositions=5; }else{ riskPerTrade=0.05; maxPositions=8; } const maxLossPerPosition=capital*riskPerTrade, maxLossTotal=maxLossPerPosition*maxPositions, profitPerPosition=maxLossPerPosition*2, maxProfitTotal=profitPerPosition*maxPositions; document.getElementById('mmMaxPositions').innerHTML=`${maxPositions}`; document.getElementById('mmDailyProfit').innerHTML=formatRupiahShort(Math.round(maxProfitTotal)); document.getElementById('mmDailyLoss').innerHTML=formatRupiahShort(Math.round(maxLossTotal)); document.getElementById('mm30DaysProfit').innerHTML=formatRupiahShort(Math.round(maxProfitTotal*30)); document.getElementById('mmResults').style.display='grid'; showToast('Perhitungan risiko berhasil!'); }
+function resetMM(){ document.getElementById('mmCapital').value=''; document.getElementById('mmLevel').value='easy'; document.getElementById('mmResults').style.display='none'; showToast('Reset'); }
+
+// ==================== STATISTIK (SIMULASI REALISTIS) ====================
+let totalUsers=parseInt(localStorage.getItem('totalUsers'))||400, onlineUsers=parseInt(localStorage.getItem('onlineUsers'))||28, totalKeuntungan=parseInt(localStorage.getItem('totalKeuntungan'))||8200000, totalTransaksi=parseInt(localStorage.getItem('totalTransaksi'))||180;
+function updateStats(){ document.getElementById('totalUsers').innerText=totalUsers.toLocaleString(); document.getElementById('onlineUsers').innerText=onlineUsers; document.getElementById('profitTotal').innerHTML=formatRupiahShort(totalKeuntungan); document.getElementById('profitTransaksi').innerText=totalTransaksi.toLocaleString(); }
+function startStatsSimulation(){ updateStats(); setInterval(()=>{ totalUsers+=Math.floor(Math.random()*2)+1; localStorage.setItem('totalUsers',totalUsers); updateStats(); },60000); setInterval(()=>{ onlineUsers=Math.max(0,onlineUsers+(Math.floor(Math.random()*3)-1)); localStorage.setItem('onlineUsers',onlineUsers); updateStats(); },5000); setInterval(()=>{ totalKeuntungan+=Math.floor(Math.random()*30000)+5000; totalTransaksi+=1; localStorage.setItem('totalKeuntungan',totalKeuntungan); localStorage.setItem('totalTransaksi',totalTransaksi); updateStats(); },15000); }
+
+// ==================== CHART ====================
+let tvWidget=null;
+function loadTradingViewChart(pair,timeframe){ try{ if(tvWidget&&typeof tvWidget.remove==='function') tvWidget.remove(); }catch(e){} const tvSymbol=pair.includes("/")?`OANDA:${pair.replace("/","")}`:pair; try{ tvWidget=new TradingView.widget({container_id:"tradingview_chart",width:"100%",height:"100%",symbol:tvSymbol,interval:tvIntervalMap[timeframe]||"15",timezone:"Etc/UTC",theme:"dark",style:"1",locale:"id",toolbar_bg:"#0f172a",allow_symbol_change:false,enable_publishing:false,details:true}); }catch(e){ console.warn(e); } }
+
+// ==================== QRIS PAYMENT ====================
+function generateUniqueCode() { return Math.floor(Math.random() * 1000).toString().padStart(3, '0'); }
+let pendingQuantity = 0;
+let pendingAmount = 0;
+let generatedUniqueCode = '';
+function openPaymentModal(quantity, totalPrice) {
+  pendingQuantity = quantity;
+  pendingAmount = totalPrice;
+  generatedUniqueCode = generateUniqueCode();
+  const totalWithUnique = totalPrice + parseInt(generatedUniqueCode);
+  document.getElementById('totalPayment').innerHTML = 'Rp' + totalWithUnique.toLocaleString('id-ID');
+  document.getElementById('uniqueCode').innerText = generatedUniqueCode;
+  document.getElementById('userEmail').value = '';
+  document.getElementById('sourceFund').value = '';
+  document.getElementById('transactionNo').value = '';
+  document.getElementById('rrn').value = '';
+  document.getElementById('paymentStep1').style.display = 'block';
+  document.getElementById('paymentStep2').style.display = 'none';
+  document.getElementById('qrisModal').classList.add('show');
+}
+
+document.getElementById('buyQuotaBtn').addEventListener('click', async () => {
+  const maxCanBuy = MAKSIMAL_BELI - paid;
+  if (maxCanBuy <= 0) { showToast('Maksimal pembelian 10 limit!', true); return; }
+  const { value: amount } = await Swal.fire({
+    title: '<div style="font-size:1.5rem;"><i class="fas fa-shopping-cart" style="color:#22c55e;"></i> Beli Limit Analisa</div>',
+    html: `
+      <div class="text-left">
+        <div style="background: linear-gradient(135deg,#1e293b,#0f172a); padding:1.25rem; border-radius:1rem; margin-bottom:1rem; border:1px solid #22c55e;">
+          <div class="flex justify-between"><span class="text-gray-400 text-xs">Harga per Limit</span><span class="text-orange-400 text-xl font-bold">Rp${HARGA_PER_LIMIT.toLocaleString()}</span></div>
+          <div class="h-px bg-gradient-to-r from-emerald-500 to-blue-500 my-2"></div>
+          <div class="flex justify-between"><span class="text-gray-400 text-xs">Sisa yang Bisa Dibeli</span><span class="text-emerald-400 text-lg font-bold">${maxCanBuy} Limit</span></div>
+          <div class="h-px bg-gray-700 my-2"></div>
+          <div class="flex justify-between"><span class="text-gray-400 text-xs">Total Limit Saat Ini</span><span class="text-blue-400 text-lg font-bold">${getTotalLimit()} Limit</span></div>
+        </div>
+        <div style="background:#0f172a; border-radius:1rem; padding:1rem; margin-bottom:1rem;">
+          <div class="flex items-center gap-2 mb-3"><i class="fas fa-chart-line text-emerald-400"></i><span class="text-gray-300">Jumlah Limit</span></div>
+          <div class="flex items-center justify-center gap-3">
+            <button type="button" id="decrementQty" style="background:#1e293b; border:1px solid #22c55e; border-radius:8px; width:36px; height:36px; color:white;">−</button>
+            <input type="number" id="swal-input1" class="swal2-input" min="1" max="${maxCanBuy}" value="1" style="width:100px; text-align:center; background:#1e293b; border:1px solid #334155; border-radius:8px; color:white; padding:8px;">
+            <button type="button" id="incrementQty" style="background:#1e293b; border:1px solid #22c55e; border-radius:8px; width:36px; height:36px; color:white;">+</button>
+          </div>
+        </div>
+        <div style="background:linear-gradient(135deg,#22c55e20,#3b82f620); padding:1rem; border-radius:1rem; text-align:center;">
+          <span class="text-gray-400 text-xs">Total yang harus dibayar</span>
+          <div id="previewTotal" class="text-orange-400 text-2xl font-bold">Rp${HARGA_PER_LIMIT.toLocaleString()}</div>
+          <span class="text-gray-500 text-xs">* +3 digit kode unik nantinya</span>
+        </div>
+      </div>
+    `,
+    focusConfirm: false,
+    showCancelButton: true,
+    confirmButtonText: '<i class="fas fa-qrcode"></i> Lanjut ke QRIS',
+    cancelButtonText: 'Batal',
+    background: '#1e293b',
+    color: '#fff',
+    confirmButtonColor: '#22c55e',
+    didOpen: () => {
+      const qtyInput = document.getElementById('swal-input1');
+      const decrement = document.getElementById('decrementQty');
+      const increment = document.getElementById('incrementQty');
+      const preview = document.getElementById('previewTotal');
+      const maxVal = maxCanBuy;
+      const update = () => {
+        let val = parseInt(qtyInput.value);
+        if (isNaN(val)) val = 1;
+        if (val < 1) val = 1;
+        if (val > maxVal) val = maxVal;
+        qtyInput.value = val;
+        preview.innerText = 'Rp' + (val * HARGA_PER_LIMIT).toLocaleString('id-ID');
+      };
+      decrement.onclick = () => { let v = parseInt(qtyInput.value); if (v > 1) qtyInput.value = v-1; update(); };
+      increment.onclick = () => { let v = parseInt(qtyInput.value); if (v < maxVal) qtyInput.value = v+1; update(); };
+      qtyInput.oninput = update;
+      update();
+    },
+    preConfirm: () => {
+      const amount = parseInt(document.getElementById('swal-input1').value);
+      if (isNaN(amount) || amount < 1 || amount > maxCanBuy) {
+        Swal.showValidationMessage(`Masukkan 1-${maxCanBuy}`);
+        return false;
+      }
+      return amount;
+    }
+  });
+  if (amount) openPaymentModal(amount, amount * HARGA_PER_LIMIT);
+});
+
+document.getElementById('nextToConfirmationBtn').onclick = () => { document.getElementById('paymentStep1').style.display='none'; document.getElementById('paymentStep2').style.display='block'; };
+document.getElementById('backToQRBtn').onclick = () => { document.getElementById('paymentStep2').style.display='none'; document.getElementById('paymentStep1').style.display='block'; };
+document.getElementById('closeModalBtn').onclick = () => { document.getElementById('qrisModal').classList.remove('show'); };
+document.getElementById('submitPaymentBtn').onclick = async () => {
+  const email = document.getElementById('userEmail').value;
+  const sourceFund = document.getElementById('sourceFund').value;
+  const transactionNo = document.getElementById('transactionNo').value;
+  const rrn = document.getElementById('rrn').value;
+  if (!email || !sourceFund || !transactionNo || !rrn) { showToast('Harap isi semua field!', true); return; }
+  Swal.fire({ title: 'Memverifikasi...', timer: 2000, timerProgressBar: true, showConfirmButton: false, background:'#1e293b', didOpen:()=>Swal.showLoading() });
+  setTimeout(() => {
+    addPaidLimit(pendingQuantity);
+    document.getElementById('qrisModal').classList.remove('show');
+    Swal.fire({ title: '<i class="fas fa-check-circle" style="color:#22c55e"></i><br>Berhasil!', html: `Anda membeli ${pendingQuantity} limit.<br>Total limit: ${getTotalLimit()}`, icon:'success', confirmButtonText:'OK', background:'#1e293b', color:'#fff' });
+    showToast(`Berhasil membeli ${pendingQuantity} limit!`);
+  }, 2000);
+};
+
+// ==================== INIT ====================
+document.addEventListener('DOMContentLoaded', () => {
+  loadLimitData();
+  startStatsSimulation();
+  document.getElementById('trendContainer').style.display = 'none';
+  updateQuotaUI();
+  
+  document.getElementById('analyzeBtn').onclick = runAnalysis;
+  document.getElementById('resetAnalysisBtn').onclick = () => {
+    document.getElementById('pair').value = 'XAU/USD';
+    document.getElementById('timeframe').value = '15m';
+    document.getElementById('signalCard').style.display = 'none';
+    document.getElementById('dataStatus').innerHTML = '<div class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse mr-2"></div><span>Siap analisa</span>';
+    loadLimitData();
+    updateQuotaUI();
+    showToast('Reset berhasil!');
+  };
+  document.getElementById('mmCalculateBtn').onclick = calculateMM;
+  document.getElementById('mmResetBtn').onclick = resetMM;
+  
+  const toggleBtn = document.getElementById('toggleChartBtn');
+  const chartCont = document.getElementById('chartContainer');
+  toggleBtn.onclick = () => {
+    chartCont.classList.toggle('show');
+    toggleBtn.innerHTML = chartCont.classList.contains('show') ? '<i class="fas fa-times mr-2"></i> Tutup Chart' : '<i class="fas fa-chart-line mr-2"></i> Buka Chart';
+    if (chartCont.classList.contains('show')) loadTradingViewChart(document.getElementById('pair').value, document.getElementById('timeframe').value);
+  };
+  document.getElementById('pair').onchange = () => { if (chartCont.classList.contains('show')) loadTradingViewChart(document.getElementById('pair').value, document.getElementById('timeframe').value); };
+  document.getElementById('timeframe').onchange = () => { if (chartCont.classList.contains('show')) loadTradingViewChart(document.getElementById('pair').value, document.getElementById('timeframe').value); };
+});
+</script>
+</body>
+</html>
