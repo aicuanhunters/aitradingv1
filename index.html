@@ -61,7 +61,7 @@ body::before {
 ::-webkit-scrollbar-track { background: #1e293b; border-radius: 10px; }
 ::-webkit-scrollbar-thumb { background: linear-gradient(135deg, #22c55e, #3b82f6); border-radius: 10px; }
 
-/* ==================== HEADER (logo kiri, akurasi kanan) ==================== */
+/* ==================== HEADER ==================== */
 .header-premium {
   background: linear-gradient(135deg, rgba(10,15,30,0.98), rgba(15,23,42,0.98));
   backdrop-filter: blur(20px);
@@ -177,7 +177,7 @@ body::before {
   .logo-text p { font-size: 0.5rem; }
 }
 
-/* ==================== FOOTER (tidak fixed) ==================== */
+/* ==================== FOOTER ==================== */
 .footer-premium {
   width: 100%;
   text-align: center;
@@ -233,58 +233,159 @@ body::before {
   box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.5);
 }
 
-/* ==================== QUOTA CARD SEDERHANA ==================== */
-.quota-simple {
-  background: linear-gradient(135deg, #1a2332, #0f172a);
+/* ==================== QUOTA CARD MODERN & CANGGIH ==================== */
+.quota-modern {
+  background: linear-gradient(145deg, #1e293b, #0f172a);
   border-radius: 1.5rem;
   padding: 1.5rem;
-  border: 1px solid rgba(34, 197, 94, 0.3);
-  text-align: center;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+  border: 1px solid rgba(34,197,94,0.3);
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 10px 25px -5px rgba(0,0,0,0.3);
 }
 
-.quota-simple .quota-icon {
-  font-size: 2rem;
+.quota-modern::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #22c55e, #3b82f6, #8b5cf6);
+}
+
+.quota-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.quota-icon {
+  width: 55px;
+  height: 55px;
+  background: rgba(34,197,94,0.15);
+  border-radius: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(34,197,94,0.4);
+}
+
+.quota-icon i {
+  font-size: 1.8rem;
   color: #22c55e;
-  margin-bottom: 0.5rem;
 }
 
-.quota-simple .quota-label {
-  font-size: 0.8rem;
+.quota-title {
+  font-size: 0.7rem;
   text-transform: uppercase;
   letter-spacing: 2px;
   color: #94a3b8;
-  margin-bottom: 0.5rem;
 }
 
-.quota-simple .quota-value {
-  font-size: 3rem;
+.quota-value {
+  font-size: 2.8rem;
   font-weight: 800;
   background: linear-gradient(135deg, #22c55e, #4ade80);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
   line-height: 1;
-  margin-bottom: 1rem;
+  letter-spacing: -1px;
+}
+
+.quota-progress {
+  margin: 1rem 0;
+}
+
+.progress-label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.7rem;
+  color: #94a3b8;
+  margin-bottom: 0.3rem;
+}
+
+.progress-bar-modern {
+  background: #1e293b;
+  border-radius: 20px;
+  height: 6px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #22c55e, #3b82f6);
+  border-radius: 20px;
+  transition: width 0.6s ease;
+  position: relative;
+}
+
+.progress-fill::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  animation: shine 2s infinite;
+}
+
+@keyframes shine {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+.quota-stats {
+  display: flex;
+  justify-content: space-between;
+  margin: 1rem 0 1.2rem;
+  background: rgba(0,0,0,0.2);
+  border-radius: 1rem;
+  padding: 0.6rem;
+}
+
+.quota-stat-item {
+  text-align: center;
+  flex: 1;
+}
+
+.quota-stat-label {
+  font-size: 0.6rem;
+  color: #94a3b8;
+  text-transform: uppercase;
+}
+
+.quota-stat-number {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #f1f5f9;
 }
 
 .btn-buy-premium {
   background: linear-gradient(135deg, #22c55e, #16a34a);
   border: none;
   border-radius: 0.75rem;
-  padding: 0.8rem 1.5rem;
+  padding: 0.8rem 1rem;
   font-weight: 700;
   color: white;
   cursor: pointer;
   transition: all 0.2s;
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 0.5rem;
   font-size: 0.9rem;
   width: 100%;
-  justify-content: center;
 }
-.btn-buy-premium:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(34,197,94,0.3); background: linear-gradient(135deg, #16a34a, #15803d); }
+
+.btn-buy-premium:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(34,197,94,0.3);
+  background: linear-gradient(135deg, #16a34a, #15803d);
+}
 
 /* ==================== KONDISI PASAR ==================== */
 .trend-modern {
@@ -312,35 +413,164 @@ body::before {
 .trend-sideways { background: rgba(245,158,11,0.15); color: #f59e0b; border: 1px solid #f59e0b; }
 .trend-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 0.5rem; color: #94a3b8; }
 
-/* ==================== STATISTIK ==================== */
-.stats-modern {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1rem;
-}
-.stat-card-interactive {
+/* ==================== MESIN ANALISA ==================== */
+.analyzer-card {
   background: linear-gradient(145deg, #1e293b, #0f172a);
-  border-radius: 1rem;
-  padding: 1.2rem;
-  text-align: center;
+  border-radius: 1.5rem;
+  overflow: hidden;
   border: 1px solid rgba(34,197,94,0.2);
-  transition: all 0.2s;
-  cursor: pointer;
+  transition: all 0.3s;
 }
-.stat-card-interactive:hover {
-  transform: translateY(-3px);
-  border-color: #22c55e;
-  background: linear-gradient(145deg, #2a3a4e, #1a2538);
-}
-.stat-icon { font-size: 1.5rem; color: #22c55e; margin-bottom: 0.5rem; }
-.stat-value { font-size: 1.6rem; font-weight: 800; background: linear-gradient(135deg, #22c55e, #4ade80); -webkit-background-clip: text; background-clip: text; color: transparent; line-height: 1.2; }
-.stat-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1.5px; color: #94a3b8; margin-top: 0.5rem; }
 
-/* ==================== SIGNAL CARD ==================== */
+.analyzer-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(34,197,94,0.5);
+  box-shadow: 0 15px 35px -10px rgba(0,0,0,0.5);
+}
+
+.analyzer-header {
+  background: linear-gradient(135deg, #22c55e20, #3b82f620);
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid rgba(34,197,94,0.2);
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.analyzer-header i {
+  font-size: 1.25rem;
+  color: #22c55e;
+}
+
+.analyzer-header h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #cbd5e1;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.analyzer-body {
+  padding: 1.5rem;
+}
+
+.analyzer-field {
+  margin-bottom: 1.25rem;
+}
+
+.analyzer-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: #94a3b8;
+  margin-bottom: 0.5rem;
+}
+
+.analyzer-label i {
+  font-size: 0.75rem;
+  color: #22c55e;
+}
+
+.analyzer-select {
+  width: 100%;
+  background: rgba(15, 23, 42, 0.9);
+  border: 1px solid #334155;
+  border-radius: 1rem;
+  padding: 0.875rem 1rem;
+  color: #ffffff;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2322c55e'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  background-size: 1rem;
+}
+
+.analyzer-select:focus {
+  outline: none;
+  border-color: #22c55e;
+  box-shadow: 0 0 0 3px rgba(34,197,94,0.1);
+}
+
+.analyzer-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.btn-analyze {
+  background: linear-gradient(135deg, #22c55e, #16a34a);
+  border: none;
+  border-radius: 1rem;
+  padding: 0.875rem;
+  font-weight: 700;
+  color: white;
+  cursor: pointer;
+  width: 100%;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-size: 0.95rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-analyze::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  transition: left 0.5s;
+}
+
+.btn-analyze:hover::before {
+  left: 100%;
+}
+
+.btn-analyze:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px -5px rgba(34,197,94,0.4);
+}
+
+.btn-reset {
+  background: linear-gradient(135deg, #475569, #334155);
+  border: none;
+  border-radius: 1rem;
+  padding: 0.875rem;
+  font-weight: 700;
+  color: white;
+  cursor: pointer;
+  width: 100%;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-size: 0.95rem;
+}
+
+.btn-reset:hover {
+  transform: translateY(-2px);
+  background: linear-gradient(135deg, #64748b, #475569);
+}
+
+/* ==================== SIGNAL CARD (Rekomendasi Entry) ==================== */
 .signal-premium {
   background: linear-gradient(145deg, #1e293b, #0f172a);
   border-radius: 1.5rem;
   overflow: hidden;
+  margin-top: 1rem;
 }
 .signal-header {
   background: linear-gradient(135deg, #22c55e20, #3b82f620);
@@ -422,22 +652,116 @@ body::before {
 .trading-style-label { font-size: 0.7rem; color: #94a3b8; text-transform: uppercase; display: flex; align-items: center; gap: 0.5rem; }
 .trading-style-value { font-size: 1rem; font-weight: 700; color: #22c55e; }
 
-/* Input Modern */
-.input-modern, .select-modern {
+/* ==================== MANAJEMEN RISIKO ==================== */
+.risk-card {
+  background: linear-gradient(145deg, #1e293b, #0f172a);
+  border-radius: 1.5rem;
+  overflow: hidden;
+  border: 1px solid rgba(34,197,94,0.2);
+}
+
+.risk-header {
+  background: linear-gradient(135deg, #22c55e20, #3b82f620);
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid rgba(34,197,94,0.2);
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.risk-header i {
+  font-size: 1.25rem;
+  color: #22c55e;
+}
+
+.risk-header h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #cbd5e1;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.risk-body {
+  padding: 1.5rem;
+}
+
+.risk-input-group {
+  margin-bottom: 1.25rem;
+}
+
+.risk-input-group label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: #94a3b8;
+  margin-bottom: 0.5rem;
+}
+
+.risk-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.risk-input-wrapper i {
+  position: absolute;
+  left: 1rem;
+  color: #22c55e;
+  font-size: 0.9rem;
+}
+
+.risk-input {
+  width: 100%;
+  background: rgba(15, 23, 42, 0.9);
+  border: 1px solid #334155;
+  border-radius: 1rem;
+  padding: 0.875rem 1rem 0.875rem 2.5rem;
+  color: #ffffff;
+  font-size: 0.95rem;
+  transition: all 0.2s;
+}
+
+.risk-input:focus {
+  outline: none;
+  border-color: #22c55e;
+  box-shadow: 0 0 0 3px rgba(34,197,94,0.1);
+}
+
+.risk-select {
   width: 100%;
   background: rgba(15, 23, 42, 0.9);
   border: 1px solid #334155;
   border-radius: 1rem;
   padding: 0.875rem 1rem;
   color: #ffffff;
+  font-size: 0.95rem;
+  cursor: pointer;
   transition: all 0.2s;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2322c55e'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  background-size: 1rem;
 }
-.input-modern:focus, .select-modern:focus {
+
+.risk-select:focus {
   outline: none;
   border-color: #22c55e;
   box-shadow: 0 0 0 3px rgba(34,197,94,0.1);
 }
-.btn-modern-primary {
+
+.risk-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.btn-risk-calculate {
   background: linear-gradient(135deg, #22c55e, #16a34a);
   border: none;
   border-radius: 1rem;
@@ -447,10 +771,19 @@ body::before {
   cursor: pointer;
   width: 100%;
   transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
 }
-.btn-modern-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 25px -5px rgba(34,197,94,0.4); }
-.btn-modern-danger {
-  background: linear-gradient(135deg, #ef4444, #dc2626);
+
+.btn-risk-calculate:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px -5px rgba(34,197,94,0.4);
+}
+
+.btn-risk-reset {
+  background: linear-gradient(135deg, #475569, #334155);
   border: none;
   border-radius: 1rem;
   padding: 0.875rem;
@@ -458,8 +791,128 @@ body::before {
   color: white;
   cursor: pointer;
   width: 100%;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
 }
-.btn-modern-danger:hover { transform: translateY(-2px); }
+
+.btn-risk-reset:hover {
+  transform: translateY(-2px);
+  background: linear-gradient(135deg, #64748b, #475569);
+}
+
+.risk-result {
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #334155;
+}
+
+.risk-result-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.75rem;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-bottom: 1rem;
+}
+
+.risk-result-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+.risk-metric {
+  background: rgba(0,0,0,0.3);
+  border-radius: 1rem;
+  padding: 1rem;
+  text-align: center;
+  transition: all 0.2s;
+  border: 1px solid #334155;
+}
+
+.risk-metric:hover {
+  border-color: #22c55e;
+  transform: translateY(-2px);
+}
+
+.risk-metric-icon {
+  font-size: 1.25rem;
+  color: #22c55e;
+  margin-bottom: 0.5rem;
+}
+
+.risk-metric-label {
+  font-size: 0.65rem;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.risk-metric-value {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-top: 0.25rem;
+}
+
+.risk-metric-value.positive {
+  color: #22c55e;
+}
+
+.risk-metric-value.negative {
+  color: #ef4444;
+}
+
+/* ==================== STATISTIK REAL-TIME ==================== */
+.stats-modern {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+.stat-card-interactive {
+  background: linear-gradient(145deg, #1e293b, #0f172a);
+  border-radius: 1rem;
+  padding: 1.2rem;
+  text-align: center;
+  border: 1px solid rgba(34,197,94,0.2);
+  transition: all 0.2s;
+  cursor: pointer;
+}
+
+.stat-card-interactive:hover {
+  transform: translateY(-3px);
+  border-color: #22c55e;
+  background: linear-gradient(145deg, #2a3a4e, #1a2538);
+}
+
+.stat-icon {
+  font-size: 1.5rem;
+  color: #22c55e;
+  margin-bottom: 0.5rem;
+}
+
+.stat-value {
+  font-size: 1.6rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, #22c55e, #4ade80);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  line-height: 1.2;
+}
+
+.stat-label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: #94a3b8;
+  margin-top: 0.5rem;
+}
 
 /* Modal */
 .modal-modern {
@@ -572,21 +1025,6 @@ body::before {
 .loading-stats span { color: #22c55e; font-weight: 700; }
 .loading-text { font-size: 0.9rem; letter-spacing: 2px; color: #cbd5e1; }
 
-@media (max-width: 768px) {
-  .stats-modern { grid-template-columns: 1fr; }
-  .quota-simple .quota-value { font-size: 2rem; }
-  .winrate-container { flex-direction: column; align-items: center; }
-  .level-cards { grid-template-columns: 1fr; }
-  .trading-style-card { flex-direction: column; text-align: center; }
-  .signal-header { flex-direction: column; text-align: center; }
-}
-.grid-responsive { display: grid; grid-template-columns: 1fr; gap: 1rem; }
-@media (min-width: 768px) { .grid-responsive-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; } }
-
-/* Spacer untuk fixed header */
-.header-spacer { height: 80px; }
-@media (max-width: 768px) { .header-spacer { height: 120px; } }
-
 /* Toast */
 .toast-modern {
   position: fixed;
@@ -605,6 +1043,27 @@ body::before {
   from { transform: translateX(100%); opacity: 0; }
   to { transform: translateX(0); opacity: 1; }
 }
+
+/* Responsive */
+@media (max-width: 768px) {
+  .stats-modern { grid-template-columns: repeat(2, 1fr); }
+  .quota-modern .quota-value { font-size: 2rem; }
+  .winrate-container { flex-direction: column; align-items: center; }
+  .level-cards { grid-template-columns: 1fr; }
+  .trading-style-card { flex-direction: column; text-align: center; }
+  .signal-header { flex-direction: column; text-align: center; }
+  .risk-result-grid { grid-template-columns: 1fr; }
+}
+.grid-responsive { display: grid; grid-template-columns: 1fr; gap: 1rem; }
+@media (min-width: 768px) { 
+  .grid-responsive-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; 
+    align-items: start; /* agar signal card di kiri tidak ikut tinggi kanan */
+  }
+}
+
+/* Spacer untuk fixed header */
+.header-spacer { height: 80px; }
+@media (max-width: 768px) { .header-spacer { height: 120px; } }
 </style>
 </head>
 <body>
@@ -634,11 +1093,26 @@ body::before {
   <span>Sistem Siap | Menunggu analisa</span>
 </div>
 
-<!-- QUOTA CARD SEDERHANA (hanya sisa limit) -->
-<div class="quota-simple mb-4">
-  <div class="quota-icon"><i class="fas fa-chart-line"></i></div>
-  <div class="quota-label">Sisa Limit</div>
-  <div class="quota-value" id="quotaDisplay">13</div>
+<!-- QUOTA CARD MODERN & CANGGIH -->
+<div class="quota-modern mb-4">
+  <div class="quota-header">
+    <div class="quota-icon"><i class="fas fa-chart-line"></i></div>
+    <div>
+      <div class="quota-title">Sisa Limit Premium</div>
+      <div class="quota-value" id="quotaDisplay">13</div>
+    </div>
+  </div>
+  <div class="quota-progress">
+    <div class="progress-label"><span>Penggunaan Limit</span><span id="usagePercent">0%</span></div>
+    <div class="progress-bar-modern">
+      <div class="progress-fill" id="quotaProgress" style="width:0%"></div>
+    </div>
+  </div>
+  <div class="quota-stats">
+    <div class="quota-stat-item"><div class="quota-stat-label">Total Limit</div><div class="quota-stat-number" id="totalQuota">13</div></div>
+    <div class="quota-stat-item"><div class="quota-stat-label">Terpakai</div><div class="quota-stat-number" id="usedQuota">0</div></div>
+    <div class="quota-stat-item"><div class="quota-stat-label">Dibeli</div><div class="quota-stat-number" id="purchasedQuota">0</div></div>
+  </div>
   <button id="buyQuotaBtn" class="btn-buy-premium"><i class="fas fa-plus-circle"></i> Tambah Limit</button>
 </div>
 
@@ -656,7 +1130,7 @@ body::before {
   </div>
 </div>
 
-<!-- KONDISI PASAR - AWALNYA TERSEMBUNYI -->
+<!-- KONDISI PASAR -->
 <div id="trendContainer" class="mb-4" style="display: none;">
   <div class="glass-card">
     <div class="trend-modern">
@@ -669,40 +1143,109 @@ body::before {
   </div>
 </div>
 
-<!-- MESIN ANALISA & SINYAL -->
+<!-- MESIN ANALISA (kiri) & MANAJEMEN RISIKO (kanan) dengan signal card di bawah mesin analisa -->
 <div class="grid-responsive md:grid-cols-2 gap-4 mb-4">
-  <div class="glass-card">
-    <h3 class="font-bold mb-3 text-gray-300 flex items-center gap-2"><i class="fas fa-microchip text-emerald-400"></i> Mesin Analisa</h3>
-    <div class="mb-3"><label class="block text-xs text-gray-400 mb-1 uppercase tracking-wide">Pasangan</label><select id="pair" class="select-modern"><option value="BTC/USD">₿ BTC/USD - Bitcoin</option><option value="XAU/USD" selected>🥇 XAU/USD - Emas</option></select></div>
-    <div class="mb-4"><label class="block text-xs text-gray-400 mb-1 uppercase tracking-wide">Kerangka Waktu</label><select id="timeframe" class="select-modern"><option value="1m">1 Menit</option><option value="5m">5 Menit</option><option value="15m" selected>15 Menit</option><option value="1h">1 Jam</option><option value="4h">4 Jam</option><option value="1d">1 Hari</option></select></div>
-    <button id="analyzeBtn" class="btn-modern-primary mb-2"><i class="fas fa-brain mr-2"></i> Analisa Sekarang</button>
-    <button id="resetAnalysisBtn" class="btn-modern-danger"><i class="fas fa-sync-alt mr-2"></i> Reset</button>
-  </div>
-  <div class="glass-card">
-    <h3 class="font-bold mb-4 text-gray-300 flex items-center gap-2"><i class="fas fa-chart-pie text-emerald-400"></i> Manajemen Risiko</h3>
-    <div class="mb-3"><label class="block text-xs text-gray-400 mb-1">Modal Awal (Rp)</label><input type="number" id="mmCapital" placeholder="Contoh: 10000000" class="input-modern"></div>
-    <div class="mb-4"><label class="block text-xs text-gray-400 mb-1">Level Risiko</label><select id="mmLevel" class="select-modern"><option value="easy">Konservatif (1%)</option><option value="medium">Moderate (2%)</option><option value="aggressive">Agresif (5%)</option></select></div>
-    <button id="mmCalculateBtn" class="btn-modern-primary mb-2"><i class="fas fa-calculator mr-2"></i> Hitung Risiko</button>
-    <button id="mmResetBtn" class="btn-modern-danger"><i class="fas fa-undo-alt mr-2"></i> Reset</button>
-    <div id="mmResults" class="grid grid-cols-2 gap-2 mt-4" style="display:none;">
-      <div class="bg-black/30 rounded-xl p-2 text-center"><p class="text-xs text-gray-400">Max Posisi</p><p class="text-lg font-bold text-emerald-400" id="mmMaxPositions">—</p></div>
-      <div class="bg-black/30 rounded-xl p-2 text-center"><p class="text-xs text-gray-400">Target Harian</p><p class="text-lg font-bold text-emerald-400" id="mmDailyProfit">—</p></div>
-      <div class="bg-black/30 rounded-xl p-2 text-center"><p class="text-xs text-gray-400">Max Loss/Hari</p><p class="text-lg font-bold text-red-400" id="mmDailyLoss">—</p></div>
-      <div class="bg-black/30 rounded-xl p-2 text-center"><p class="text-xs text-gray-400">Proyeksi 30 Hari</p><p class="text-lg font-bold text-emerald-400" id="mm30DaysProfit">—</p></div>
+  <!-- Kolom Kiri: Mesin Analisa + Signal Card -->
+  <div class="flex flex-col gap-4">
+    <div class="analyzer-card">
+      <div class="analyzer-header">
+        <i class="fas fa-microchip"></i>
+        <h3>Mesin Analisa</h3>
+      </div>
+      <div class="analyzer-body">
+        <div class="analyzer-field">
+          <div class="analyzer-label"><i class="fas fa-coins"></i> Pasangan</div>
+          <select id="pair" class="analyzer-select">
+            <option value="BTC/USD">₿ BTC/USD - Bitcoin</option>
+            <option value="XAU/USD" selected>🥇 XAU/USD - Emas</option>
+          </select>
+        </div>
+        <div class="analyzer-field">
+          <div class="analyzer-label"><i class="fas fa-clock"></i> Kerangka Waktu</div>
+          <select id="timeframe" class="analyzer-select">
+            <option value="1m">1 Menit</option>
+            <option value="5m">5 Menit</option>
+            <option value="15m" selected>15 Menit (Rekomendasi)</option>
+            <option value="1h">1 Jam</option>
+            <option value="4h">4 Jam</option>
+            <option value="1d">1 Hari</option>
+          </select>
+        </div>
+        <div class="analyzer-buttons">
+          <button id="analyzeBtn" class="btn-analyze"><i class="fas fa-brain"></i> Analisa Sekarang</button>
+          <button id="resetAnalysisBtn" class="btn-reset"><i class="fas fa-sync-alt"></i> Reset</button>
+        </div>
+      </div>
+    </div>
+    <!-- SIGNAL CARD (Rekomendasi Entry) muncul di bawah mesin analisa -->
+    <div id="signalCard" class="signal-premium" style="display: none;">
+      <div class="signal-header"><h3><i class="fas fa-chart-simple"></i> Rekomendasi Entry</h3><div id="signalBadge" class="signal-badge-premium signal-wait-premium"><i class="fas fa-clock"></i> TUNGGU</div></div>
+      <div class="signal-body">
+        <div class="winrate-container">
+          <div class="winrate-circle"><svg width="100" height="100" class="winrate-svg"><circle cx="50" cy="50" r="42" class="winrate-circle-bg"></circle><circle cx="50" cy="50" r="42" class="winrate-circle-fill" id="winrateCircle" stroke-dasharray="0, 264"></circle></svg><div class="winrate-text"><div class="winrate-percent" id="winratePercent">0%</div><div class="winrate-label">Akurasi</div></div></div>
+          <div class="winrate-legend"><div class="legend-item"><div class="legend-dot weak"></div><span>Lemah (&lt;40%)</span></div><div class="legend-item"><div class="legend-dot medium"></div><span>Sedang (40-60%)</span></div><div class="legend-item"><div class="legend-dot strong"></div><span>Kuat (&gt;60%)</span></div></div>
+        </div>
+        <div class="level-cards"><div class="level-card-premium"><div class="level-icon"><i class="fas fa-shield-haltered"></i></div><div class="level-title">Order Block (OB)</div><div class="level-value" id="obValue">—</div></div><div class="level-card-premium"><div class="level-icon"><i class="fas fa-chart-gantt"></i></div><div class="level-title">Fair Value Gap (FVG)</div><div class="level-value" id="fvgValue">—</div></div></div>
+        <div class="trading-style-card"><div class="trading-style-label"><i class="fas fa-flag-checkered"></i> Gaya Trading Rekomendasi</div><div class="trading-style-value" id="tradingStyleText">—</div></div>
+      </div>
     </div>
   </div>
-</div>
 
-<!-- SIGNAL CARD -->
-<div id="signalCard" class="signal-premium mb-4" style="display: none;">
-  <div class="signal-header"><h3><i class="fas fa-chart-simple"></i> Rekomendasi Entry</h3><div id="signalBadge" class="signal-badge-premium signal-wait-premium"><i class="fas fa-clock"></i> TUNGGU</div></div>
-  <div class="signal-body">
-    <div class="winrate-container">
-      <div class="winrate-circle"><svg width="100" height="100" class="winrate-svg"><circle cx="50" cy="50" r="42" class="winrate-circle-bg"></circle><circle cx="50" cy="50" r="42" class="winrate-circle-fill" id="winrateCircle" stroke-dasharray="0, 264"></circle></svg><div class="winrate-text"><div class="winrate-percent" id="winratePercent">0%</div><div class="winrate-label">Akurasi</div></div></div>
-      <div class="winrate-legend"><div class="legend-item"><div class="legend-dot weak"></div><span>Lemah (&lt;40%)</span></div><div class="legend-item"><div class="legend-dot medium"></div><span>Sedang (40-60%)</span></div><div class="legend-item"><div class="legend-dot strong"></div><span>Kuat (&gt;60%)</span></div></div>
+  <!-- Kolom Kanan: Manajemen Risiko -->
+  <div class="risk-card">
+    <div class="risk-header">
+      <i class="fas fa-shield-alt"></i>
+      <h3>Manajemen Risiko</h3>
     </div>
-    <div class="level-cards"><div class="level-card-premium"><div class="level-icon"><i class="fas fa-shield-haltered"></i></div><div class="level-title">Order Block (OB)</div><div class="level-value" id="obValue">—</div></div><div class="level-card-premium"><div class="level-icon"><i class="fas fa-chart-gantt"></i></div><div class="level-title">Fair Value Gap (FVG)</div><div class="level-value" id="fvgValue">—</div></div></div>
-    <div class="trading-style-card"><div class="trading-style-label"><i class="fas fa-flag-checkered"></i> Gaya Trading Rekomendasi</div><div class="trading-style-value" id="tradingStyleText">—</div></div>
+    <div class="risk-body">
+      <div class="risk-input-group">
+        <label><i class="fas fa-wallet"></i> Modal Awal (Rp)</label>
+        <div class="risk-input-wrapper">
+          <i class="fas fa-rupiah-sign"></i>
+          <input type="text" id="mmCapital" placeholder="100.000.000" class="risk-input" value="">
+        </div>
+      </div>
+      <div class="risk-input-group">
+        <label><i class="fas fa-chart-line"></i> Level Risiko</label>
+        <select id="mmLevel" class="risk-select">
+          <option value="easy">🟢 Konservatif (1% per posisi)</option>
+          <option value="medium">🟡 Moderate (2% per posisi)</option>
+          <option value="aggressive">🔴 Agresif (5% per posisi)</option>
+        </select>
+      </div>
+      <div class="risk-buttons">
+        <button id="mmCalculateBtn" class="btn-risk-calculate"><i class="fas fa-calculator"></i> Hitung Risiko</button>
+        <button id="mmResetBtn" class="btn-risk-reset"><i class="fas fa-undo-alt"></i> Reset</button>
+      </div>
+      <div id="mmResults" class="risk-result" style="display: none;">
+        <div class="risk-result-title">
+          <i class="fas fa-chart-pie"></i>
+          <span>Hasil Kalkulasi Risiko</span>
+        </div>
+        <div class="risk-result-grid">
+          <div class="risk-metric">
+            <div class="risk-metric-icon"><i class="fas fa-layer-group"></i></div>
+            <div class="risk-metric-label">Max Open Posisi</div>
+            <div class="risk-metric-value" id="mmMaxPositions">—</div>
+          </div>
+          <div class="risk-metric">
+            <div class="risk-metric-icon"><i class="fas fa-chart-line"></i></div>
+            <div class="risk-metric-label">Target Profit Harian</div>
+            <div class="risk-metric-value positive" id="mmDailyProfit">—</div>
+          </div>
+          <div class="risk-metric">
+            <div class="risk-metric-icon"><i class="fas fa-exclamation-triangle"></i></div>
+            <div class="risk-metric-label">Max Loss Harian</div>
+            <div class="risk-metric-value negative" id="mmDailyLoss">—</div>
+          </div>
+          <div class="risk-metric">
+            <div class="risk-metric-icon"><i class="fas fa-chart-simple"></i></div>
+            <div class="risk-metric-label">Proyeksi 30 Hari</div>
+            <div class="risk-metric-value positive" id="mm30DaysProfit">—</div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -731,7 +1274,7 @@ body::before {
 </div>
 
 <!-- CHART BUTTON -->
-<div class="chart-float-btn"><button id="toggleChartBtn"><i class="fas fa-chart-line mr-2"></i> Buka Chart</button></div>
+<div class="chart-float-btn"><button id="toggleChartBtn"><i class="fas fa-chart-line mr-2"></i> Buka Chart Lanjutan</button></div>
 <div id="chartContainer" class="chart-container-modern"><div class="tradingview-widget-container h-full"><div id="tradingview_chart" class="h-full"></div></div></div>
 
 <!-- LOADING OVERLAY -->
@@ -742,7 +1285,7 @@ body::before {
   <div class="loading-text" id="loadingMessage">Mengambil data pasar...</div>
 </div>
 
-<!-- FOOTER (tidak fixed) -->
+<!-- FOOTER -->
 <footer class="footer-premium">
   <div class="footer-content">
     <div class="license-badge"><i class="fas fa-shield-alt"></i><span>Lisensi: AI-TB/2025/001</span></div>
@@ -756,7 +1299,7 @@ body::before {
 <div id="paymentStep2" style="display:none;"><p class="text-sm text-gray-300 mb-4">Masukkan detail pembayaran Anda untuk verifikasi</p><div class="mb-3"><label class="text-xs text-gray-400 block mb-1">Alamat Email</label><input type="email" id="userEmail" class="input-modern" placeholder="anda@email.com"></div><div class="mb-3"><label class="text-xs text-gray-400 block mb-1">Sumber Dana</label><select id="sourceFund" class="select-modern"><option value="">Pilih Bank / Wallet</option><option value="BCA">BCA</option><option value="Mandiri">Mandiri</option><option value="BNI">BNI</option><option value="BRI">BRI</option><option value="CIMB Niaga">CIMB Niaga</option><option value="OVO">OVO</option><option value="GoPay">GoPay</option><option value="DANA">DANA</option><option value="ShopeePay">ShopeePay</option></select></div><div class="mb-3"><label class="text-xs text-gray-400 block mb-1">Nomor Transaksi / Referensi</label><input type="text" id="transactionNo" class="input-modern" placeholder="Contoh: TRX20250404001"></div><div class="mb-3"><label class="text-xs text-gray-400 block mb-1">RRN (Request Reference Number)</label><input type="text" id="rrn" class="input-modern" placeholder="Contoh: 123456789012"></div><div class="mb-4"><label class="text-xs text-gray-400 block mb-2">Panduan Transaksi</label><div class="flex gap-2 justify-center flex-wrap"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiCKtWd3W2whyxbomxiajeZpHzatXj-gWdTclEhmTJvKXTlrmdXlwFsIrncxfP6miDfZaGbqmjvETaw9JOQyUXjFazkNaggnaWbz_9uu9hOAgGGvOvw02QE34i1fPiMXuztCe6pU2mB6oEh6QtIFscRji68s93WJJAfhKpQUZ2MOD68yRYUmrDrSSQlGoqx/s1280/IMG-20260404-WA0007.jpg" class="h-24 rounded-lg border border-gray-700 cursor-pointer hover:opacity-80" onclick="window.open(this.src)"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgxk9soM4YJW0TqcDDhhSftpNPOfhRw4-csdOPvHQWlMKrF5P2Mx6Qbimx1CFR_O5AVZJEoYAGgT-1tB_LVl5JYPB95Ha3MlFPqQd9C8wVziuHcpf8met34IG4FshjHJ_o_kdGyZOU-lhsT2BhlsCnI1fMbZnlQJsp8qQ2t0-B_PRHYxxJ69Zi4EaSUOoMO/s934/IMG-20260404-WA0008.jpg" class="h-24 rounded-lg border border-gray-700 cursor-pointer hover:opacity-80" onclick="window.open(this.src)"></div></div><div class="flex flex-col gap-2"><button id="submitPaymentBtn" class="btn-modern-primary flex items-center justify-center gap-2"><i class="fas fa-check-double"></i> Konfirmasi Pembayaran</button><button id="backToQRBtn" class="btn-modern-danger" style="background:#475569;">Kembali ke QR Code</button></div></div></div></div>
 
 <script>
-// ==================== KONFIGURASI ====================
+// ==================== KONFIGURASI & LIMIT SYSTEM ====================
 const apiKey = "6b80b1aab6174949bdf77eade950c8fa";
 const intervalMap = { "1m":"1min","5m":"5min","15m":"15min","1h":"1h","4h":"4h","1d":"1day" };
 const tvIntervalMap = { "1m":"1","5m":"5","15m":"15","1h":"60","4h":"240","1d":"D" };
@@ -764,7 +1307,6 @@ const HARGA_PER_LIMIT = 8499;
 const MAKSIMAL_BELI = 10;
 const LIMIT_AWAL_FREE = 13;
 
-// Struktur data limit (real, disimpan di localStorage)
 let freeInitial = LIMIT_AWAL_FREE;
 let paid = 0;
 let dailyFree = 0;
@@ -800,44 +1342,39 @@ function loadLimitData() {
 
 function saveLimitData() {
   const userId = localStorage.getItem('userId');
-  localStorage.setItem(`limitData_${userId}`, JSON.stringify({
-    freeInitial, paid, dailyFree, lastDailyDate
-  }));
+  localStorage.setItem(`limitData_${userId}`, JSON.stringify({ freeInitial, paid, dailyFree, lastDailyDate }));
 }
 
-function getTotalLimit() {
-  return freeInitial + paid + dailyFree;
-}
+function getTotalLimit() { return freeInitial + paid + dailyFree; }
+function getUsedTotal() { return (LIMIT_AWAL_FREE + paid + dailyFree) - getTotalLimit(); }
 
 function useLimit() {
-  if (paid > 0) {
-    paid--;
-  } else if (dailyFree > 0) {
-    dailyFree--;
-  } else if (freeInitial > 0) {
-    freeInitial--;
-  } else {
-    return false;
-  }
+  if (paid > 0) { paid--; }
+  else if (dailyFree > 0) { dailyFree--; }
+  else if (freeInitial > 0) { freeInitial--; }
+  else { return false; }
   saveLimitData();
   updateQuotaUI();
   return true;
 }
 
-function addPaidLimit(amount) {
-  paid += amount;
-  saveLimitData();
-  updateQuotaUI();
-}
+function addPaidLimit(amount) { paid += amount; saveLimitData(); updateQuotaUI(); }
 
 function updateQuotaUI() {
   const total = getTotalLimit();
+  const totalLimitOverall = LIMIT_AWAL_FREE + paid + dailyFree;
+  const used = totalLimitOverall - total;
+  const percent = (used / totalLimitOverall) * 100;
   document.getElementById('quotaDisplay').innerText = total;
+  document.getElementById('totalQuota').innerText = totalLimitOverall;
+  document.getElementById('usedQuota').innerText = used;
+  document.getElementById('purchasedQuota').innerText = paid;
+  document.getElementById('quotaProgress').style.width = percent + '%';
+  document.getElementById('usagePercent').innerText = Math.round(percent) + '%';
   const analyzeBtn = document.getElementById('analyzeBtn');
   if (analyzeBtn) analyzeBtn.disabled = (total <= 0);
 }
 
-// ==================== FUNGSI LAIN ====================
 function showToast(message, isError = false) {
   const toast = document.createElement('div');
   toast.className = 'toast-modern';
@@ -847,6 +1384,23 @@ function showToast(message, isError = false) {
   setTimeout(() => toast.remove(), 3000);
 }
 
+// ==================== FUNGSI FORMAT RUPIAH (PEMISAH TITIK) ====================
+function formatNumberWithDots(number) {
+  return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+}
+function parseNumberFromDots(formatted) {
+  return parseInt(formatted.replace(/\./g, ""), 10);
+}
+// Event listener untuk input modal awal
+document.getElementById('mmCapital').addEventListener('input', function(e) {
+  let raw = this.value.replace(/\./g, "");
+  if (raw === "") raw = "0";
+  let number = parseInt(raw, 10);
+  if (isNaN(number)) number = 0;
+  this.value = formatNumberWithDots(number);
+});
+
+// ==================== LOADING ANIMATION ====================
 let loadingInterval = null;
 function startLoadingAnimation() {
   const overlay = document.getElementById('loadingOverlay');
@@ -883,18 +1437,13 @@ function startLoadingAnimation() {
       candle.style.height = height + 'px';
       candle.style.background = Math.random() > 0.5 ? '#22c55e' : '#ef4444';
     });
-    if (progress >= 100) {
-      clearInterval(loadingInterval);
-      loadingInterval = null;
-    }
+    if (progress >= 100) { clearInterval(loadingInterval); loadingInterval = null; }
   }, 200);
   const msgInterval = setInterval(() => {
     if (!overlay.classList.contains('hidden')) {
       messageSpan.innerText = steps[stepIndex % steps.length];
       stepIndex++;
-    } else {
-      clearInterval(msgInterval);
-    }
+    } else { clearInterval(msgInterval); }
   }, 1200);
 }
 
@@ -903,7 +1452,7 @@ function stopLoadingAnimation() {
   document.getElementById('loadingOverlay').classList.add('hidden');
 }
 
-// ==================== FUNGSI ANALISIS (REAL API) ====================
+// ==================== ANALISIS (REAL API) ====================
 async function fetchOHLC(pair, interval, output_size=100) {
   const symbol = pair.replace("/","/");
   const url = `https://api.twelvedata.com/time_series?symbol=${encodeURIComponent(symbol)}&interval=${interval}&outputsize=${output_size}&apikey=${apiKey}`;
@@ -928,7 +1477,6 @@ function updateSignalResult(finalSignal, winrate, levels){
   else{ badge.className='signal-badge-premium signal-wait-premium'; badge.innerHTML='<i class="fas fa-clock"></i> TUNGGU'; }
   let style='Scalping'; if(winrate>=60) style='Swing'; else if(winrate>=45) style='Day Trading'; document.getElementById('tradingStyleText').innerHTML=style;
 }
-
 async function fetchRealTimeMarketCondition() {
   const pair = document.getElementById('pair').value;
   const tf = "15min";
@@ -948,58 +1496,34 @@ async function fetchRealTimeMarketCondition() {
   } catch(e) { console.warn(e); }
   return "Sideways";
 }
-
 function updateTrendDisplay(trend) {
   const container = document.getElementById('trendContainer');
   const displayDiv = document.getElementById('trendDisplay');
   const textSpan = document.getElementById('trendTextSimple');
   displayDiv.classList.remove('trend-bullish', 'trend-bearish', 'trend-sideways');
-  if (trend === 'Bullish') {
-    displayDiv.classList.add('trend-bullish');
-    textSpan.innerHTML = '<i class="fas fa-arrow-up"></i> BULLISH';
-  } else if (trend === 'Bearish') {
-    displayDiv.classList.add('trend-bearish');
-    textSpan.innerHTML = '<i class="fas fa-arrow-down"></i> BEARISH';
-  } else {
-    displayDiv.classList.add('trend-sideways');
-    textSpan.innerHTML = '<i class="fas fa-minus"></i> SIDEWAYS';
-  }
+  if (trend === 'Bullish') { displayDiv.classList.add('trend-bullish'); textSpan.innerHTML = '<i class="fas fa-arrow-up"></i> BULLISH'; }
+  else if (trend === 'Bearish') { displayDiv.classList.add('trend-bearish'); textSpan.innerHTML = '<i class="fas fa-arrow-down"></i> BEARISH'; }
+  else { displayDiv.classList.add('trend-sideways'); textSpan.innerHTML = '<i class="fas fa-minus"></i> SIDEWAYS'; }
   if (container.style.display === 'none') container.style.display = 'block';
 }
-
 async function runAnalysis(){
   if (getTotalLimit() <= 0) {
     showToast('Limit habis! Beli limit atau tunggu besok untuk limit harian.', true);
-    Swal.fire({
-      title: 'Limit Habis',
-      html: `Anda tidak memiliki limit.<br>Dapatkan limit gratis harian besok atau beli sekarang.<br>Harga: <strong class="text-orange-400">Rp${HARGA_PER_LIMIT.toLocaleString()}/limit</strong>`,
-      icon: 'warning',
-      confirmButtonText: 'Beli Limit',
-      background: '#1e293b',
-      confirmButtonColor: '#22c55e'
-    }).then(() => document.getElementById('buyQuotaBtn').click());
+    Swal.fire({ title: 'Limit Habis', html: `Anda tidak memiliki limit.<br>Dapatkan limit gratis harian besok atau beli sekarang.<br>Harga: <strong class="text-orange-400">Rp${HARGA_PER_LIMIT.toLocaleString()}/limit</strong>`, icon: 'warning', confirmButtonText: 'Beli Limit', background: '#1e293b', confirmButtonColor: '#22c55e' }).then(() => document.getElementById('buyQuotaBtn').click());
     return;
   }
-  
   const pair = document.getElementById('pair').value;
   const tf = document.getElementById('timeframe').value;
   const apiInterval = intervalMap[tf] || "15min";
-  
   document.getElementById('signalCard').style.display = 'none';
   document.getElementById('loadingOverlay').classList.remove('hidden');
   startLoadingAnimation();
   document.getElementById('dataStatus').innerHTML = '<div class="w-2 h-2 rounded-full bg-yellow-500 animate-pulse mr-2"></div><span>Menganalisa...</span>';
-  
   try {
     const ohlc = await fetchOHLC(pair, apiInterval, 200);
     if (!ohlc || ohlc.length < 10) throw new Error("Data tidak cukup");
-    
     if (!useLimit()) throw new Error("Gagal menggunakan limit");
-    
-    const smc = analyzeSMC(ohlc);
-    const crt = analyzeCRT(ohlc);
-    const ict = analyzeICT(ohlc);
-    const vol = analyzeVolume(ohlc);
+    const smc = analyzeSMC(ohlc), crt = analyzeCRT(ohlc), ict = analyzeICT(ohlc), vol = analyzeVolume(ohlc);
     const votes = [smc, crt, ict, vol];
     const buyCount = votes.filter(v => v === "BELI").length;
     const sellCount = votes.filter(v => v === "JUAL").length;
@@ -1009,27 +1533,45 @@ async function runAnalysis(){
     const winrate = calculateWinrate(ohlc);
     const levels = getLevelPoints(ohlc);
     updateSignalResult(finalSignal, winrate, levels);
-    
     const marketTrend = await fetchRealTimeMarketCondition();
     updateTrendDisplay(marketTrend);
-    
     document.getElementById('signalCard').style.display = 'block';
     document.getElementById('dataStatus').innerHTML = `<div class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse mr-2"></div><span>Analisa selesai | Sisa limit: ${getTotalLimit()}</span>`;
     showToast(`Analisa berhasil! Sisa limit: ${getTotalLimit()}`);
-  } catch(e) {
-    showToast('Gagal: ' + e.message, true);
-    document.getElementById('dataStatus').innerHTML = '<div class="w-2 h-2 rounded-full bg-red-500 animate-pulse mr-2"></div><span>Gagal ambil data</span>';
-  } finally {
-    stopLoadingAnimation();
-  }
+  } catch(e) { showToast('Gagal: ' + e.message, true); document.getElementById('dataStatus').innerHTML = '<div class="w-2 h-2 rounded-full bg-red-500 animate-pulse mr-2"></div><span>Gagal ambil data</span>'; }
+  finally { stopLoadingAnimation(); }
 }
 
-// ==================== MONEY MANAGEMENT ====================
-function formatRupiahShort(num){ if(num>=1e6) return 'Rp'+(num/1e6).toFixed(1)+'M'; if(num>=1e3) return 'Rp'+(num/1e3).toFixed(0)+'K'; return 'Rp'+num.toLocaleString('id-ID'); }
-function calculateMM(){ const capital=parseFloat(document.getElementById('mmCapital').value); if(isNaN(capital)||capital<=0){ showToast('Modal valid!',true); return; } const level=document.getElementById('mmLevel').value; let riskPerTrade,maxPositions; if(level==='easy'){ riskPerTrade=0.01; maxPositions=3; }else if(level==='medium'){ riskPerTrade=0.02; maxPositions=5; }else{ riskPerTrade=0.05; maxPositions=8; } const maxLossPerPosition=capital*riskPerTrade, maxLossTotal=maxLossPerPosition*maxPositions, profitPerPosition=maxLossPerPosition*2, maxProfitTotal=profitPerPosition*maxPositions; document.getElementById('mmMaxPositions').innerHTML=`${maxPositions}`; document.getElementById('mmDailyProfit').innerHTML=formatRupiahShort(Math.round(maxProfitTotal)); document.getElementById('mmDailyLoss').innerHTML=formatRupiahShort(Math.round(maxLossTotal)); document.getElementById('mm30DaysProfit').innerHTML=formatRupiahShort(Math.round(maxProfitTotal*30)); document.getElementById('mmResults').style.display='grid'; showToast('Perhitungan risiko berhasil!'); }
-function resetMM(){ document.getElementById('mmCapital').value=''; document.getElementById('mmLevel').value='easy'; document.getElementById('mmResults').style.display='none'; showToast('Reset'); }
+// ==================== MANAJEMEN RISIKO ====================
+function formatRupiahShort(num){ if(num>=1e6) return 'Rp'+(num/1e6).toFixed(1)+'Jt'; if(num>=1e3) return 'Rp'+(num/1e3).toFixed(0)+'Rb'; return 'Rp'+num.toLocaleString('id-ID'); }
+function calculateMM(){
+  let capitalRaw = document.getElementById('mmCapital').value.replace(/\./g, "");
+  const capital = parseFloat(capitalRaw);
+  if(isNaN(capital) || capital <= 0){ showToast('Masukkan modal yang valid!', true); return; }
+  const level = document.getElementById('mmLevel').value;
+  let riskPerTrade, maxPositions;
+  if(level === 'easy'){ riskPerTrade = 0.01; maxPositions = 3; }
+  else if(level === 'medium'){ riskPerTrade = 0.02; maxPositions = 5; }
+  else{ riskPerTrade = 0.05; maxPositions = 8; }
+  const maxLossPerPosition = capital * riskPerTrade;
+  const maxLossTotal = maxLossPerPosition * maxPositions;
+  const profitPerPosition = maxLossPerPosition * 2;
+  const maxProfitTotal = profitPerPosition * maxPositions;
+  document.getElementById('mmMaxPositions').innerHTML = `${maxPositions} posisi`;
+  document.getElementById('mmDailyProfit').innerHTML = formatRupiahShort(Math.round(maxProfitTotal));
+  document.getElementById('mmDailyLoss').innerHTML = formatRupiahShort(Math.round(maxLossTotal));
+  document.getElementById('mm30DaysProfit').innerHTML = formatRupiahShort(Math.round(maxProfitTotal * 30));
+  document.getElementById('mmResults').style.display = 'block';
+  showToast('Perhitungan risiko berhasil!');
+}
+function resetMM(){
+  document.getElementById('mmCapital').value = '';
+  document.getElementById('mmLevel').value = 'easy';
+  document.getElementById('mmResults').style.display = 'none';
+  showToast('Form manajemen risiko direset');
+}
 
-// ==================== STATISTIK (SIMULASI REALISTIS) ====================
+// ==================== STATISTIK ====================
 let totalUsers=parseInt(localStorage.getItem('totalUsers'))||400, onlineUsers=parseInt(localStorage.getItem('onlineUsers'))||28, totalKeuntungan=parseInt(localStorage.getItem('totalKeuntungan'))||8200000, totalTransaksi=parseInt(localStorage.getItem('totalTransaksi'))||180;
 function updateStats(){ document.getElementById('totalUsers').innerText=totalUsers.toLocaleString(); document.getElementById('onlineUsers').innerText=onlineUsers; document.getElementById('profitTotal').innerHTML=formatRupiahShort(totalKeuntungan); document.getElementById('profitTransaksi').innerText=totalTransaksi.toLocaleString(); }
 function startStatsSimulation(){ updateStats(); setInterval(()=>{ totalUsers+=Math.floor(Math.random()*2)+1; localStorage.setItem('totalUsers',totalUsers); updateStats(); },60000); setInterval(()=>{ onlineUsers=Math.max(0,onlineUsers+(Math.floor(Math.random()*3)-1)); localStorage.setItem('onlineUsers',onlineUsers); updateStats(); },5000); setInterval(()=>{ totalKeuntungan+=Math.floor(Math.random()*30000)+5000; totalTransaksi+=1; localStorage.setItem('totalKeuntungan',totalKeuntungan); localStorage.setItem('totalTransaksi',totalTransaksi); updateStats(); },15000); }
@@ -1040,12 +1582,9 @@ function loadTradingViewChart(pair,timeframe){ try{ if(tvWidget&&typeof tvWidget
 
 // ==================== QRIS PAYMENT ====================
 function generateUniqueCode() { return Math.floor(Math.random() * 1000).toString().padStart(3, '0'); }
-let pendingQuantity = 0;
-let pendingAmount = 0;
-let generatedUniqueCode = '';
+let pendingQuantity = 0, pendingAmount = 0, generatedUniqueCode = '';
 function openPaymentModal(quantity, totalPrice) {
-  pendingQuantity = quantity;
-  pendingAmount = totalPrice;
+  pendingQuantity = quantity; pendingAmount = totalPrice;
   generatedUniqueCode = generateUniqueCode();
   const totalWithUnique = totalPrice + parseInt(generatedUniqueCode);
   document.getElementById('totalPayment').innerHTML = 'Rp' + totalWithUnique.toLocaleString('id-ID');
@@ -1058,119 +1597,48 @@ function openPaymentModal(quantity, totalPrice) {
   document.getElementById('paymentStep2').style.display = 'none';
   document.getElementById('qrisModal').classList.add('show');
 }
-
 document.getElementById('buyQuotaBtn').addEventListener('click', async () => {
   const maxCanBuy = MAKSIMAL_BELI - paid;
   if (maxCanBuy <= 0) { showToast('Maksimal pembelian 10 limit!', true); return; }
   const { value: amount } = await Swal.fire({
     title: '<div style="font-size:1.5rem;"><i class="fas fa-shopping-cart" style="color:#22c55e;"></i> Beli Limit Analisa</div>',
-    html: `
-      <div class="text-left">
-        <div style="background: linear-gradient(135deg,#1e293b,#0f172a); padding:1.25rem; border-radius:1rem; margin-bottom:1rem; border:1px solid #22c55e;">
-          <div class="flex justify-between"><span class="text-gray-400 text-xs">Harga per Limit</span><span class="text-orange-400 text-xl font-bold">Rp${HARGA_PER_LIMIT.toLocaleString()}</span></div>
-          <div class="h-px bg-gradient-to-r from-emerald-500 to-blue-500 my-2"></div>
-          <div class="flex justify-between"><span class="text-gray-400 text-xs">Sisa yang Bisa Dibeli</span><span class="text-emerald-400 text-lg font-bold">${maxCanBuy} Limit</span></div>
-          <div class="h-px bg-gray-700 my-2"></div>
-          <div class="flex justify-between"><span class="text-gray-400 text-xs">Total Limit Saat Ini</span><span class="text-blue-400 text-lg font-bold">${getTotalLimit()} Limit</span></div>
-        </div>
-        <div style="background:#0f172a; border-radius:1rem; padding:1rem; margin-bottom:1rem;">
-          <div class="flex items-center gap-2 mb-3"><i class="fas fa-chart-line text-emerald-400"></i><span class="text-gray-300">Jumlah Limit</span></div>
-          <div class="flex items-center justify-center gap-3">
-            <button type="button" id="decrementQty" style="background:#1e293b; border:1px solid #22c55e; border-radius:8px; width:36px; height:36px; color:white;">−</button>
-            <input type="number" id="swal-input1" class="swal2-input" min="1" max="${maxCanBuy}" value="1" style="width:100px; text-align:center; background:#1e293b; border:1px solid #334155; border-radius:8px; color:white; padding:8px;">
-            <button type="button" id="incrementQty" style="background:#1e293b; border:1px solid #22c55e; border-radius:8px; width:36px; height:36px; color:white;">+</button>
-          </div>
-        </div>
-        <div style="background:linear-gradient(135deg,#22c55e20,#3b82f620); padding:1rem; border-radius:1rem; text-align:center;">
-          <span class="text-gray-400 text-xs">Total yang harus dibayar</span>
-          <div id="previewTotal" class="text-orange-400 text-2xl font-bold">Rp${HARGA_PER_LIMIT.toLocaleString()}</div>
-          <span class="text-gray-500 text-xs">* +3 digit kode unik nantinya</span>
-        </div>
-      </div>
-    `,
-    focusConfirm: false,
-    showCancelButton: true,
-    confirmButtonText: '<i class="fas fa-qrcode"></i> Lanjut ke QRIS',
-    cancelButtonText: 'Batal',
-    background: '#1e293b',
-    color: '#fff',
-    confirmButtonColor: '#22c55e',
+    html: `<div class="text-left"><div style="background: linear-gradient(135deg,#1e293b,#0f172a); padding:1.25rem; border-radius:1rem; margin-bottom:1rem; border:1px solid #22c55e;"><div class="flex justify-between"><span class="text-gray-400 text-xs">Harga per Limit</span><span class="text-orange-400 text-xl font-bold">Rp${HARGA_PER_LIMIT.toLocaleString()}</span></div><div class="h-px bg-gradient-to-r from-emerald-500 to-blue-500 my-2"></div><div class="flex justify-between"><span class="text-gray-400 text-xs">Sisa yang Bisa Dibeli</span><span class="text-emerald-400 text-lg font-bold">${maxCanBuy} Limit</span></div><div class="h-px bg-gray-700 my-2"></div><div class="flex justify-between"><span class="text-gray-400 text-xs">Total Limit Saat Ini</span><span class="text-blue-400 text-lg font-bold">${getTotalLimit()} Limit</span></div></div><div style="background:#0f172a; border-radius:1rem; padding:1rem; margin-bottom:1rem;"><div class="flex items-center gap-2 mb-3"><i class="fas fa-chart-line text-emerald-400"></i><span class="text-gray-300">Jumlah Limit</span></div><div class="flex items-center justify-center gap-3"><button type="button" id="decrementQty" style="background:#1e293b; border:1px solid #22c55e; border-radius:8px; width:36px; height:36px; color:white;">−</button><input type="number" id="swal-input1" class="swal2-input" min="1" max="${maxCanBuy}" value="1" style="width:100px; text-align:center; background:#1e293b; border:1px solid #334155; border-radius:8px; color:white; padding:8px;"><button type="button" id="incrementQty" style="background:#1e293b; border:1px solid #22c55e; border-radius:8px; width:36px; height:36px; color:white;">+</button></div></div><div style="background:linear-gradient(135deg,#22c55e20,#3b82f620); padding:1rem; border-radius:1rem; text-align:center;"><span class="text-gray-400 text-xs">Total yang harus dibayar</span><div id="previewTotal" class="text-orange-400 text-2xl font-bold">Rp${HARGA_PER_LIMIT.toLocaleString()}</div><span class="text-gray-500 text-xs">* +3 digit kode unik nantinya</span></div></div>`,
+    focusConfirm: false, showCancelButton: true, confirmButtonText: '<i class="fas fa-qrcode"></i> Lanjut ke QRIS', cancelButtonText: 'Batal',
+    background: '#1e293b', color: '#fff', confirmButtonColor: '#22c55e',
     didOpen: () => {
       const qtyInput = document.getElementById('swal-input1');
       const decrement = document.getElementById('decrementQty');
       const increment = document.getElementById('incrementQty');
       const preview = document.getElementById('previewTotal');
       const maxVal = maxCanBuy;
-      const update = () => {
-        let val = parseInt(qtyInput.value);
-        if (isNaN(val)) val = 1;
-        if (val < 1) val = 1;
-        if (val > maxVal) val = maxVal;
-        qtyInput.value = val;
-        preview.innerText = 'Rp' + (val * HARGA_PER_LIMIT).toLocaleString('id-ID');
-      };
+      const update = () => { let val = parseInt(qtyInput.value); if (isNaN(val)) val = 1; if (val < 1) val = 1; if (val > maxVal) val = maxVal; qtyInput.value = val; preview.innerText = 'Rp' + (val * HARGA_PER_LIMIT).toLocaleString('id-ID'); };
       decrement.onclick = () => { let v = parseInt(qtyInput.value); if (v > 1) qtyInput.value = v-1; update(); };
       increment.onclick = () => { let v = parseInt(qtyInput.value); if (v < maxVal) qtyInput.value = v+1; update(); };
-      qtyInput.oninput = update;
-      update();
+      qtyInput.oninput = update; update();
     },
-    preConfirm: () => {
-      const amount = parseInt(document.getElementById('swal-input1').value);
-      if (isNaN(amount) || amount < 1 || amount > maxCanBuy) {
-        Swal.showValidationMessage(`Masukkan 1-${maxCanBuy}`);
-        return false;
-      }
-      return amount;
-    }
+    preConfirm: () => { const amount = parseInt(document.getElementById('swal-input1').value); if (isNaN(amount) || amount < 1 || amount > maxCanBuy) { Swal.showValidationMessage(`Masukkan 1-${maxCanBuy}`); return false; } return amount; }
   });
   if (amount) openPaymentModal(amount, amount * HARGA_PER_LIMIT);
 });
-
 document.getElementById('nextToConfirmationBtn').onclick = () => { document.getElementById('paymentStep1').style.display='none'; document.getElementById('paymentStep2').style.display='block'; };
 document.getElementById('backToQRBtn').onclick = () => { document.getElementById('paymentStep2').style.display='none'; document.getElementById('paymentStep1').style.display='block'; };
 document.getElementById('closeModalBtn').onclick = () => { document.getElementById('qrisModal').classList.remove('show'); };
 document.getElementById('submitPaymentBtn').onclick = async () => {
-  const email = document.getElementById('userEmail').value;
-  const sourceFund = document.getElementById('sourceFund').value;
-  const transactionNo = document.getElementById('transactionNo').value;
-  const rrn = document.getElementById('rrn').value;
+  const email = document.getElementById('userEmail').value, sourceFund = document.getElementById('sourceFund').value, transactionNo = document.getElementById('transactionNo').value, rrn = document.getElementById('rrn').value;
   if (!email || !sourceFund || !transactionNo || !rrn) { showToast('Harap isi semua field!', true); return; }
   Swal.fire({ title: 'Memverifikasi...', timer: 2000, timerProgressBar: true, showConfirmButton: false, background:'#1e293b', didOpen:()=>Swal.showLoading() });
-  setTimeout(() => {
-    addPaidLimit(pendingQuantity);
-    document.getElementById('qrisModal').classList.remove('show');
-    Swal.fire({ title: '<i class="fas fa-check-circle" style="color:#22c55e"></i><br>Berhasil!', html: `Anda membeli ${pendingQuantity} limit.<br>Total limit: ${getTotalLimit()}`, icon:'success', confirmButtonText:'OK', background:'#1e293b', color:'#fff' });
-    showToast(`Berhasil membeli ${pendingQuantity} limit!`);
-  }, 2000);
+  setTimeout(() => { addPaidLimit(pendingQuantity); document.getElementById('qrisModal').classList.remove('show'); Swal.fire({ title: '<i class="fas fa-check-circle" style="color:#22c55e"></i><br>Berhasil!', html: `Anda membeli ${pendingQuantity} limit.<br>Total limit: ${getTotalLimit()}`, icon:'success', confirmButtonText:'OK', background:'#1e293b', color:'#fff' }); showToast(`Berhasil membeli ${pendingQuantity} limit!`); }, 2000);
 };
 
 // ==================== INIT ====================
 document.addEventListener('DOMContentLoaded', () => {
-  loadLimitData();
-  startStatsSimulation();
-  document.getElementById('trendContainer').style.display = 'none';
-  updateQuotaUI();
-  
+  loadLimitData(); startStatsSimulation(); document.getElementById('trendContainer').style.display = 'none'; updateQuotaUI();
   document.getElementById('analyzeBtn').onclick = runAnalysis;
-  document.getElementById('resetAnalysisBtn').onclick = () => {
-    document.getElementById('pair').value = 'XAU/USD';
-    document.getElementById('timeframe').value = '15m';
-    document.getElementById('signalCard').style.display = 'none';
-    document.getElementById('dataStatus').innerHTML = '<div class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse mr-2"></div><span>Siap analisa</span>';
-    loadLimitData();
-    updateQuotaUI();
-    showToast('Reset berhasil!');
-  };
+  document.getElementById('resetAnalysisBtn').onclick = () => { document.getElementById('pair').value = 'XAU/USD'; document.getElementById('timeframe').value = '15m'; document.getElementById('signalCard').style.display = 'none'; document.getElementById('dataStatus').innerHTML = '<div class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse mr-2"></div><span>Siap analisa</span>'; loadLimitData(); updateQuotaUI(); showToast('Reset berhasil!'); };
   document.getElementById('mmCalculateBtn').onclick = calculateMM;
   document.getElementById('mmResetBtn').onclick = resetMM;
-  
-  const toggleBtn = document.getElementById('toggleChartBtn');
-  const chartCont = document.getElementById('chartContainer');
-  toggleBtn.onclick = () => {
-    chartCont.classList.toggle('show');
-    toggleBtn.innerHTML = chartCont.classList.contains('show') ? '<i class="fas fa-times mr-2"></i> Tutup Chart' : '<i class="fas fa-chart-line mr-2"></i> Buka Chart';
-    if (chartCont.classList.contains('show')) loadTradingViewChart(document.getElementById('pair').value, document.getElementById('timeframe').value);
-  };
+  const toggleBtn = document.getElementById('toggleChartBtn'), chartCont = document.getElementById('chartContainer');
+  toggleBtn.onclick = () => { chartCont.classList.toggle('show'); toggleBtn.innerHTML = chartCont.classList.contains('show') ? '<i class="fas fa-times mr-2"></i> Tutup Chart' : '<i class="fas fa-chart-line mr-2"></i> Buka Chart'; if (chartCont.classList.contains('show')) loadTradingViewChart(document.getElementById('pair').value, document.getElementById('timeframe').value); };
   document.getElementById('pair').onchange = () => { if (chartCont.classList.contains('show')) loadTradingViewChart(document.getElementById('pair').value, document.getElementById('timeframe').value); };
   document.getElementById('timeframe').onchange = () => { if (chartCont.classList.contains('show')) loadTradingViewChart(document.getElementById('pair').value, document.getElementById('timeframe').value); };
 });
