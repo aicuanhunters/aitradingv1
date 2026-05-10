@@ -1099,7 +1099,7 @@ body::before {
     <div class="quota-icon"><i class="fas fa-chart-line"></i></div>
     <div>
       <div class="quota-title">Sisa Limit Premium</div>
-      <div class="quota-value" id="quotaDisplay">13</div>
+      <div class="quota-value" id="quotaDisplay">5</div>
     </div>
   </div>
   <div class="quota-progress">
@@ -1109,7 +1109,7 @@ body::before {
     </div>
   </div>
   <div class="quota-stats">
-    <div class="quota-stat-item"><div class="quota-stat-label">Total Limit</div><div class="quota-stat-number" id="totalQuota">13</div></div>
+    <div class="quota-stat-item"><div class="quota-stat-label">Total Limit</div><div class="quota-stat-number" id="totalQuota">5</div></div>
     <div class="quota-stat-item"><div class="quota-stat-label">Terpakai</div><div class="quota-stat-number" id="usedQuota">0</div></div>
     <div class="quota-stat-item"><div class="quota-stat-label">Dibeli</div><div class="quota-stat-number" id="purchasedQuota">0</div></div>
   </div>
@@ -1305,7 +1305,7 @@ const intervalMap = { "1m":"1min","5m":"5min","15m":"15min","1h":"1h","4h":"4h",
 const tvIntervalMap = { "1m":"1","5m":"5","15m":"15","1h":"60","4h":"240","1d":"D" };
 const HARGA_PER_LIMIT = 8499;
 const MAKSIMAL_BELI = 10;
-const LIMIT_AWAL_FREE = 13;
+const LIMIT_AWAL_FREE = 5; // <========== UBAH DARI 13 MENJADI 5
 
 let freeInitial = LIMIT_AWAL_FREE;
 let paid = 0;
@@ -1364,7 +1364,7 @@ function updateQuotaUI() {
   const total = getTotalLimit();
   const totalLimitOverall = LIMIT_AWAL_FREE + paid + dailyFree;
   const used = totalLimitOverall - total;
-  const percent = (used / totalLimitOverall) * 100;
+  const percent = totalLimitOverall > 0 ? (used / totalLimitOverall) * 100 : 0;
   document.getElementById('quotaDisplay').innerText = total;
   document.getElementById('totalQuota').innerText = totalLimitOverall;
   document.getElementById('usedQuota').innerText = used;
@@ -1392,13 +1392,16 @@ function parseNumberFromDots(formatted) {
   return parseInt(formatted.replace(/\./g, ""), 10);
 }
 // Event listener untuk input modal awal
-document.getElementById('mmCapital').addEventListener('input', function(e) {
-  let raw = this.value.replace(/\./g, "");
-  if (raw === "") raw = "0";
-  let number = parseInt(raw, 10);
-  if (isNaN(number)) number = 0;
-  this.value = formatNumberWithDots(number);
-});
+const mmCapitalInput = document.getElementById('mmCapital');
+if (mmCapitalInput) {
+  mmCapitalInput.addEventListener('input', function(e) {
+    let raw = this.value.replace(/\./g, "");
+    if (raw === "") raw = "0";
+    let number = parseInt(raw, 10);
+    if (isNaN(number)) number = 0;
+    this.value = formatNumberWithDots(number);
+  });
+}
 
 // ==================== LOADING ANIMATION ====================
 let loadingInterval = null;
