@@ -166,7 +166,6 @@ body::before {
   margin-left: 0.25rem;
 }
 
-/* Responsive header */
 @media (max-width: 768px) {
   .header-container { flex-direction: column; gap: 0.5rem; }
   .logo-area { justify-content: center; }
@@ -233,7 +232,7 @@ body::before {
   box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.5);
 }
 
-/* ==================== QUOTA CARD MODERN & CANGGIH ==================== */
+/* ==================== QUOTA CARD MODERN ==================== */
 .quota-modern {
   background: linear-gradient(145deg, #1e293b, #0f172a);
   border-radius: 1.5rem;
@@ -565,7 +564,7 @@ body::before {
   background: linear-gradient(135deg, #64748b, #475569);
 }
 
-/* ==================== SIGNAL CARD (Rekomendasi Entry) ==================== */
+/* ==================== SIGNAL CARD ==================== */
 .signal-premium {
   background: linear-gradient(145deg, #1e293b, #0f172a);
   border-radius: 1.5rem;
@@ -914,52 +913,389 @@ body::before {
   margin-top: 0.5rem;
 }
 
-/* Modal */
-.modal-modern {
+/* ==================== MODAL PEMBELIAN LIMIT SUPER MODERN ==================== */
+/* Modal Container */
+.modern-modal {
   display: none;
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0,0,0,0.95);
-  backdrop-filter: blur(20px);
+  background: rgba(0, 0, 0, 0.97);
+  backdrop-filter: blur(24px);
   z-index: 10001;
   overflow-y: auto;
   padding: 1rem;
 }
-.modal-modern.show { display: flex; align-items: center; justify-content: center; }
-.modal-content-modern {
+.modern-modal.show { display: flex; align-items: center; justify-content: center; }
+
+/* Modal Inner */
+.modern-modal-content {
   max-width: 550px;
   width: 100%;
   background: linear-gradient(145deg, #1e293b, #0f172a);
-  border-radius: 1.5rem;
-  padding: 1.5rem;
+  border-radius: 2rem;
   border: 1px solid rgba(34,197,94,0.3);
+  overflow: hidden;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  animation: modalSlideUp 0.4s ease;
 }
-.qris-container-modern {
+@keyframes modalSlideUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Modal Header */
+.modern-modal-header {
+  padding: 1.5rem;
+  background: linear-gradient(135deg, #22c55e15, #3b82f615);
+  border-bottom: 1px solid rgba(34,197,94,0.2);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.modern-modal-header h2 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, #22c55e, #3b82f6);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.modern-modal-close {
+  width: 36px;
+  height: 36px;
+  background: rgba(255,255,255,0.05);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s;
+  border: 1px solid rgba(255,255,255,0.1);
+}
+.modern-modal-close:hover {
+  background: rgba(239,68,68,0.2);
+  border-color: #ef4444;
+  transform: rotate(90deg);
+}
+
+/* Step Progress */
+.step-progress {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  padding: 1.25rem 1.5rem;
+  background: rgba(0,0,0,0.2);
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+.step-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.75rem;
+  color: #64748b;
+}
+.step-item.active {
+  color: #22c55e;
+}
+.step-number {
+  width: 28px;
+  height: 28px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+.step-item.active .step-number {
+  background: #22c55e;
+  color: white;
+  box-shadow: 0 0 15px rgba(34,197,94,0.4);
+}
+.step-item.completed .step-number {
+  background: #22c55e;
+  color: white;
+}
+
+/* Quantity Selector Premium */
+.quantity-selector-premium {
+  background: linear-gradient(145deg, #0f172a, #0a0f1e);
+  border-radius: 1.25rem;
+  padding: 1.25rem;
+  margin: 1.25rem 1.5rem;
+  border: 1px solid rgba(34,197,94,0.2);
+  text-align: center;
+}
+.quantity-label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: #94a3b8;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+.quantity-control {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+}
+.quantity-btn {
+  width: 48px;
+  height: 48px;
+  background: #1e293b;
+  border: 1px solid #334155;
+  border-radius: 1rem;
+  color: white;
+  font-size: 1.5rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.quantity-btn:hover {
+  border-color: #22c55e;
+  background: rgba(34,197,94,0.1);
+  transform: scale(1.05);
+}
+.quantity-value {
+  font-size: 2rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, #22c55e, #4ade80);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  min-width: 80px;
+  text-align: center;
+}
+
+/* Price Card */
+.price-card-premium {
+  background: linear-gradient(135deg, #1e293b, #0f172a);
+  border-radius: 1.25rem;
+  padding: 1.25rem;
+  margin: 0 1.5rem 1.25rem 1.5rem;
+  border: 1px solid rgba(34,197,94,0.2);
+}
+.price-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.6rem 0;
+  border-bottom: 1px dashed rgba(255,255,255,0.1);
+}
+.price-row:last-child {
+  border-bottom: none;
+  padding-top: 0.8rem;
+  margin-top: 0.2rem;
+}
+.price-label {
+  font-size: 0.75rem;
+  color: #94a3b8;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.price-value {
+  font-weight: 600;
+  color: white;
+}
+.price-total {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #f59e0b;
+}
+.unique-code-highlight {
+  font-family: monospace;
+  font-size: 1.1rem;
+  font-weight: 800;
+  background: rgba(245,158,11,0.15);
+  padding: 0.25rem 0.75rem;
+  border-radius: 0.5rem;
+  color: #f59e0b;
+  letter-spacing: 2px;
+}
+
+/* Form Container Modern */
+.form-container-modern {
+  padding: 0 1.5rem 1.5rem 1.5rem;
+}
+.form-group-modern {
+  margin-bottom: 1.25rem;
+}
+.form-label-modern {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: #94a3b8;
+  margin-bottom: 0.5rem;
+}
+.form-label-modern i {
+  color: #22c55e;
+  font-size: 0.75rem;
+}
+.form-input-modern {
+  width: 100%;
+  background: rgba(15, 23, 42, 0.95);
+  border: 1px solid #334155;
+  border-radius: 1rem;
+  padding: 0.875rem 1rem;
+  color: #ffffff;
+  font-size: 0.9rem;
+  transition: all 0.2s;
+}
+.form-input-modern:focus {
+  outline: none;
+  border-color: #22c55e;
+  box-shadow: 0 0 0 3px rgba(34,197,94,0.1);
+}
+.form-select-modern {
+  width: 100%;
+  background: rgba(15, 23, 42, 0.95);
+  border: 1px solid #334155;
+  border-radius: 1rem;
+  padding: 0.875rem 1rem;
+  color: #ffffff;
+  font-size: 0.9rem;
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2322c55e'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  background-size: 1rem;
+}
+.form-select-modern:focus {
+  outline: none;
+  border-color: #22c55e;
+  box-shadow: 0 0 0 3px rgba(34,197,94,0.1);
+}
+
+/* QR Container Premium */
+.qr-container-premium {
   background: linear-gradient(145deg, #0f172a, #0a0f1e);
   border-radius: 1.25rem;
   padding: 1.5rem;
+  margin: 1.25rem 1.5rem;
   text-align: center;
+  border: 1px solid rgba(34,197,94,0.25);
+  position: relative;
+  overflow: hidden;
+}
+.qr-container-premium::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #22c55e, #3b82f6, #8b5cf6);
+}
+.qr-code-wrapper {
+  background: white;
+  padding: 0.75rem;
+  border-radius: 1rem;
+  display: inline-block;
+  box-shadow: 0 0 30px rgba(34,197,94,0.2);
+  transition: transform 0.3s;
+}
+.qr-code-wrapper:hover {
+  transform: scale(1.02);
+}
+.qr-code-wrapper img {
+  width: 160px;
+  height: 160px;
+  object-fit: contain;
+}
+
+/* Guide Card */
+.guide-card {
+  background: rgba(0,0,0,0.25);
+  border-radius: 1rem;
+  padding: 1rem;
+  margin-top: 1rem;
   border: 1px solid #334155;
 }
-.qr-code-modern {
-  background: white;
-  padding: 1rem;
-  border-radius: 1.25rem;
-  display: inline-block;
+.guide-title {
+  font-size: 0.7rem;
+  color: #94a3b8;
+  margin-bottom: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
-.unique-code-modern {
-  font-family: monospace;
-  font-size: 2rem;
-  font-weight: 800;
-  color: #f59e0b;
-  background: rgba(0,0,0,0.3);
-  padding: 0.5rem 1rem;
+.guide-images {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.guide-images img {
+  height: 70px;
+  border-radius: 0.5rem;
+  border: 1px solid #334155;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.guide-images img:hover {
+  transform: scale(1.05);
+  border-color: #22c55e;
+}
+
+/* Buttons Modern */
+.btn-modern-primary {
+  background: linear-gradient(135deg, #22c55e, #16a34a);
+  border: none;
   border-radius: 1rem;
-  letter-spacing: 8px;
-  display: inline-block;
+  padding: 0.875rem;
+  font-weight: 700;
+  color: white;
+  cursor: pointer;
+  width: 100%;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+}
+.btn-modern-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px -5px rgba(34,197,94,0.4);
+}
+.btn-modern-secondary {
+  background: linear-gradient(135deg, #475569, #334155);
+  border: none;
+  border-radius: 1rem;
+  padding: 0.875rem;
+  font-weight: 700;
+  color: white;
+  cursor: pointer;
+  width: 100%;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+}
+.btn-modern-secondary:hover {
+  transform: translateY(-2px);
+  background: linear-gradient(135deg, #64748b, #475569);
 }
 
 /* Chart */
@@ -1044,7 +1380,6 @@ body::before {
   to { transform: translateX(0); opacity: 1; }
 }
 
-/* Responsive */
 @media (max-width: 768px) {
   .stats-modern { grid-template-columns: repeat(2, 1fr); }
   .quota-modern .quota-value { font-size: 2rem; }
@@ -1053,22 +1388,24 @@ body::before {
   .trading-style-card { flex-direction: column; text-align: center; }
   .signal-header { flex-direction: column; text-align: center; }
   .risk-result-grid { grid-template-columns: 1fr; }
+  .qr-code-wrapper img { width: 120px; height: 120px; }
+  .quantity-btn { width: 40px; height: 40px; }
+  .quantity-value { font-size: 1.5rem; min-width: 60px; }
+  .step-progress { gap: 1rem; }
+  .step-item span { display: none; }
 }
 .grid-responsive { display: grid; grid-template-columns: 1fr; gap: 1rem; }
 @media (min-width: 768px) { 
-  .grid-responsive-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; 
-    align-items: start; /* agar signal card di kiri tidak ikut tinggi kanan */
-  }
+  .grid-responsive-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; align-items: start; }
 }
 
-/* Spacer untuk fixed header */
 .header-spacer { height: 80px; }
 @media (max-width: 768px) { .header-spacer { height: 120px; } }
 </style>
 </head>
 <body>
 
-<!-- HEADER (logo kiri, akurasi kanan) -->
+<!-- HEADER -->
 <header class="header-premium">
   <div class="header-container">
     <div class="logo-area">
@@ -1093,12 +1430,12 @@ body::before {
   <span>Sistem Siap | Menunggu analisa</span>
 </div>
 
-<!-- QUOTA CARD MODERN & CANGGIH -->
+<!-- QUOTA CARD -->
 <div class="quota-modern mb-4">
   <div class="quota-header">
     <div class="quota-icon"><i class="fas fa-chart-line"></i></div>
     <div>
-      <div class="quota-title">Sisa Limit Premium</div>
+      <div class="quota-title">Sisa Limit</div>
       <div class="quota-value" id="quotaDisplay">5</div>
     </div>
   </div>
@@ -1143,9 +1480,8 @@ body::before {
   </div>
 </div>
 
-<!-- MESIN ANALISA (kiri) & MANAJEMEN RISIKO (kanan) dengan signal card di bawah mesin analisa -->
+<!-- MESIN ANALISA & MANAJEMEN RISIKO -->
 <div class="grid-responsive md:grid-cols-2 gap-4 mb-4">
-  <!-- Kolom Kiri: Mesin Analisa + Signal Card -->
   <div class="flex flex-col gap-4">
     <div class="analyzer-card">
       <div class="analyzer-header">
@@ -1177,7 +1513,6 @@ body::before {
         </div>
       </div>
     </div>
-    <!-- SIGNAL CARD (Rekomendasi Entry) muncul di bawah mesin analisa -->
     <div id="signalCard" class="signal-premium" style="display: none;">
       <div class="signal-header"><h3><i class="fas fa-chart-simple"></i> Rekomendasi Entry</h3><div id="signalBadge" class="signal-badge-premium signal-wait-premium"><i class="fas fa-clock"></i> TUNGGU</div></div>
       <div class="signal-body">
@@ -1191,7 +1526,6 @@ body::before {
     </div>
   </div>
 
-  <!-- Kolom Kanan: Manajemen Risiko -->
   <div class="risk-card">
     <div class="risk-header">
       <i class="fas fa-shield-alt"></i>
@@ -1218,31 +1552,12 @@ body::before {
         <button id="mmResetBtn" class="btn-risk-reset"><i class="fas fa-undo-alt"></i> Reset</button>
       </div>
       <div id="mmResults" class="risk-result" style="display: none;">
-        <div class="risk-result-title">
-          <i class="fas fa-chart-pie"></i>
-          <span>Hasil Kalkulasi Risiko</span>
-        </div>
+        <div class="risk-result-title"><i class="fas fa-chart-pie"></i><span>Hasil Kalkulasi Risiko</span></div>
         <div class="risk-result-grid">
-          <div class="risk-metric">
-            <div class="risk-metric-icon"><i class="fas fa-layer-group"></i></div>
-            <div class="risk-metric-label">Max Open Posisi</div>
-            <div class="risk-metric-value" id="mmMaxPositions">—</div>
-          </div>
-          <div class="risk-metric">
-            <div class="risk-metric-icon"><i class="fas fa-chart-line"></i></div>
-            <div class="risk-metric-label">Target Profit Harian</div>
-            <div class="risk-metric-value positive" id="mmDailyProfit">—</div>
-          </div>
-          <div class="risk-metric">
-            <div class="risk-metric-icon"><i class="fas fa-exclamation-triangle"></i></div>
-            <div class="risk-metric-label">Max Loss Harian</div>
-            <div class="risk-metric-value negative" id="mmDailyLoss">—</div>
-          </div>
-          <div class="risk-metric">
-            <div class="risk-metric-icon"><i class="fas fa-chart-simple"></i></div>
-            <div class="risk-metric-label">Proyeksi 30 Hari</div>
-            <div class="risk-metric-value positive" id="mm30DaysProfit">—</div>
-          </div>
+          <div class="risk-metric"><div class="risk-metric-icon"><i class="fas fa-layer-group"></i></div><div class="risk-metric-label">Max Open Posisi</div><div class="risk-metric-value" id="mmMaxPositions">—</div></div>
+          <div class="risk-metric"><div class="risk-metric-icon"><i class="fas fa-chart-line"></i></div><div class="risk-metric-label">Target Profit Harian</div><div class="risk-metric-value positive" id="mmDailyProfit">—</div></div>
+          <div class="risk-metric"><div class="risk-metric-icon"><i class="fas fa-exclamation-triangle"></i></div><div class="risk-metric-label">Max Loss Harian</div><div class="risk-metric-value negative" id="mmDailyLoss">—</div></div>
+          <div class="risk-metric"><div class="risk-metric-icon"><i class="fas fa-chart-simple"></i></div><div class="risk-metric-label">Proyeksi 30 Hari</div><div class="risk-metric-value positive" id="mm30DaysProfit">—</div></div>
         </div>
       </div>
     </div>
@@ -1293,86 +1608,254 @@ body::before {
   </div>
 </footer>
 
-<!-- QRIS MODAL -->
-<div id="qrisModal" class="modal-modern"><div class="modal-content-modern"><div class="flex justify-between items-center mb-4"><h3 class="font-bold text-xl flex items-center gap-2"><i class="fas fa-qrcode text-emerald-400"></i> Pembayaran QRIS</h3><button id="closeModalBtn" class="text-gray-400 hover:text-white text-2xl">&times;</button></div>
-<div id="paymentStep1"><div class="qris-container-modern"><p class="text-sm text-gray-300 mb-3">Scan QR Code di bawah untuk melakukan pembayaran</p><div class="qr-code-modern"><img id="qrisImage" src="https://blogger.googleusercontent.com/img/a/AVvXsEhH0Z6ewE2H7V-Maa0448YScMvF2qjha4Xt6uKlioFSJeUXHSzYesEbB2CsWE1LRdJSN7QxwYW1yGRDN2uyYVY6DtaTfKn_727s9cC2dWr3mNoezeKIFci6rRK6HzbQzCE1DYg8q1F5DWOm9RbypUNB5ipKcIDbXL0GW9d9SRIQ3QePOqw_lcEL4t1Wh_DK" alt="QRIS" class="w-48 h-48 object-contain"></div></div><div class="bg-gradient-to-r from-emerald-900/30 to-blue-900/30 rounded-xl p-4 my-4 text-center"><p class="text-xs text-gray-400">Total Pembayaran</p><p class="text-3xl font-bold text-orange-400" id="totalPayment">Rp0</p><p class="text-xs text-gray-400 mt-2">Kode Unik (3 digit yang harus ditambahkan)</p><div class="unique-code-modern" id="uniqueCode">000</div><p class="text-xs text-gray-500 mt-2">* Transfer total harga + kode unik 3 digit di atas</p></div><button id="nextToConfirmationBtn" class="btn-modern-primary flex items-center justify-center gap-2"><i class="fas fa-check-circle"></i> Saya Sudah Bayar</button></div>
-<div id="paymentStep2" style="display:none;"><p class="text-sm text-gray-300 mb-4">Masukkan detail pembayaran Anda untuk verifikasi</p><div class="mb-3"><label class="text-xs text-gray-400 block mb-1">Alamat Email</label><input type="email" id="userEmail" class="input-modern" placeholder="anda@email.com"></div><div class="mb-3"><label class="text-xs text-gray-400 block mb-1">Sumber Dana</label><select id="sourceFund" class="select-modern"><option value="">Pilih Bank / Wallet</option><option value="BCA">BCA</option><option value="Mandiri">Mandiri</option><option value="BNI">BNI</option><option value="BRI">BRI</option><option value="CIMB Niaga">CIMB Niaga</option><option value="OVO">OVO</option><option value="GoPay">GoPay</option><option value="DANA">DANA</option><option value="ShopeePay">ShopeePay</option></select></div><div class="mb-3"><label class="text-xs text-gray-400 block mb-1">Nomor Transaksi / Referensi</label><input type="text" id="transactionNo" class="input-modern" placeholder="Contoh: TRX20250404001"></div><div class="mb-3"><label class="text-xs text-gray-400 block mb-1">RRN (Request Reference Number)</label><input type="text" id="rrn" class="input-modern" placeholder="Contoh: 123456789012"></div><div class="mb-4"><label class="text-xs text-gray-400 block mb-2">Panduan Transaksi</label><div class="flex gap-2 justify-center flex-wrap"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiCKtWd3W2whyxbomxiajeZpHzatXj-gWdTclEhmTJvKXTlrmdXlwFsIrncxfP6miDfZaGbqmjvETaw9JOQyUXjFazkNaggnaWbz_9uu9hOAgGGvOvw02QE34i1fPiMXuztCe6pU2mB6oEh6QtIFscRji68s93WJJAfhKpQUZ2MOD68yRYUmrDrSSQlGoqx/s1280/IMG-20260404-WA0007.jpg" class="h-24 rounded-lg border border-gray-700 cursor-pointer hover:opacity-80" onclick="window.open(this.src)"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgxk9soM4YJW0TqcDDhhSftpNPOfhRw4-csdOPvHQWlMKrF5P2Mx6Qbimx1CFR_O5AVZJEoYAGgT-1tB_LVl5JYPB95Ha3MlFPqQd9C8wVziuHcpf8met34IG4FshjHJ_o_kdGyZOU-lhsT2BhlsCnI1fMbZnlQJsp8qQ2t0-B_PRHYxxJ69Zi4EaSUOoMO/s934/IMG-20260404-WA0008.jpg" class="h-24 rounded-lg border border-gray-700 cursor-pointer hover:opacity-80" onclick="window.open(this.src)"></div></div><div class="flex flex-col gap-2"><button id="submitPaymentBtn" class="btn-modern-primary flex items-center justify-center gap-2"><i class="fas fa-check-double"></i> Konfirmasi Pembayaran</button><button id="backToQRBtn" class="btn-modern-danger" style="background:#475569;">Kembali ke QR Code</button></div></div></div></div>
+<!-- MODAL PEMBELIAN LIMIT SUPER MODERN -->
+<div id="paymentModal" class="modern-modal">
+  <div class="modern-modal-content">
+    <div class="modern-modal-header">
+      <h2><i class="fas fa-crown"></i> Premium Upgrade</h2>
+      <div class="modern-modal-close" id="closeModalBtn"><i class="fas fa-times"></i></div>
+    </div>
+    
+    <!-- Step Progress -->
+    <div class="step-progress">
+      <div class="step-item active" id="step1Indicator">
+        <div class="step-number">1</div>
+        <span>Pilih Limit</span>
+      </div>
+      <div class="step-item" id="step2Indicator">
+        <div class="step-number">2</div>
+        <span>QRIS Payment</span>
+      </div>
+      <div class="step-item" id="step3Indicator">
+        <div class="step-number">3</div>
+        <span>Konfirmasi</span>
+      </div>
+    </div>
+    
+    <!-- STEP 1: Pilih Limit -->
+    <div id="step1Panel">
+      <div class="quantity-selector-premium">
+        <div class="quantity-label"><i class="fas fa-chart-line"></i> Jumlah Limit yang Ingin Dibeli</div>
+        <div class="quantity-control">
+          <button id="decrementQtyModal" class="quantity-btn">−</button>
+          <div class="quantity-value" id="modalQuantity">1</div>
+          <button id="incrementQtyModal" class="quantity-btn">+</button>
+        </div>
+        <div class="text-xs text-gray-500 mt-3">Maksimal pembelian: <span id="maxCanBuyText">10</span> limit</div>
+      </div>
+      
+      <div class="price-card-premium">
+        <div class="price-row">
+          <span class="price-label"><i class="fas fa-tag"></i> Harga per Limit</span>
+          <span class="price-value">Rp <span id="pricePerLimit">8.499</span></span>
+        </div>
+        <div class="price-row">
+          <span class="price-label"><i class="fas fa-calculator"></i> Subtotal</span>
+          <span class="price-value">Rp <span id="modalSubtotal">8.499</span></span>
+        </div>
+        <div class="price-row">
+          <span class="price-label"><i class="fas fa-fingerprint"></i> Kode Unik (3 digit)</span>
+          <span class="unique-code-highlight" id="modalUniqueCode">000</span>
+        </div>
+        <div class="price-row">
+          <span class="price-label"><i class="fas fa-money-bill-wave"></i> Total Pembayaran</span>
+          <span class="price-total" id="modalTotalPayment">Rp 0</span>
+        </div>
+        <div class="text-xs text-gray-500 text-center mt-2">* Transfer total harga + kode unik 3 digit di atas</div>
+      </div>
+      
+      <div class="form-container-modern">
+        <button id="nextToQRISBtn" class="btn-modern-primary"><i class="fas fa-qrcode"></i> Lanjut ke QRIS Payment</button>
+      </div>
+    </div>
+    
+    <!-- STEP 2: QRIS Payment -->
+    <div id="step2Panel" style="display: none;">
+      <div class="qr-container-premium">
+        <p class="text-xs text-gray-400 mb-2 flex items-center justify-center gap-2"><i class="fas fa-qrcode text-emerald-400"></i> Scan QR Code untuk melakukan pembayaran</p>
+        <div class="qr-code-wrapper">
+          <img id="qrisImage" src="https://blogger.googleusercontent.com/img/a/AVvXsEhH0Z6ewE2H7V-Maa0448YScMvF2qjha4Xt6uKlioFSJeUXHSzYesEbB2CsWE1LRdJSN7QxwYW1yGRDN2uyYVY6DtaTfKn_727s9cC2dWr3mNoezeKIFci6rRK6HzbQzCE1DYg8q1F5DWOm9RbypUNB5ipKcIDbXL0GW9d9SRIQ3QePOqw_lcEL4t1Wh_DK" alt="QRIS">
+        </div>
+        <div class="text-xs text-gray-500 mt-3">Gunakan aplikasi mobile banking atau e-wallet favorit Anda</div>
+      </div>
+      
+      <div class="form-container-modern">
+        <button id="backToStep1Btn" class="btn-modern-secondary mb-2"><i class="fas fa-arrow-left"></i> Kembali</button>
+        <button id="nextToConfirmBtn" class="btn-modern-primary"><i class="fas fa-check-circle"></i> Saya Sudah Bayar</button>
+      </div>
+    </div>
+    
+    <!-- STEP 3: Konfirmasi Pembayaran -->
+    <div id="step3Panel" style="display: none;">
+      <div class="form-container-modern">
+        <div class="form-group-modern">
+          <label class="form-label-modern"><i class="fas fa-envelope"></i> Alamat Email</label>
+          <input type="email" id="userEmail" class="form-input-modern" placeholder="anda@email.com">
+        </div>
+        
+        <div class="form-group-modern">
+          <label class="form-label-modern"><i class="fas fa-university"></i> Sumber Dana</label>
+          <select id="sourceFund" class="form-select-modern">
+            <option value="">Pilih Bank / Wallet</option>
+            <option value="BCA">🏦 BCA</option>
+            <option value="Mandiri">🏦 Bank Mandiri</option>
+            <option value="BNI">🏦 BNI</option>
+            <option value="BRI">🏦 BRI</option>
+            <option value="CIMB Niaga">🏦 CIMB Niaga</option>
+            <option value="OVO">📱 OVO</option>
+            <option value="GoPay">📱 GoPay</option>
+            <option value="DANA">📱 DANA</option>
+            <option value="ShopeePay">📱 ShopeePay</option>
+          </select>
+        </div>
+        
+        <div class="form-group-modern">
+          <label class="form-label-modern"><i class="fas fa-hashtag"></i> Nomor Transaksi / Referensi</label>
+          <input type="text" id="transactionNo" class="form-input-modern" placeholder="Contoh: TRX20250404001">
+        </div>
+        
+        <div class="form-group-modern">
+          <label class="form-label-modern"><i class="fas fa-barcode"></i> RRN (Request Reference Number)</label>
+          <input type="text" id="rrn" class="form-input-modern" placeholder="Contoh: 123456789012">
+        </div>
+        
+        <div class="guide-card">
+          <div class="guide-title"><i class="fas fa-info-circle text-emerald-400"></i> Panduan Transaksi</div>
+          <div class="guide-images">
+            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiCKtWd3W2whyxbomxiajeZpHzatXj-gWdTclEhmTJvKXTlrmdXlwFsIrncxfP6miDfZaGbqmjvETaw9JOQyUXjFazkNaggnaWbz_9uu9hOAgGGvOvw02QE34i1fPiMXuztCe6pU2mB6oEh6QtIFscRji68s93WJJAfhKpQUZ2MOD68yRYUmrDrSSQlGoqx/s1280/IMG-20260404-WA0007.jpg" onclick="window.open(this.src)">
+            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgxk9soM4YJW0TqcDDhhSftpNPOfhRw4-csdOPvHQWlMKrF5P2Mx6Qbimx1CFR_O5AVZJEoYAGgT-1tB_LVl5JYPB95Ha3MlFPqQd9C8wVziuHcpf8met34IG4FshjHJ_o_kdGyZOU-lhsT2BhlsCnI1fMbZnlQJsp8qQ2t0-B_PRHYxxJ69Zi4EaSUOoMO/s934/IMG-20260404-WA0008.jpg" onclick="window.open(this.src)">
+          </div>
+        </div>
+        
+        <div class="flex flex-col gap-2 mt-2">
+          <button id="submitPaymentBtn" class="btn-modern-primary"><i class="fas fa-check-double"></i> Konfirmasi Pembayaran</button>
+          <button id="backToStep2Btn" class="btn-modern-secondary"><i class="fas fa-arrow-left"></i> Kembali ke QR Code</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
 <script>
-// ==================== KONFIGURASI & LIMIT SYSTEM ====================
+// ==================== KONFIGURASI ====================
 const apiKey = "6b80b1aab6174949bdf77eade950c8fa";
 const intervalMap = { "1m":"1min","5m":"5min","15m":"15min","1h":"1h","4h":"4h","1d":"1day" };
 const tvIntervalMap = { "1m":"1","5m":"5","15m":"15","1h":"60","4h":"240","1d":"D" };
 const HARGA_PER_LIMIT = 8499;
 const MAKSIMAL_BELI = 10;
-const LIMIT_AWAL_FREE = 5; // <========== UBAH DARI 13 MENJADI 5
+const LIMIT_AWAL = 5;
 
-let freeInitial = LIMIT_AWAL_FREE;
-let paid = 0;
-let dailyFree = 0;
-let lastDailyDate = '';
+// ==================== SISTEM LIMIT ====================
+let remainingQuota = LIMIT_AWAL;
+let usedQuota = 0;
+let purchasedQuota = 0;
+let lastDailyResetDate = '';
+
+function getUserId() {
+  let userId = localStorage.getItem('ai_trading_user_id_v3');
+  if (!userId) {
+    userId = 'user_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+    localStorage.setItem('ai_trading_user_id_v3', userId);
+  }
+  return userId;
+}
 
 function loadLimitData() {
-  const userId = 'cfa_user_' + (localStorage.getItem('userId') || (() => {
-    const id = 'user_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
-    localStorage.setItem('userId', id);
-    return id;
-  })());
-  const saved = localStorage.getItem(`limitData_${userId}`);
-  if (saved) {
-    const data = JSON.parse(saved);
-    freeInitial = data.freeInitial !== undefined ? data.freeInitial : LIMIT_AWAL_FREE;
-    paid = data.paid || 0;
-    dailyFree = data.dailyFree || 0;
-    lastDailyDate = data.lastDailyDate || '';
+  const userId = getUserId();
+  const storageKey = `ai_trading_limit_v3_${userId}`;
+  const savedData = localStorage.getItem(storageKey);
+  
+  if (savedData) {
+    try {
+      const data = JSON.parse(savedData);
+      remainingQuota = data.remainingQuota !== undefined ? data.remainingQuota : LIMIT_AWAL;
+      usedQuota = data.usedQuota || 0;
+      purchasedQuota = data.purchasedQuota || 0;
+      lastDailyResetDate = data.lastDailyResetDate || '';
+    } catch(e) {
+      resetLimitData();
+    }
   } else {
-    freeInitial = LIMIT_AWAL_FREE;
-    paid = 0;
-    dailyFree = 0;
-    lastDailyDate = '';
+    resetLimitData();
+  }
+  
+  const today = new Date().toISOString().slice(0, 10);
+  if (lastDailyResetDate !== today) {
+    remainingQuota++;
+    lastDailyResetDate = today;
     saveLimitData();
   }
-  const today = new Date().toISOString().slice(0,10);
-  if (lastDailyDate !== today) {
-    dailyFree = 1;
-    lastDailyDate = today;
-    saveLimitData();
-  }
+  
+  updateQuotaUI();
+}
+
+function resetLimitData() {
+  remainingQuota = LIMIT_AWAL;
+  usedQuota = 0;
+  purchasedQuota = 0;
+  lastDailyResetDate = '';
+  saveLimitData();
 }
 
 function saveLimitData() {
-  const userId = localStorage.getItem('userId');
-  localStorage.setItem(`limitData_${userId}`, JSON.stringify({ freeInitial, paid, dailyFree, lastDailyDate }));
+  const userId = getUserId();
+  const storageKey = `ai_trading_limit_v3_${userId}`;
+  const dataToSave = { 
+    remainingQuota: remainingQuota,
+    usedQuota: usedQuota,
+    purchasedQuota: purchasedQuota,
+    lastDailyResetDate: lastDailyResetDate,
+    lastUpdated: new Date().toISOString()
+  };
+  localStorage.setItem(storageKey, JSON.stringify(dataToSave));
 }
 
-function getTotalLimit() { return freeInitial + paid + dailyFree; }
-function getUsedTotal() { return (LIMIT_AWAL_FREE + paid + dailyFree) - getTotalLimit(); }
+function getRemainingQuota() { return remainingQuota; }
+function getTotalQuota() { return remainingQuota + usedQuota; }
+function getUsedQuota() { return usedQuota; }
+function getPurchasedQuota() { return purchasedQuota; }
 
 function useLimit() {
-  if (paid > 0) { paid--; }
-  else if (dailyFree > 0) { dailyFree--; }
-  else if (freeInitial > 0) { freeInitial--; }
-  else { return false; }
+  if (remainingQuota <= 0) return false;
+  remainingQuota--;
+  usedQuota++;
   saveLimitData();
   updateQuotaUI();
   return true;
 }
 
-function addPaidLimit(amount) { paid += amount; saveLimitData(); updateQuotaUI(); }
+function addPaidLimit(amount) {
+  if (amount <= 0) return false;
+  const maxCanBuy = MAKSIMAL_BELI - purchasedQuota;
+  const actualAmount = Math.min(amount, maxCanBuy);
+  if (actualAmount <= 0) return false;
+  remainingQuota += actualAmount;
+  purchasedQuota += actualAmount;
+  saveLimitData();
+  updateQuotaUI();
+  return true;
+}
 
 function updateQuotaUI() {
-  const total = getTotalLimit();
-  const totalLimitOverall = LIMIT_AWAL_FREE + paid + dailyFree;
-  const used = totalLimitOverall - total;
-  const percent = totalLimitOverall > 0 ? (used / totalLimitOverall) * 100 : 0;
-  document.getElementById('quotaDisplay').innerText = total;
-  document.getElementById('totalQuota').innerText = totalLimitOverall;
+  const remaining = getRemainingQuota();
+  const total = getTotalQuota();
+  const used = getUsedQuota();
+  const purchased = getPurchasedQuota();
+  const percent = total > 0 ? (used / total) * 100 : 0;
+  
+  document.getElementById('quotaDisplay').innerText = remaining;
+  document.getElementById('totalQuota').innerText = total;
   document.getElementById('usedQuota').innerText = used;
-  document.getElementById('purchasedQuota').innerText = paid;
+  document.getElementById('purchasedQuota').innerText = purchased;
   document.getElementById('quotaProgress').style.width = percent + '%';
   document.getElementById('usagePercent').innerText = Math.round(percent) + '%';
+  
   const analyzeBtn = document.getElementById('analyzeBtn');
-  if (analyzeBtn) analyzeBtn.disabled = (total <= 0);
+  if (analyzeBtn) {
+    analyzeBtn.disabled = (remaining <= 0);
+    analyzeBtn.style.opacity = remaining <= 0 ? '0.5' : '1';
+    analyzeBtn.style.cursor = remaining <= 0 ? 'not-allowed' : 'pointer';
+  }
 }
 
 function showToast(message, isError = false) {
@@ -1384,14 +1867,17 @@ function showToast(message, isError = false) {
   setTimeout(() => toast.remove(), 3000);
 }
 
-// ==================== FUNGSI FORMAT RUPIAH (PEMISAH TITIK) ====================
+// ==================== FORMAT RUPIAH ====================
 function formatNumberWithDots(number) {
   return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 }
-function parseNumberFromDots(formatted) {
-  return parseInt(formatted.replace(/\./g, ""), 10);
+
+function formatRupiahShort(num) { 
+  if(num >= 1e6) return 'Rp'+(num/1e6).toFixed(1)+'Jt'; 
+  if(num >= 1e3) return 'Rp'+(num/1e3).toFixed(0)+'Rb'; 
+  return 'Rp'+num.toLocaleString('id-ID'); 
 }
-// Event listener untuk input modal awal
+
 const mmCapitalInput = document.getElementById('mmCapital');
 if (mmCapitalInput) {
   mmCapitalInput.addEventListener('input', function(e) {
@@ -1455,7 +1941,7 @@ function stopLoadingAnimation() {
   document.getElementById('loadingOverlay').classList.add('hidden');
 }
 
-// ==================== ANALISIS (REAL API) ====================
+// ==================== ANALISIS TRADING ====================
 async function fetchOHLC(pair, interval, output_size=100) {
   const symbol = pair.replace("/","/");
   const url = `https://api.twelvedata.com/time_series?symbol=${encodeURIComponent(symbol)}&interval=${interval}&outputsize=${output_size}&apikey=${apiKey}`;
@@ -1464,22 +1950,71 @@ async function fetchOHLC(pair, interval, output_size=100) {
   if(data && data.values) return data.values.map(v=>({time:v.datetime,open:parseFloat(v.open),high:parseFloat(v.high),low:parseFloat(v.low),close:parseFloat(v.close),volume:v.volume?parseFloat(v.volume):0}));
   throw new Error(data.message||"Gagal ambil data");
 }
+
 function analyzeSMC(ohlc){ if(!ohlc||ohlc.length<4) return "TUNGGU"; const last=ohlc[0].close, prevHigh=Math.max(...ohlc.slice(1,4).map(c=>c.high)); return last>prevHigh?"BELI":"JUAL"; }
-function analyzeCRT(ohlc){ if(!ohlc||ohlc.length<5) return "TUNGGU"; const avg=ohlc.reduce((a,b)=>a+b.close,0)/ohlc.length; return ohlc[0].close>avg?"BELI":"JUAL"; }
+function analyzeCRT(ohlc){ if(!ohlc||ohlc.length<5) return "TUNGGU"; const avg=ohlc.slice(0,5).reduce((a,b)=>a+b.close,0)/5; return ohlc[0].close>avg?"BELI":"JUAL"; }
 function analyzeICT(ohlc){ if(!ohlc||ohlc.length<4) return "TUNGGU"; const last=ohlc[0].close, prevLow=Math.min(...ohlc.slice(1,4).map(c=>c.low)); return last<prevLow?"JUAL":"BELI"; }
 function analyzeVolume(ohlc){ if(!ohlc||ohlc.length<5) return "TUNGGU"; const lastVol=ohlc[0].volume||0, avgVol=ohlc.slice(1,15).reduce((a,b)=>a+(b.volume||0),0)/Math.min(14,ohlc.length-1); if(avgVol===0) return "TUNGGU"; if(lastVol>avgVol*1.2) return ohlc[0].close>ohlc[1].close?"BELI":"JUAL"; return "TUNGGU"; }
-function calculateWinrate(ohlc){ if(!ohlc||ohlc.length<20) return 0; let success=0,total=0; for(let i=1;i<=Math.min(ohlc.length-16,50);i++){ const slice=ohlc.slice(i,i+15); const smc=analyzeSMC(slice), crt=analyzeCRT(slice), ict=analyzeICT(slice), vol=analyzeVolume(slice); const votes=[smc,crt,ict,vol]; const buy=votes.filter(v=>v==="BELI").length, sell=votes.filter(v=>v==="JUAL").length; let pred="TUNGGU"; if(buy>=2) pred="BELI"; else if(sell>=2) pred="JUAL"; const next=ohlc[i-1].close; if(pred==="BELI"&&next>slice[0].close) success++; if(pred==="JUAL"&&next<slice[0].close) success++; if(pred!=="TUNGGU") total++; } return total>0?success/total*100:0; }
-function getLevelPoints(ohlc){ let ob=null,fvg=null; for(let i=1;i<Math.min(ohlc.length,12);i++) if(ohlc[i].close<ohlc[i].open){ ob=`${ohlc[i].high.toFixed(2)} / ${ohlc[i].low.toFixed(2)}`; break; } for(let i=0;i<Math.min(ohlc.length-2,3);i++){ const s=ohlc[i+1], t=ohlc[i+2]; const sLow=Math.min(s.open,s.close), sHigh=Math.max(s.open,s.close), tLow=Math.min(t.open,t.close), tHigh=Math.max(t.open,t.close); if(sLow>tHigh) fvg=`${tHigh.toFixed(2)} - ${sLow.toFixed(2)}`; if(sHigh<tLow) fvg=`${sHigh.toFixed(2)} - ${tLow.toFixed(2)}`; if(fvg) break; } return {ob:ob||'—',fvg:fvg||'—'}; }
+
+function calculateWinrate(ohlc){ 
+  if(!ohlc||ohlc.length<20) return 0; 
+  let success=0,total=0; 
+  for(let i=1;i<=Math.min(ohlc.length-16,50);i++){ 
+    const slice=ohlc.slice(i,i+15); 
+    const smc=analyzeSMC(slice), crt=analyzeCRT(slice), ict=analyzeICT(slice), vol=analyzeVolume(slice); 
+    const votes=[smc,crt,ict,vol]; 
+    const buy=votes.filter(v=>v==="BELI").length, sell=votes.filter(v=>v==="JUAL").length; 
+    let pred="TUNGGU"; 
+    if(buy>=2) pred="BELI"; 
+    else if(sell>=2) pred="JUAL"; 
+    const next=ohlc[i-1].close; 
+    if(pred==="BELI"&&next>slice[0].close) success++; 
+    if(pred==="JUAL"&&next<slice[0].close) success++; 
+    if(pred!=="TUNGGU") total++; 
+  } 
+  return total>0?success/total*100:0; 
+}
+
+function getLevelPoints(ohlc){ 
+  let ob=null,fvg=null; 
+  for(let i=1;i<Math.min(ohlc.length,12);i++) 
+    if(ohlc[i].close<ohlc[i].open){ 
+      ob=`${ohlc[i].high.toFixed(2)} / ${ohlc[i].low.toFixed(2)}`; 
+      break; 
+    } 
+  for(let i=0;i<Math.min(ohlc.length-2,3);i++){ 
+    const s=ohlc[i+1], t=ohlc[i+2]; 
+    const sLow=Math.min(s.open,s.close), sHigh=Math.max(s.open,s.close), tLow=Math.min(t.open,t.close), tHigh=Math.max(t.open,t.close); 
+    if(sLow>tHigh) fvg=`${tHigh.toFixed(2)} - ${sLow.toFixed(2)}`; 
+    if(sHigh<tLow) fvg=`${sHigh.toFixed(2)} - ${tLow.toFixed(2)}`; 
+    if(fvg) break; 
+  } 
+  return {ob:ob||'—',fvg:fvg||'—'}; 
+}
+
 function updateSignalResult(finalSignal, winrate, levels){
   const badge=document.getElementById('signalBadge'), circle=document.getElementById('winrateCircle'), circumference=2*Math.PI*42, offset=circumference-(winrate/100)*circumference;
-  circle.style.strokeDasharray=`${circumference} ${circumference}`; circle.style.strokeDashoffset=offset;
+  circle.style.strokeDasharray=`${circumference} ${circumference}`; 
+  circle.style.strokeDashoffset=offset;
   document.getElementById('winratePercent').innerHTML=`${Math.round(winrate)}%`;
-  document.getElementById('obValue').innerText=levels.ob; document.getElementById('fvgValue').innerText=levels.fvg;
-  if(finalSignal==='BELI'){ badge.className='signal-badge-premium signal-buy-premium'; badge.innerHTML='<i class="fas fa-arrow-up"></i> BELI'; }
-  else if(finalSignal==='JUAL'){ badge.className='signal-badge-premium signal-sell-premium'; badge.innerHTML='<i class="fas fa-arrow-down"></i> JUAL'; }
-  else{ badge.className='signal-badge-premium signal-wait-premium'; badge.innerHTML='<i class="fas fa-clock"></i> TUNGGU'; }
-  let style='Scalping'; if(winrate>=60) style='Swing'; else if(winrate>=45) style='Day Trading'; document.getElementById('tradingStyleText').innerHTML=style;
+  document.getElementById('obValue').innerText=levels.ob; 
+  document.getElementById('fvgValue').innerText=levels.fvg;
+  if(finalSignal==='BELI'){ 
+    badge.className='signal-badge-premium signal-buy-premium'; 
+    badge.innerHTML='<i class="fas fa-arrow-up"></i> BELI'; 
+  } else if(finalSignal==='JUAL'){ 
+    badge.className='signal-badge-premium signal-sell-premium'; 
+    badge.innerHTML='<i class="fas fa-arrow-down"></i> JUAL'; 
+  } else { 
+    badge.className='signal-badge-premium signal-wait-premium'; 
+    badge.innerHTML='<i class="fas fa-clock"></i> TUNGGU'; 
+  }
+  let style='Scalping'; 
+  if(winrate>=60) style='Swing'; 
+  else if(winrate>=45) style='Day Trading'; 
+  document.getElementById('tradingStyleText').innerHTML=style;
 }
+
 async function fetchRealTimeMarketCondition() {
   const pair = document.getElementById('pair').value;
   const tf = "15min";
@@ -1499,22 +2034,40 @@ async function fetchRealTimeMarketCondition() {
   } catch(e) { console.warn(e); }
   return "Sideways";
 }
+
 function updateTrendDisplay(trend) {
   const container = document.getElementById('trendContainer');
   const displayDiv = document.getElementById('trendDisplay');
   const textSpan = document.getElementById('trendTextSimple');
   displayDiv.classList.remove('trend-bullish', 'trend-bearish', 'trend-sideways');
-  if (trend === 'Bullish') { displayDiv.classList.add('trend-bullish'); textSpan.innerHTML = '<i class="fas fa-arrow-up"></i> BULLISH'; }
-  else if (trend === 'Bearish') { displayDiv.classList.add('trend-bearish'); textSpan.innerHTML = '<i class="fas fa-arrow-down"></i> BEARISH'; }
-  else { displayDiv.classList.add('trend-sideways'); textSpan.innerHTML = '<i class="fas fa-minus"></i> SIDEWAYS'; }
+  if (trend === 'Bullish') { 
+    displayDiv.classList.add('trend-bullish'); 
+    textSpan.innerHTML = '<i class="fas fa-arrow-up"></i> BULLISH'; 
+  } else if (trend === 'Bearish') { 
+    displayDiv.classList.add('trend-bearish'); 
+    textSpan.innerHTML = '<i class="fas fa-arrow-down"></i> BEARISH'; 
+  } else { 
+    displayDiv.classList.add('trend-sideways'); 
+    textSpan.innerHTML = '<i class="fas fa-minus"></i> SIDEWAYS'; 
+  }
   if (container.style.display === 'none') container.style.display = 'block';
 }
+
 async function runAnalysis(){
-  if (getTotalLimit() <= 0) {
-    showToast('Limit habis! Beli limit atau tunggu besok untuk limit harian.', true);
-    Swal.fire({ title: 'Limit Habis', html: `Anda tidak memiliki limit.<br>Dapatkan limit gratis harian besok atau beli sekarang.<br>Harga: <strong class="text-orange-400">Rp${HARGA_PER_LIMIT.toLocaleString()}/limit</strong>`, icon: 'warning', confirmButtonText: 'Beli Limit', background: '#1e293b', confirmButtonColor: '#22c55e' }).then(() => document.getElementById('buyQuotaBtn').click());
+  const remaining = getRemainingQuota();
+  if (remaining <= 0) {
+    showToast('Limit habis! Beli limit atau tunggu besok untuk limit gratis harian.', true);
+    Swal.fire({ 
+      title: 'Limit Habis', 
+      html: `Anda tidak memiliki limit.<br>Dapatkan limit gratis harian besok atau beli sekarang.<br>Harga: <strong class="text-orange-400">Rp${HARGA_PER_LIMIT.toLocaleString()}/limit</strong>`, 
+      icon: 'warning', 
+      confirmButtonText: 'Beli Limit', 
+      background: '#1e293b', 
+      confirmButtonColor: '#22c55e' 
+    }).then(() => document.getElementById('buyQuotaBtn').click());
     return;
   }
+  
   const pair = document.getElementById('pair').value;
   const tf = document.getElementById('timeframe').value;
   const apiInterval = intervalMap[tf] || "15min";
@@ -1522,10 +2075,13 @@ async function runAnalysis(){
   document.getElementById('loadingOverlay').classList.remove('hidden');
   startLoadingAnimation();
   document.getElementById('dataStatus').innerHTML = '<div class="w-2 h-2 rounded-full bg-yellow-500 animate-pulse mr-2"></div><span>Menganalisa...</span>';
+  
   try {
     const ohlc = await fetchOHLC(pair, apiInterval, 200);
     if (!ohlc || ohlc.length < 10) throw new Error("Data tidak cukup");
+    
     if (!useLimit()) throw new Error("Gagal menggunakan limit");
+    
     const smc = analyzeSMC(ohlc), crt = analyzeCRT(ohlc), ict = analyzeICT(ohlc), vol = analyzeVolume(ohlc);
     const votes = [smc, crt, ict, vol];
     const buyCount = votes.filter(v => v === "BELI").length;
@@ -1539,14 +2095,17 @@ async function runAnalysis(){
     const marketTrend = await fetchRealTimeMarketCondition();
     updateTrendDisplay(marketTrend);
     document.getElementById('signalCard').style.display = 'block';
-    document.getElementById('dataStatus').innerHTML = `<div class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse mr-2"></div><span>Analisa selesai | Sisa limit: ${getTotalLimit()}</span>`;
-    showToast(`Analisa berhasil! Sisa limit: ${getTotalLimit()}`);
-  } catch(e) { showToast('Gagal: ' + e.message, true); document.getElementById('dataStatus').innerHTML = '<div class="w-2 h-2 rounded-full bg-red-500 animate-pulse mr-2"></div><span>Gagal ambil data</span>'; }
-  finally { stopLoadingAnimation(); }
+    document.getElementById('dataStatus').innerHTML = `<div class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse mr-2"></div><span>Analisa selesai | Sisa limit: ${getRemainingQuota()}</span>`;
+    showToast(`Analisa berhasil! Sisa limit: ${getRemainingQuota()}`);
+  } catch(e) { 
+    showToast('Gagal: ' + e.message, true); 
+    document.getElementById('dataStatus').innerHTML = '<div class="w-2 h-2 rounded-full bg-red-500 animate-pulse mr-2"></div><span>Gagal ambil data</span>';
+  } finally { 
+    stopLoadingAnimation(); 
+  }
 }
 
 // ==================== MANAJEMEN RISIKO ====================
-function formatRupiahShort(num){ if(num>=1e6) return 'Rp'+(num/1e6).toFixed(1)+'Jt'; if(num>=1e3) return 'Rp'+(num/1e3).toFixed(0)+'Rb'; return 'Rp'+num.toLocaleString('id-ID'); }
 function calculateMM(){
   let capitalRaw = document.getElementById('mmCapital').value.replace(/\./g, "");
   const capital = parseFloat(capitalRaw);
@@ -1567,6 +2126,7 @@ function calculateMM(){
   document.getElementById('mmResults').style.display = 'block';
   showToast('Perhitungan risiko berhasil!');
 }
+
 function resetMM(){
   document.getElementById('mmCapital').value = '';
   document.getElementById('mmLevel').value = 'easy';
@@ -1575,75 +2135,260 @@ function resetMM(){
 }
 
 // ==================== STATISTIK ====================
-let totalUsers=parseInt(localStorage.getItem('totalUsers'))||400, onlineUsers=parseInt(localStorage.getItem('onlineUsers'))||28, totalKeuntungan=parseInt(localStorage.getItem('totalKeuntungan'))||8200000, totalTransaksi=parseInt(localStorage.getItem('totalTransaksi'))||180;
-function updateStats(){ document.getElementById('totalUsers').innerText=totalUsers.toLocaleString(); document.getElementById('onlineUsers').innerText=onlineUsers; document.getElementById('profitTotal').innerHTML=formatRupiahShort(totalKeuntungan); document.getElementById('profitTransaksi').innerText=totalTransaksi.toLocaleString(); }
-function startStatsSimulation(){ updateStats(); setInterval(()=>{ totalUsers+=Math.floor(Math.random()*2)+1; localStorage.setItem('totalUsers',totalUsers); updateStats(); },60000); setInterval(()=>{ onlineUsers=Math.max(0,onlineUsers+(Math.floor(Math.random()*3)-1)); localStorage.setItem('onlineUsers',onlineUsers); updateStats(); },5000); setInterval(()=>{ totalKeuntungan+=Math.floor(Math.random()*30000)+5000; totalTransaksi+=1; localStorage.setItem('totalKeuntungan',totalKeuntungan); localStorage.setItem('totalTransaksi',totalTransaksi); updateStats(); },15000); }
+let totalUsers=parseInt(localStorage.getItem('totalUsers'))||400, 
+    onlineUsers=parseInt(localStorage.getItem('onlineUsers'))||28, 
+    totalKeuntungan=parseInt(localStorage.getItem('totalKeuntungan'))||8200000, 
+    totalTransaksi=parseInt(localStorage.getItem('totalTransaksi'))||180;
+
+function updateStats(){ 
+  document.getElementById('totalUsers').innerText=totalUsers.toLocaleString(); 
+  document.getElementById('onlineUsers').innerText=onlineUsers; 
+  document.getElementById('profitTotal').innerHTML=formatRupiahShort(totalKeuntungan); 
+  document.getElementById('profitTransaksi').innerText=totalTransaksi.toLocaleString(); 
+}
+
+function startStatsSimulation(){ 
+  updateStats(); 
+  setInterval(()=>{ 
+    totalUsers+=Math.floor(Math.random()*2)+1; 
+    localStorage.setItem('totalUsers',totalUsers); 
+    updateStats(); 
+  }, 60000); 
+  setInterval(()=>{ 
+    onlineUsers=Math.max(0,onlineUsers+(Math.floor(Math.random()*3)-1)); 
+    localStorage.setItem('onlineUsers',onlineUsers); 
+    updateStats(); 
+  }, 5000); 
+  setInterval(()=>{ 
+    totalKeuntungan+=Math.floor(Math.random()*30000)+5000; 
+    totalTransaksi+=1; 
+    localStorage.setItem('totalKeuntungan',totalKeuntungan); 
+    localStorage.setItem('totalTransaksi',totalTransaksi); 
+    updateStats(); 
+  }, 15000); 
+}
 
 // ==================== CHART ====================
 let tvWidget=null;
-function loadTradingViewChart(pair,timeframe){ try{ if(tvWidget&&typeof tvWidget.remove==='function') tvWidget.remove(); }catch(e){} const tvSymbol=pair.includes("/")?`OANDA:${pair.replace("/","")}`:pair; try{ tvWidget=new TradingView.widget({container_id:"tradingview_chart",width:"100%",height:"100%",symbol:tvSymbol,interval:tvIntervalMap[timeframe]||"15",timezone:"Etc/UTC",theme:"dark",style:"1",locale:"id",toolbar_bg:"#0f172a",allow_symbol_change:false,enable_publishing:false,details:true}); }catch(e){ console.warn(e); } }
+function loadTradingViewChart(pair,timeframe){ 
+  try{ 
+    if(tvWidget&&typeof tvWidget.remove==='function') tvWidget.remove(); 
+  } catch(e){} 
+  const tvSymbol=pair.includes("/")?`OANDA:${pair.replace("/","")}`:pair; 
+  try{ 
+    tvWidget=new TradingView.widget({
+      container_id:"tradingview_chart",
+      width:"100%",
+      height:"100%",
+      symbol:tvSymbol,
+      interval:tvIntervalMap[timeframe]||"15",
+      timezone:"Etc/UTC",
+      theme:"dark",
+      style:"1",
+      locale:"id",
+      toolbar_bg:"#0f172a",
+      allow_symbol_change:false,
+      enable_publishing:false,
+      details:true
+    }); 
+  } catch(e){ 
+    console.warn(e); 
+  } 
+}
 
-// ==================== QRIS PAYMENT ====================
-function generateUniqueCode() { return Math.floor(Math.random() * 1000).toString().padStart(3, '0'); }
-let pendingQuantity = 0, pendingAmount = 0, generatedUniqueCode = '';
-function openPaymentModal(quantity, totalPrice) {
-  pendingQuantity = quantity; pendingAmount = totalPrice;
+// ==================== MODAL PEMBELIAN MODERN ====================
+let pendingQuantity = 1;
+let generatedUniqueCode = '';
+
+function generateUniqueCode() { 
+  return Math.floor(Math.random() * 1000).toString().padStart(3, '0'); 
+}
+
+function updateModalPrice() {
+  const subtotal = pendingQuantity * HARGA_PER_LIMIT;
+  const uniqueCode = parseInt(generatedUniqueCode);
+  const total = subtotal + uniqueCode;
+  
+  document.getElementById('modalQuantity').innerText = pendingQuantity;
+  document.getElementById('modalSubtotal').innerHTML = subtotal.toLocaleString('id-ID');
+  document.getElementById('modalUniqueCode').innerHTML = generatedUniqueCode;
+  document.getElementById('modalTotalPayment').innerHTML = 'Rp ' + total.toLocaleString('id-ID');
+}
+
+function resetModalToStep1() {
+  pendingQuantity = 1;
   generatedUniqueCode = generateUniqueCode();
-  const totalWithUnique = totalPrice + parseInt(generatedUniqueCode);
-  document.getElementById('totalPayment').innerHTML = 'Rp' + totalWithUnique.toLocaleString('id-ID');
-  document.getElementById('uniqueCode').innerText = generatedUniqueCode;
+  updateModalPrice();
+  
+  document.getElementById('step1Panel').style.display = 'block';
+  document.getElementById('step2Panel').style.display = 'none';
+  document.getElementById('step3Panel').style.display = 'none';
+  
+  document.getElementById('step1Indicator').classList.add('active');
+  document.getElementById('step2Indicator').classList.remove('active');
+  document.getElementById('step3Indicator').classList.remove('active');
+  document.getElementById('step2Indicator').classList.remove('completed');
+  document.getElementById('step3Indicator').classList.remove('completed');
+}
+
+function openPaymentModal() {
+  const maxCanBuy = MAKSIMAL_BELI - getPurchasedQuota();
+  if (maxCanBuy <= 0) { 
+    showToast('Maksimal pembelian 10 limit!', true); 
+    return; 
+  }
+  
+  document.getElementById('maxCanBuyText').innerText = maxCanBuy;
+  pendingQuantity = 1;
+  generatedUniqueCode = generateUniqueCode();
+  updateModalPrice();
+  
+  // Reset form fields
   document.getElementById('userEmail').value = '';
   document.getElementById('sourceFund').value = '';
   document.getElementById('transactionNo').value = '';
   document.getElementById('rrn').value = '';
-  document.getElementById('paymentStep1').style.display = 'block';
-  document.getElementById('paymentStep2').style.display = 'none';
-  document.getElementById('qrisModal').classList.add('show');
+  
+  resetModalToStep1();
+  document.getElementById('paymentModal').classList.add('show');
 }
-document.getElementById('buyQuotaBtn').addEventListener('click', async () => {
-  const maxCanBuy = MAKSIMAL_BELI - paid;
-  if (maxCanBuy <= 0) { showToast('Maksimal pembelian 10 limit!', true); return; }
-  const { value: amount } = await Swal.fire({
-    title: '<div style="font-size:1.5rem;"><i class="fas fa-shopping-cart" style="color:#22c55e;"></i> Beli Limit Analisa</div>',
-    html: `<div class="text-left"><div style="background: linear-gradient(135deg,#1e293b,#0f172a); padding:1.25rem; border-radius:1rem; margin-bottom:1rem; border:1px solid #22c55e;"><div class="flex justify-between"><span class="text-gray-400 text-xs">Harga per Limit</span><span class="text-orange-400 text-xl font-bold">Rp${HARGA_PER_LIMIT.toLocaleString()}</span></div><div class="h-px bg-gradient-to-r from-emerald-500 to-blue-500 my-2"></div><div class="flex justify-between"><span class="text-gray-400 text-xs">Sisa yang Bisa Dibeli</span><span class="text-emerald-400 text-lg font-bold">${maxCanBuy} Limit</span></div><div class="h-px bg-gray-700 my-2"></div><div class="flex justify-between"><span class="text-gray-400 text-xs">Total Limit Saat Ini</span><span class="text-blue-400 text-lg font-bold">${getTotalLimit()} Limit</span></div></div><div style="background:#0f172a; border-radius:1rem; padding:1rem; margin-bottom:1rem;"><div class="flex items-center gap-2 mb-3"><i class="fas fa-chart-line text-emerald-400"></i><span class="text-gray-300">Jumlah Limit</span></div><div class="flex items-center justify-center gap-3"><button type="button" id="decrementQty" style="background:#1e293b; border:1px solid #22c55e; border-radius:8px; width:36px; height:36px; color:white;">−</button><input type="number" id="swal-input1" class="swal2-input" min="1" max="${maxCanBuy}" value="1" style="width:100px; text-align:center; background:#1e293b; border:1px solid #334155; border-radius:8px; color:white; padding:8px;"><button type="button" id="incrementQty" style="background:#1e293b; border:1px solid #22c55e; border-radius:8px; width:36px; height:36px; color:white;">+</button></div></div><div style="background:linear-gradient(135deg,#22c55e20,#3b82f620); padding:1rem; border-radius:1rem; text-align:center;"><span class="text-gray-400 text-xs">Total yang harus dibayar</span><div id="previewTotal" class="text-orange-400 text-2xl font-bold">Rp${HARGA_PER_LIMIT.toLocaleString()}</div><span class="text-gray-500 text-xs">* +3 digit kode unik nantinya</span></div></div>`,
-    focusConfirm: false, showCancelButton: true, confirmButtonText: '<i class="fas fa-qrcode"></i> Lanjut ke QRIS', cancelButtonText: 'Batal',
-    background: '#1e293b', color: '#fff', confirmButtonColor: '#22c55e',
-    didOpen: () => {
-      const qtyInput = document.getElementById('swal-input1');
-      const decrement = document.getElementById('decrementQty');
-      const increment = document.getElementById('incrementQty');
-      const preview = document.getElementById('previewTotal');
-      const maxVal = maxCanBuy;
-      const update = () => { let val = parseInt(qtyInput.value); if (isNaN(val)) val = 1; if (val < 1) val = 1; if (val > maxVal) val = maxVal; qtyInput.value = val; preview.innerText = 'Rp' + (val * HARGA_PER_LIMIT).toLocaleString('id-ID'); };
-      decrement.onclick = () => { let v = parseInt(qtyInput.value); if (v > 1) qtyInput.value = v-1; update(); };
-      increment.onclick = () => { let v = parseInt(qtyInput.value); if (v < maxVal) qtyInput.value = v+1; update(); };
-      qtyInput.oninput = update; update();
-    },
-    preConfirm: () => { const amount = parseInt(document.getElementById('swal-input1').value); if (isNaN(amount) || amount < 1 || amount > maxCanBuy) { Swal.showValidationMessage(`Masukkan 1-${maxCanBuy}`); return false; } return amount; }
-  });
-  if (amount) openPaymentModal(amount, amount * HARGA_PER_LIMIT);
-});
-document.getElementById('nextToConfirmationBtn').onclick = () => { document.getElementById('paymentStep1').style.display='none'; document.getElementById('paymentStep2').style.display='block'; };
-document.getElementById('backToQRBtn').onclick = () => { document.getElementById('paymentStep2').style.display='none'; document.getElementById('paymentStep1').style.display='block'; };
-document.getElementById('closeModalBtn').onclick = () => { document.getElementById('qrisModal').classList.remove('show'); };
-document.getElementById('submitPaymentBtn').onclick = async () => {
-  const email = document.getElementById('userEmail').value, sourceFund = document.getElementById('sourceFund').value, transactionNo = document.getElementById('transactionNo').value, rrn = document.getElementById('rrn').value;
-  if (!email || !sourceFund || !transactionNo || !rrn) { showToast('Harap isi semua field!', true); return; }
-  Swal.fire({ title: 'Memverifikasi...', timer: 2000, timerProgressBar: true, showConfirmButton: false, background:'#1e293b', didOpen:()=>Swal.showLoading() });
-  setTimeout(() => { addPaidLimit(pendingQuantity); document.getElementById('qrisModal').classList.remove('show'); Swal.fire({ title: '<i class="fas fa-check-circle" style="color:#22c55e"></i><br>Berhasil!', html: `Anda membeli ${pendingQuantity} limit.<br>Total limit: ${getTotalLimit()}`, icon:'success', confirmButtonText:'OK', background:'#1e293b', color:'#fff' }); showToast(`Berhasil membeli ${pendingQuantity} limit!`); }, 2000);
+
+// Event listeners untuk modal
+document.getElementById('buyQuotaBtn').onclick = openPaymentModal;
+document.getElementById('closeModalBtn').onclick = () => {
+  document.getElementById('paymentModal').classList.remove('show');
+  resetModalToStep1();
 };
 
-// ==================== INIT ====================
+// Quantity controls
+document.getElementById('decrementQtyModal').onclick = () => {
+  const maxCanBuy = MAKSIMAL_BELI - getPurchasedQuota();
+  if (pendingQuantity > 1) {
+    pendingQuantity--;
+    updateModalPrice();
+  }
+};
+document.getElementById('incrementQtyModal').onclick = () => {
+  const maxCanBuy = MAKSIMAL_BELI - getPurchasedQuota();
+  if (pendingQuantity < maxCanBuy) {
+    pendingQuantity++;
+    updateModalPrice();
+  }
+};
+
+// Step navigation
+document.getElementById('nextToQRISBtn').onclick = () => {
+  if (pendingQuantity < 1) {
+    showToast('Pilih minimal 1 limit!', true);
+    return;
+  }
+  document.getElementById('step1Panel').style.display = 'none';
+  document.getElementById('step2Panel').style.display = 'block';
+  document.getElementById('step1Indicator').classList.remove('active');
+  document.getElementById('step2Indicator').classList.add('active');
+  document.getElementById('step1Indicator').classList.add('completed');
+};
+
+document.getElementById('backToStep1Btn').onclick = () => {
+  document.getElementById('step2Panel').style.display = 'none';
+  document.getElementById('step1Panel').style.display = 'block';
+  document.getElementById('step2Indicator').classList.remove('active');
+  document.getElementById('step1Indicator').classList.add('active');
+  document.getElementById('step1Indicator').classList.remove('completed');
+};
+
+document.getElementById('nextToConfirmBtn').onclick = () => {
+  document.getElementById('step2Panel').style.display = 'none';
+  document.getElementById('step3Panel').style.display = 'block';
+  document.getElementById('step2Indicator').classList.remove('active');
+  document.getElementById('step3Indicator').classList.add('active');
+  document.getElementById('step2Indicator').classList.add('completed');
+};
+
+document.getElementById('backToStep2Btn').onclick = () => {
+  document.getElementById('step3Panel').style.display = 'none';
+  document.getElementById('step2Panel').style.display = 'block';
+  document.getElementById('step3Indicator').classList.remove('active');
+  document.getElementById('step2Indicator').classList.add('active');
+  document.getElementById('step2Indicator').classList.remove('completed');
+};
+
+// Submit payment
+document.getElementById('submitPaymentBtn').onclick = async () => {
+  const email = document.getElementById('userEmail').value;
+  const sourceFund = document.getElementById('sourceFund').value;
+  const transactionNo = document.getElementById('transactionNo').value;
+  const rrn = document.getElementById('rrn').value;
+  
+  if (!email || !sourceFund || !transactionNo || !rrn) { 
+    showToast('Harap isi semua field!', true); 
+    return; 
+  }
+  
+  Swal.fire({ 
+    title: 'Memverifikasi...', 
+    timer: 2000, 
+    timerProgressBar: true, 
+    showConfirmButton: false, 
+    background:'#1e293b', 
+    didOpen:()=>Swal.showLoading() 
+  });
+  
+  setTimeout(() => { 
+    addPaidLimit(pendingQuantity); 
+    document.getElementById('paymentModal').classList.remove('show'); 
+    resetModalToStep1();
+    Swal.fire({ 
+      title: '<i class="fas fa-check-circle" style="color:#22c55e"></i><br>Berhasil!', 
+      html: `Anda membeli ${pendingQuantity} limit.<br>Sisa limit: ${getRemainingQuota()}`, 
+      icon:'success', 
+      confirmButtonText:'OK', 
+      background:'#1e293b', 
+      color:'#fff' 
+    }); 
+    showToast(`Berhasil membeli ${pendingQuantity} limit!`); 
+  }, 2000);
+};
+
+// ==================== INITIALIZATION ====================
 document.addEventListener('DOMContentLoaded', () => {
-  loadLimitData(); startStatsSimulation(); document.getElementById('trendContainer').style.display = 'none'; updateQuotaUI();
+  loadLimitData();
+  startStatsSimulation();
+  document.getElementById('trendContainer').style.display = 'none';
+  
   document.getElementById('analyzeBtn').onclick = runAnalysis;
-  document.getElementById('resetAnalysisBtn').onclick = () => { document.getElementById('pair').value = 'XAU/USD'; document.getElementById('timeframe').value = '15m'; document.getElementById('signalCard').style.display = 'none'; document.getElementById('dataStatus').innerHTML = '<div class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse mr-2"></div><span>Siap analisa</span>'; loadLimitData(); updateQuotaUI(); showToast('Reset berhasil!'); };
+  
+  document.getElementById('resetAnalysisBtn').onclick = () => { 
+    document.getElementById('pair').value = 'XAU/USD'; 
+    document.getElementById('timeframe').value = '15m'; 
+    document.getElementById('signalCard').style.display = 'none'; 
+    document.getElementById('trendContainer').style.display = 'none';
+    document.getElementById('dataStatus').innerHTML = '<div class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse mr-2"></div><span>Siap analisa</span>'; 
+    loadLimitData();
+    updateQuotaUI(); 
+    showToast('Reset berhasil!'); 
+  };
+  
   document.getElementById('mmCalculateBtn').onclick = calculateMM;
   document.getElementById('mmResetBtn').onclick = resetMM;
-  const toggleBtn = document.getElementById('toggleChartBtn'), chartCont = document.getElementById('chartContainer');
-  toggleBtn.onclick = () => { chartCont.classList.toggle('show'); toggleBtn.innerHTML = chartCont.classList.contains('show') ? '<i class="fas fa-times mr-2"></i> Tutup Chart' : '<i class="fas fa-chart-line mr-2"></i> Buka Chart'; if (chartCont.classList.contains('show')) loadTradingViewChart(document.getElementById('pair').value, document.getElementById('timeframe').value); };
-  document.getElementById('pair').onchange = () => { if (chartCont.classList.contains('show')) loadTradingViewChart(document.getElementById('pair').value, document.getElementById('timeframe').value); };
-  document.getElementById('timeframe').onchange = () => { if (chartCont.classList.contains('show')) loadTradingViewChart(document.getElementById('pair').value, document.getElementById('timeframe').value); };
+  
+  const toggleBtn = document.getElementById('toggleChartBtn'), 
+        chartCont = document.getElementById('chartContainer');
+  toggleBtn.onclick = () => { 
+    chartCont.classList.toggle('show'); 
+    toggleBtn.innerHTML = chartCont.classList.contains('show') ? '<i class="fas fa-times mr-2"></i> Tutup Chart' : '<i class="fas fa-chart-line mr-2"></i> Buka Chart'; 
+    if (chartCont.classList.contains('show')) 
+      loadTradingViewChart(document.getElementById('pair').value, document.getElementById('timeframe').value); 
+  };
+  
+  document.getElementById('pair').onchange = () => { 
+    if (chartCont.classList.contains('show')) 
+      loadTradingViewChart(document.getElementById('pair').value, document.getElementById('timeframe').value); 
+  };
+  document.getElementById('timeframe').onchange = () => { 
+    if (chartCont.classList.contains('show')) 
+      loadTradingViewChart(document.getElementById('pair').value, document.getElementById('timeframe').value); 
+  };
 });
 </script>
 </body>
