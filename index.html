@@ -9,6 +9,7 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
 tailwind.config = {
   darkMode: "class",
@@ -51,8 +52,8 @@ body::before {
   width: 100%;
   height: 100%;
   background: 
-    repeating-linear-gradient(90deg, rgba(34,197,94,0.03) 0px, rgba(34,197,94,0.03) 1px, transparent 1px, transparent 100px),
-    repeating-linear-gradient(0deg, rgba(34,197,94,0.03) 0px, rgba(34,197,94,0.03) 1px, transparent 1px, transparent 100px);
+    repeating-linear-gradient(90deg, rgba(34,197,94,0.02) 0px, rgba(34,197,94,0.02) 1px, transparent 1px, transparent 100px),
+    repeating-linear-gradient(0deg, rgba(34,197,94,0.02) 0px, rgba(34,197,94,0.02) 1px, transparent 1px, transparent 100px);
   pointer-events: none;
   z-index: 0;
 }
@@ -61,27 +62,57 @@ body::before {
 ::-webkit-scrollbar-track { background: #1e293b; border-radius: 10px; }
 ::-webkit-scrollbar-thumb { background: linear-gradient(135deg, #22c55e, #3b82f6); border-radius: 10px; }
 
-/* ==================== HEADER ==================== */
+/* Animasi Modern */
+@keyframes shine {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+@keyframes glow-pulse {
+  0% { box-shadow: 0 0 0 0 rgba(34,197,94,0.4); }
+  70% { box-shadow: 0 0 0 15px rgba(34,197,94,0); }
+  100% { box-shadow: 0 0 0 0 rgba(34,197,94,0); }
+}
+
+@keyframes bounceUp {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+@keyframes bounceDown {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(5px); }
+}
+
+/* ==================== HEADER ROUNDED OVERLAY ==================== */
 .header-premium {
-  background: linear-gradient(135deg, rgba(10,15,30,0.98), rgba(15,23,42,0.98));
-  backdrop-filter: blur(20px);
-  border-bottom: 1px solid rgba(34,197,94,0.3);
+  background: transparent;
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% - 40px);
+  max-width: 1400px;
   z-index: 100;
-  box-shadow: 0 10px 30px -10px rgba(0,0,0,0.5);
 }
 
 .header-container {
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 0.75rem 1.5rem;
+  background: linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(10, 15, 30, 0.95));
+  backdrop-filter: blur(20px);
+  border-radius: 60px;
+  border: 1px solid rgba(34,197,94,0.3);
+  padding: 0.6rem 1.5rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 1rem;
+  box-shadow: 0 10px 30px -10px rgba(0,0,0,0.5);
+  transition: all 0.3s;
+}
+
+.header-container:hover {
+  border-color: rgba(34,197,94,0.6);
+  box-shadow: 0 15px 40px -10px rgba(34,197,94,0.2);
 }
 
 .logo-area {
@@ -135,44 +166,50 @@ body::before {
 .header-stat {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  padding: 0.5rem 1rem;
-  background: rgba(34,197,94,0.08);
-  border-radius: 2rem;
-  border: 1px solid rgba(34,197,94,0.2);
+  gap: 0.6rem;
+  padding: 0.5rem 1.2rem;
+  background: rgba(34,197,94,0.12);
+  border-radius: 40px;
+  border: 1px solid rgba(34,197,94,0.3);
   transition: all 0.2s;
 }
 
 .header-stat:hover {
-  background: rgba(34,197,94,0.15);
+  background: rgba(34,197,94,0.2);
   transform: translateY(-2px);
+  border-color: rgba(34,197,94,0.5);
 }
 
 .header-stat i {
   color: #22c55e;
-  font-size: 0.875rem;
+  font-size: 0.9rem;
 }
 
 .header-stat .stat-label {
   font-size: 0.7rem;
   font-weight: 500;
   color: #94a3b8;
+  letter-spacing: 0.5px;
 }
 
 .header-stat .stat-value {
-  color: #22c55e;
-  font-weight: 700;
-  font-size: 0.875rem;
-  margin-left: 0.25rem;
+  background: linear-gradient(135deg, #22c55e, #4ade80);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  font-weight: 800;
+  font-size: 0.9rem;
+  letter-spacing: 0.5px;
 }
 
 @media (max-width: 768px) {
-  .header-container { flex-direction: column; gap: 0.5rem; }
+  .header-premium { top: 10px; width: calc(100% - 20px); }
+  .header-container { flex-direction: column; gap: 0.5rem; padding: 0.8rem 1rem; border-radius: 40px; }
   .logo-area { justify-content: center; }
   .header-right { justify-content: center; }
   .logo-icon { width: 36px; height: 36px; }
   .logo-icon img { width: 32px; height: 32px; }
-  .logo-text h1 { font-size: 1.1rem; }
+  .logo-text h1 { font-size: 1rem; }
   .logo-text p { font-size: 0.5rem; }
 }
 
@@ -215,28 +252,27 @@ body::before {
   .footer-premium .footer-content { flex-direction: column; gap: 0.5rem; }
 }
 
-/* ==================== CARD UMUM ==================== */
-.glass-card {
-  background: rgba(15, 23, 42, 0.7);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(34, 197, 94, 0.15);
+/* ==================== CARD UNIFORM ==================== */
+.uniform-card {
+  background: linear-gradient(145deg, #1e293b, #0f172a);
   border-radius: 1.5rem;
-  transition: all 0.3s;
-  position: relative;
+  border: 1px solid rgba(34,197,94,0.2);
   overflow: hidden;
+  transition: all 0.3s;
+  box-shadow: 0 10px 25px -5px rgba(0,0,0,0.3);
 }
 
-.glass-card:hover {
-  border-color: rgba(34, 197, 94, 0.4);
+.uniform-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.5);
+  border-color: rgba(34,197,94,0.5);
+  box-shadow: 0 15px 35px -10px rgba(0,0,0,0.5);
 }
 
 /* ==================== QUOTA CARD MODERN ==================== */
 .quota-modern {
   background: linear-gradient(145deg, #1e293b, #0f172a);
   border-radius: 1.5rem;
-  padding: 1.5rem;
+  padding: 1.2rem;
   border: 1px solid rgba(34,197,94,0.3);
   position: relative;
   overflow: hidden;
@@ -257,12 +293,12 @@ body::before {
   display: flex;
   align-items: center;
   gap: 1rem;
-  margin-bottom: 1rem;
+  margin-bottom: 0.8rem;
 }
 
 .quota-icon {
-  width: 55px;
-  height: 55px;
+  width: 50px;
+  height: 50px;
   background: rgba(34,197,94,0.15);
   border-radius: 1rem;
   display: flex;
@@ -272,19 +308,19 @@ body::before {
 }
 
 .quota-icon i {
-  font-size: 1.8rem;
+  font-size: 1.5rem;
   color: #22c55e;
 }
 
 .quota-title {
-  font-size: 0.7rem;
+  font-size: 0.65rem;
   text-transform: uppercase;
   letter-spacing: 2px;
   color: #94a3b8;
 }
 
 .quota-value {
-  font-size: 2.8rem;
+  font-size: 2.2rem;
   font-weight: 800;
   background: linear-gradient(135deg, #22c55e, #4ade80);
   -webkit-background-clip: text;
@@ -295,13 +331,13 @@ body::before {
 }
 
 .quota-progress {
-  margin: 1rem 0;
+  margin: 0.8rem 0;
 }
 
 .progress-label {
   display: flex;
   justify-content: space-between;
-  font-size: 0.7rem;
+  font-size: 0.65rem;
   color: #94a3b8;
   margin-bottom: 0.3rem;
 }
@@ -309,7 +345,7 @@ body::before {
 .progress-bar-modern {
   background: #1e293b;
   border-radius: 20px;
-  height: 6px;
+  height: 5px;
   overflow: hidden;
 }
 
@@ -332,18 +368,13 @@ body::before {
   animation: shine 2s infinite;
 }
 
-@keyframes shine {
-  0% { transform: translateX(-100%); }
-  100% { transform: translateX(100%); }
-}
-
 .quota-stats {
   display: flex;
   justify-content: space-between;
-  margin: 1rem 0 1.2rem;
+  margin: 0.8rem 0 1rem;
   background: rgba(0,0,0,0.2);
-  border-radius: 1rem;
-  padding: 0.6rem;
+  border-radius: 0.8rem;
+  padding: 0.5rem;
 }
 
 .quota-stat-item {
@@ -352,13 +383,13 @@ body::before {
 }
 
 .quota-stat-label {
-  font-size: 0.6rem;
+  font-size: 0.55rem;
   color: #94a3b8;
   text-transform: uppercase;
 }
 
 .quota-stat-number {
-  font-size: 1rem;
+  font-size: 0.9rem;
   font-weight: 700;
   color: #f1f5f9;
 }
@@ -367,7 +398,7 @@ body::before {
   background: linear-gradient(135deg, #22c55e, #16a34a);
   border: none;
   border-radius: 0.75rem;
-  padding: 0.8rem 1rem;
+  padding: 0.6rem 1rem;
   font-weight: 700;
   color: white;
   cursor: pointer;
@@ -376,7 +407,7 @@ body::before {
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   width: 100%;
 }
 
@@ -384,6 +415,21 @@ body::before {
   transform: translateY(-2px);
   box-shadow: 0 8px 20px rgba(34,197,94,0.3);
   background: linear-gradient(135deg, #16a34a, #15803d);
+}
+
+/* ==================== TRADINGVIEW WIDGET WRAPPER ==================== */
+.tradingview-wrapper {
+  background: linear-gradient(145deg, #1e293b, #0f172a);
+  border-radius: 1.5rem;
+  border: 1px solid rgba(34,197,94,0.2);
+  overflow: hidden;
+  transition: all 0.3s;
+}
+
+.tradingview-wrapper:hover {
+  transform: translateY(-4px);
+  border-color: rgba(34,197,94,0.5);
+  box-shadow: 0 15px 35px -10px rgba(0,0,0,0.5);
 }
 
 /* ==================== KONDISI PASAR ==================== */
@@ -401,16 +447,16 @@ body::before {
   align-items: center;
   justify-content: center;
   gap: 1rem;
-  font-size: 1.2rem;
+  font-size: 1rem;
   font-weight: 700;
   padding: 0.5rem;
   border-radius: 2rem;
 }
-.trend-status i { font-size: 1.5rem; }
+.trend-status i { font-size: 1.2rem; }
 .trend-bullish { background: rgba(34,197,94,0.15); color: #22c55e; border: 1px solid #22c55e; }
 .trend-bearish { background: rgba(239,68,68,0.15); color: #ef4444; border: 1px solid #ef4444; }
 .trend-sideways { background: rgba(245,158,11,0.15); color: #f59e0b; border: 1px solid #f59e0b; }
-.trend-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 0.5rem; color: #94a3b8; }
+.trend-label { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 0.5rem; color: #94a3b8; }
 
 /* ==================== MESIN ANALISA ==================== */
 .analyzer-card {
@@ -429,7 +475,7 @@ body::before {
 
 .analyzer-header {
   background: linear-gradient(135deg, #22c55e20, #3b82f620);
-  padding: 1rem 1.5rem;
+  padding: 0.8rem 1.2rem;
   border-bottom: 1px solid rgba(34,197,94,0.2);
   display: flex;
   align-items: center;
@@ -437,12 +483,12 @@ body::before {
 }
 
 .analyzer-header i {
-  font-size: 1.25rem;
+  font-size: 1rem;
   color: #22c55e;
 }
 
 .analyzer-header h3 {
-  font-size: 1rem;
+  font-size: 0.85rem;
   font-weight: 600;
   color: #cbd5e1;
   text-transform: uppercase;
@@ -450,26 +496,26 @@ body::before {
 }
 
 .analyzer-body {
-  padding: 1.5rem;
+  padding: 1.2rem;
 }
 
 .analyzer-field {
-  margin-bottom: 1.25rem;
+  margin-bottom: 1rem;
 }
 
 .analyzer-label {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  font-size: 0.7rem;
+  font-size: 0.65rem;
   text-transform: uppercase;
   letter-spacing: 1.5px;
   color: #94a3b8;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.4rem;
 }
 
 .analyzer-label i {
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   color: #22c55e;
 }
 
@@ -477,17 +523,17 @@ body::before {
   width: 100%;
   background: rgba(15, 23, 42, 0.9);
   border: 1px solid #334155;
-  border-radius: 1rem;
-  padding: 0.875rem 1rem;
+  border-radius: 0.8rem;
+  padding: 0.7rem 1rem;
   color: #ffffff;
-  font-size: 0.95rem;
+  font-size: 0.85rem;
   cursor: pointer;
   transition: all 0.2s;
   appearance: none;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2322c55e'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: right 1rem center;
-  background-size: 1rem;
+  background-size: 0.8rem;
 }
 
 .analyzer-select:focus {
@@ -499,15 +545,15 @@ body::before {
 .analyzer-buttons {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
-  margin-top: 1rem;
+  gap: 0.6rem;
+  margin-top: 0.8rem;
 }
 
 .btn-analyze {
   background: linear-gradient(135deg, #22c55e, #16a34a);
   border: none;
-  border-radius: 1rem;
-  padding: 0.875rem;
+  border-radius: 0.8rem;
+  padding: 0.7rem;
   font-weight: 700;
   color: white;
   cursor: pointer;
@@ -517,7 +563,7 @@ body::before {
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  font-size: 0.95rem;
+  font-size: 0.85rem;
   position: relative;
   overflow: hidden;
 }
@@ -545,8 +591,8 @@ body::before {
 .btn-reset {
   background: linear-gradient(135deg, #475569, #334155);
   border: none;
-  border-radius: 1rem;
-  padding: 0.875rem;
+  border-radius: 0.8rem;
+  padding: 0.7rem;
   font-weight: 700;
   color: white;
   cursor: pointer;
@@ -556,7 +602,7 @@ body::before {
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  font-size: 0.95rem;
+  font-size: 0.85rem;
 }
 
 .btn-reset:hover {
@@ -564,92 +610,641 @@ body::before {
   background: linear-gradient(135deg, #64748b, #475569);
 }
 
-/* ==================== SIGNAL CARD ==================== */
+/* ==================== SIGNAL CARD PREMIUM ==================== */
 .signal-premium {
   background: linear-gradient(145deg, #1e293b, #0f172a);
   border-radius: 1.5rem;
   overflow: hidden;
   margin-top: 1rem;
+  border: 1px solid rgba(34,197,94,0.2);
+  box-shadow: 0 10px 30px -10px rgba(0,0,0,0.3);
+  transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
 }
+
+.signal-premium:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 25px 40px -15px rgba(0,0,0,0.5);
+  border-color: rgba(34,197,94,0.4);
+}
+
 .signal-header {
-  background: linear-gradient(135deg, #22c55e20, #3b82f620);
-  padding: 1rem 1.5rem;
+  background: linear-gradient(135deg, rgba(34,197,94,0.1), rgba(59,130,246,0.05));
+  padding: 1rem 1.2rem;
   border-bottom: 1px solid rgba(34,197,94,0.2);
   display: flex;
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
-  gap: 0.5rem;
+  gap: 0.8rem;
 }
+
+.signal-header h3 {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #22c55e;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.signal-header h3 i {
+  font-size: 1rem;
+}
+
 .signal-badge-premium {
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
-  padding: 0.5rem 1.25rem;
+  gap: 0.6rem;
+  padding: 0.4rem 1.2rem;
   border-radius: 2rem;
-  font-weight: 700;
-  font-size: 0.875rem;
+  font-weight: 800;
+  font-size: 0.85rem;
+  letter-spacing: 1px;
+  transition: all 0.3s;
 }
-.signal-buy-premium { background: linear-gradient(135deg, #22c55e, #16a34a); box-shadow: 0 0 15px rgba(34,197,94,0.4); }
-.signal-sell-premium { background: linear-gradient(135deg, #ef4444, #dc2626); box-shadow: 0 0 15px rgba(239,68,68,0.4); }
-.signal-wait-premium { background: linear-gradient(135deg, #f59e0b, #d97706); box-shadow: 0 0 15px rgba(245,158,11,0.4); }
-.signal-body { padding: 1.5rem; }
 
-.winrate-container {
+.signal-badge-premium:hover {
+  transform: scale(1.02);
+}
+
+.signal-buy-premium { 
+  background: linear-gradient(135deg, #22c55e, #16a34a); 
+  box-shadow: 0 4px 15px rgba(34,197,94,0.3);
+  animation: glow-pulse 2s ease-in-out infinite;
+}
+
+.signal-sell-premium { 
+  background: linear-gradient(135deg, #ef4444, #dc2626); 
+  box-shadow: 0 4px 15px rgba(239,68,68,0.3);
+  animation: glow-pulse 2s ease-in-out infinite;
+}
+
+.signal-wait-premium { 
+  background: linear-gradient(135deg, #f59e0b, #d97706); 
+  box-shadow: 0 4px 15px rgba(245,158,11,0.3);
+}
+
+.signal-body {
+  padding: 1.2rem;
+}
+
+/* ==================== CONFIDENCE SECTION ==================== */
+.confidence-super-modern {
+  background: linear-gradient(135deg, rgba(34,197,94,0.08), rgba(59,130,246,0.04));
+  border-radius: 1.2rem;
+  padding: 1rem;
+  margin-bottom: 1.2rem;
+  border: 1px solid rgba(34,197,94,0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+.confidence-super-modern::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #22c55e, #3b82f6, #8b5cf6, #22c55e);
+  background-size: 200% auto;
+  animation: shine 3s ease-in-out infinite;
+}
+
+.confidence-wrapper {
   display: flex;
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
   gap: 1rem;
-  margin-bottom: 1.5rem;
 }
-.winrate-circle { position: relative; width: 100px; height: 100px; }
-.winrate-svg { transform: rotate(-90deg); }
-.winrate-circle-bg { stroke: #1e293b; stroke-width: 8; fill: none; }
-.winrate-circle-fill { stroke: #22c55e; stroke-width: 8; fill: none; stroke-linecap: round; transition: stroke-dasharray 0.5s; }
-.winrate-text { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; }
-.winrate-percent { font-size: 1.5rem; font-weight: 800; color: #22c55e; }
-.winrate-label { font-size: 0.6rem; color: #94a3b8; }
-.winrate-legend { display: flex; gap: 1rem; flex-wrap: wrap; }
-.legend-item { display: flex; align-items: center; gap: 0.5rem; font-size: 0.7rem; color: #94a3b8; }
-.legend-dot { width: 8px; height: 8px; border-radius: 50%; }
-.legend-dot.weak { background: #ef4444; }
-.legend-dot.medium { background: #f59e0b; }
-.legend-dot.strong { background: #22c55e; }
 
-.level-cards {
+.modern-circle {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  flex-shrink: 0;
+}
+
+.modern-circle svg {
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+
+.modern-circle-bg {
+  stroke: #1e293b;
+  stroke-width: 10;
+  fill: none;
+}
+
+.modern-circle-fill {
+  stroke-width: 10;
+  fill: none;
+  stroke-linecap: round;
+  transition: stroke-dasharray 1s cubic-bezier(0.4, 0, 0.2, 1);
+  filter: drop-shadow(0 0 6px currentColor);
+}
+
+.modern-circle-fill.low-confidence { stroke: #ef4444; }
+.modern-circle-fill.medium-confidence { stroke: #f59e0b; }
+.modern-circle-fill.high-confidence { stroke: #22c55e; }
+
+.modern-circle-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.modern-circle-percent {
+  font-size: 1.3rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.modern-circle-percent.low-confidence { color: #ef4444; }
+.modern-circle-percent.medium-confidence { color: #f59e0b; }
+.modern-circle-percent.high-confidence { color: #22c55e; }
+
+.modern-circle-label {
+  font-size: 0.55rem;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-top: 2px;
+}
+
+.confidence-levels-horizontal {
+  display: flex;
+  gap: 1rem;
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+}
+
+.confidence-level-indicator {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  transition: all 0.3s;
+  cursor: pointer;
+  padding: 0.2rem 0.6rem;
+  border-radius: 30px;
+  background: rgba(255,255,255,0.03);
+}
+
+.confidence-level-indicator:hover {
+  transform: translateY(-2px);
+  background: rgba(255,255,255,0.08);
+}
+
+.level-bullet {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  transition: all 0.3s;
+}
+
+.confidence-level-indicator:hover .level-bullet {
+  transform: scale(1.2);
+}
+
+.level-bullet.low { background: #ef4444; box-shadow: 0 0 4px #ef4444; }
+.level-bullet.medium { background: #f59e0b; box-shadow: 0 0 4px #f59e0b; }
+.level-bullet.high { background: #22c55e; box-shadow: 0 0 4px #22c55e; }
+
+.level-text {
+  font-size: 0.65rem;
+  font-weight: 600;
+  color: #cbd5e1;
+}
+
+.level-range {
+  font-size: 0.55rem;
+  color: #64748b;
+}
+
+/* ==================== TECHNICAL INDICATORS SECTION ==================== */
+.technical-section {
+  margin-bottom: 1.2rem;
+  background: rgba(0,0,0,0.2);
+  border-radius: 1rem;
+  overflow: hidden;
+}
+
+.technical-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.8rem 1rem;
+  background: rgba(34,197,94,0.05);
+  cursor: pointer;
+  transition: all 0.3s;
+  border-bottom: 1px solid rgba(34,197,94,0.1);
+}
+
+.technical-header:hover {
+  background: rgba(34,197,94,0.1);
+}
+
+.technical-header .section-label {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: #22c55e;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.technical-header .section-label i {
+  font-size: 0.7rem;
+  transition: transform 0.3s;
+}
+
+.technical-header .toggle-icon {
+  font-size: 0.8rem;
+  color: #22c55e;
+  transition: transform 0.3s;
+}
+
+.technical-header .toggle-icon.rotated {
+  transform: rotate(180deg);
+}
+
+.technical-content {
+  padding: 1rem;
+  animation: slide-down 0.3s ease;
+}
+
+.technical-content.collapsed {
+  display: none;
+}
+
+.signal-info-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 1rem;
-  margin-bottom: 1.5rem;
+  gap: 0.8rem;
 }
-.level-card-premium {
-  background: rgba(0,0,0,0.3);
-  border-radius: 1rem;
-  padding: 1rem;
-  text-align: center;
-  border: 1px solid #334155;
-  transition: all 0.2s;
-}
-.level-card-premium:hover { border-color: #22c55e; transform: translateY(-2px); }
-.level-icon { font-size: 1.25rem; color: #22c55e; margin-bottom: 0.5rem; }
-.level-title { font-size: 0.7rem; color: #94a3b8; text-transform: uppercase; letter-spacing: 1px; }
-.level-value { font-size: 1rem; font-weight: 700; font-family: monospace; color: #22c55e; }
 
-.trading-style-card {
-  background: linear-gradient(135deg, #22c55e10, #3b82f610);
+.market-trend-card {
+  background: rgba(0,0,0,0.35);
+  border-radius: 0.8rem;
+  padding: 0.8rem;
+  text-align: center;
+  border: 1px solid rgba(255,255,255,0.05);
+  transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.market-trend-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, currentColor, transparent);
+  transform: translateX(-100%);
+  transition: transform 0.5s;
+}
+
+.market-trend-card:hover::before {
+  transform: translateX(100%);
+}
+
+.market-trend-card:hover {
+  transform: translateY(-4px) scale(1.02);
+  background: rgba(34,197,94,0.08);
+  box-shadow: 0 8px 20px -8px rgba(0,0,0,0.4);
+}
+
+.trend-animation {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.4rem;
+  margin-bottom: 0.4rem;
+}
+
+.trend-arrow-up {
+  color: #22c55e;
+  font-size: 1.2rem;
+  animation: bounceUp 1s ease-in-out infinite;
+}
+
+.trend-arrow-down {
+  color: #ef4444;
+  font-size: 1.2rem;
+  animation: bounceDown 1s ease-in-out infinite;
+}
+
+.trend-minus {
+  color: #f59e0b;
+  font-size: 1.2rem;
+}
+
+.market-trend-value {
+  font-size: 0.85rem;
+  font-weight: 800;
+  margin-top: 0.3rem;
+}
+
+.market-trend-value.bullish { color: #22c55e; }
+.market-trend-value.bearish { color: #ef4444; }
+.market-trend-value.sideways { color: #f59e0b; }
+
+.signal-info-card {
+  background: rgba(0,0,0,0.35);
+  border-radius: 0.8rem;
+  padding: 0.8rem 0.5rem;
+  text-align: center;
+  border: 1px solid rgba(255,255,255,0.05);
+  transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.signal-info-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #22c55e, transparent);
+  transform: translateX(-100%);
+  transition: transform 0.5s;
+}
+
+.signal-info-card:hover::before {
+  transform: translateX(100%);
+}
+
+.signal-info-card:hover {
+  transform: translateY(-4px) scale(1.02);
+  border-color: rgba(34,197,94,0.4);
+  background: rgba(34,197,94,0.08);
+  box-shadow: 0 8px 20px -8px rgba(0,0,0,0.4);
+}
+
+.signal-info-icon {
+  font-size: 1.2rem;
+  margin-bottom: 0.4rem;
+  transition: all 0.3s;
+}
+
+.signal-info-card:hover .signal-info-icon {
+  transform: scale(1.1);
+}
+
+.signal-info-icon.rsi-icon { color: #3b82f6; }
+.signal-info-icon.macd-icon { color: #8b5cf6; }
+.signal-info-icon.obv-icon { color: #06b6d4; }
+
+.signal-info-title {
+  font-size: 0.55rem;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-bottom: 0.2rem;
+}
+
+.signal-info-value {
+  font-size: 0.85rem;
+  font-weight: 800;
+  font-family: monospace;
+  transition: all 0.3s;
+}
+
+.signal-info-card:hover .signal-info-value {
+  transform: scale(1.05);
+}
+
+.signal-info-value.rsi-normal { color: #3b82f6; }
+.signal-info-value.rsi-high { color: #ef4444; }
+.signal-info-value.rsi-low { color: #22c55e; }
+.signal-info-value.macd-bullish { color: #22c55e; }
+.signal-info-value.macd-bearish { color: #ef4444; }
+.signal-info-value.obv-bullish { color: #22c55e; }
+.signal-info-value.obv-bearish { color: #ef4444; }
+.signal-info-value.obv-neutral { color: #94a3b8; }
+
+.rsi-chart-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.rsi-chart-canvas {
+  width: 100%;
+  height: 40px;
+}
+
+.rsi-indicator {
+  display: flex;
+  justify-content: center;
+  gap: 0.8rem;
+  font-size: 0.55rem;
+}
+
+.rsi-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.rsi-dot.oversold { background: #22c55e; box-shadow: 0 0 4px #22c55e; }
+.rsi-dot.normal { background: #3b82f6; box-shadow: 0 0 4px #3b82f6; }
+.rsi-dot.overbought { background: #ef4444; box-shadow: 0 0 4px #ef4444; }
+
+/* ==================== KEY LEVELS SECTION PREMIUM ==================== */
+.key-levels-section {
+  margin-bottom: 1.2rem;
+  background: rgba(0,0,0,0.2);
   border-radius: 1rem;
-  padding: 1rem;
-  margin-bottom: 1.5rem;
-  border: 1px solid rgba(34,197,94,0.2);
+  overflow: hidden;
+}
+
+.key-levels-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 0.5rem;
+  padding: 0.8rem 1rem;
+  background: rgba(34,197,94,0.05);
+  cursor: pointer;
+  transition: all 0.3s;
+  border-bottom: 1px solid rgba(34,197,94,0.1);
 }
-.trading-style-label { font-size: 0.7rem; color: #94a3b8; text-transform: uppercase; display: flex; align-items: center; gap: 0.5rem; }
-.trading-style-value { font-size: 1rem; font-weight: 700; color: #22c55e; }
+
+.key-levels-header:hover {
+  background: rgba(34,197,94,0.1);
+}
+
+.key-levels-header .section-label {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: #22c55e;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.key-levels-header .toggle-icon {
+  font-size: 0.8rem;
+  color: #22c55e;
+  transition: transform 0.3s;
+}
+
+.key-levels-header .toggle-icon.rotated {
+  transform: rotate(180deg);
+}
+
+.key-levels-content {
+  padding: 1rem;
+  animation: slide-down 0.3s ease;
+}
+
+.key-levels-content.collapsed {
+  display: none;
+}
+
+.levels-grid-2x2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.8rem;
+}
+
+.level-card {
+  background: linear-gradient(135deg, rgba(0,0,0,0.4), rgba(0,0,0,0.2));
+  border-radius: 0.8rem;
+  padding: 0.8rem 0.6rem;
+  text-align: center;
+  border: 1px solid rgba(255,255,255,0.05);
+  transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(5px);
+}
+
+.level-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  background: linear-gradient(135deg, transparent, rgba(255,255,255,0.03), transparent);
+  transform: translateX(-100%);
+  transition: transform 0.6s;
+}
+
+.level-card:hover::before {
+  transform: translateX(100%);
+}
+
+.level-card:hover {
+  transform: translateY(-4px) scale(1.02);
+  border-color: currentColor;
+}
+
+.level-card.support {
+  border-top: 2px solid #ef4444;
+}
+.level-card.resistance {
+  border-top: 2px solid #22c55e;
+}
+.level-card.sl {
+  border-top: 2px solid #94a3b8;
+}
+.level-card.tp {
+  border-top: 2px solid #94a3b8;
+}
+
+.level-icon {
+  font-size: 1.2rem;
+  margin-bottom: 0.4rem;
+  transition: all 0.3s;
+}
+
+.level-card:hover .level-icon {
+  transform: scale(1.1);
+}
+
+.level-icon.support { color: #ef4444; }
+.level-icon.resistance { color: #22c55e; }
+.level-icon.sl { color: #94a3b8; }
+.level-icon.tp { color: #94a3b8; }
+
+.level-title {
+  font-size: 0.6rem;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-bottom: 0.3rem;
+  font-weight: 600;
+}
+
+.level-value {
+  font-size: 0.9rem;
+  font-weight: 800;
+  font-family: monospace;
+  background: linear-gradient(135deg, #f1f5f9, #cbd5e1);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  letter-spacing: 0.5px;
+}
+
+.chart-line-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+}
+
+.chart-line-icon .line {
+  width: 3px;
+  border-radius: 2px;
+}
+
+.chart-line-icon.support .line { background: #ef4444; }
+.chart-line-icon.resistance .line { background: #22c55e; }
+
+.chart-line-icon .line:nth-child(1) { height: 8px; }
+.chart-line-icon .line:nth-child(2) { height: 16px; }
+.chart-line-icon .line:nth-child(3) { height: 12px; }
+.chart-line-icon .line:nth-child(4) { height: 14px; }
+.chart-line-icon .line:nth-child(5) { height: 6px; }
+
+.trading-style-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.4rem 0.8rem;
+  background: rgba(34,197,94,0.1);
+  border-radius: 2rem;
+  font-size: 0.65rem;
+  font-weight: 600;
+  color: #22c55e;
+  border: 1px solid rgba(34,197,94,0.2);
+  transition: all 0.3s;
+}
+
+.trading-style-badge:hover {
+  transform: translateY(-2px);
+  background: rgba(34,197,94,0.15);
+}
 
 /* ==================== MANAJEMEN RISIKO ==================== */
 .risk-card {
@@ -661,20 +1256,20 @@ body::before {
 
 .risk-header {
   background: linear-gradient(135deg, #22c55e20, #3b82f620);
-  padding: 1rem 1.5rem;
+  padding: 0.8rem 1.2rem;
   border-bottom: 1px solid rgba(34,197,94,0.2);
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: 0.6rem;
 }
 
 .risk-header i {
-  font-size: 1.25rem;
+  font-size: 1rem;
   color: #22c55e;
 }
 
 .risk-header h3 {
-  font-size: 1rem;
+  font-size: 0.85rem;
   font-weight: 600;
   color: #cbd5e1;
   text-transform: uppercase;
@@ -682,22 +1277,22 @@ body::before {
 }
 
 .risk-body {
-  padding: 1.5rem;
+  padding: 1.2rem;
 }
 
 .risk-input-group {
-  margin-bottom: 1.25rem;
+  margin-bottom: 1rem;
 }
 
 .risk-input-group label {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  font-size: 0.7rem;
+  gap: 0.4rem;
+  font-size: 0.65rem;
   text-transform: uppercase;
   letter-spacing: 1.5px;
   color: #94a3b8;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.4rem;
 }
 
 .risk-input-wrapper {
@@ -708,19 +1303,19 @@ body::before {
 
 .risk-input-wrapper i {
   position: absolute;
-  left: 1rem;
+  left: 0.8rem;
   color: #22c55e;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
 }
 
 .risk-input {
   width: 100%;
   background: rgba(15, 23, 42, 0.9);
   border: 1px solid #334155;
-  border-radius: 1rem;
-  padding: 0.875rem 1rem 0.875rem 2.5rem;
+  border-radius: 0.8rem;
+  padding: 0.7rem 1rem 0.7rem 2.2rem;
   color: #ffffff;
-  font-size: 0.95rem;
+  font-size: 0.85rem;
   transition: all 0.2s;
 }
 
@@ -734,17 +1329,17 @@ body::before {
   width: 100%;
   background: rgba(15, 23, 42, 0.9);
   border: 1px solid #334155;
-  border-radius: 1rem;
-  padding: 0.875rem 1rem;
+  border-radius: 0.8rem;
+  padding: 0.7rem 1rem;
   color: #ffffff;
-  font-size: 0.95rem;
+  font-size: 0.85rem;
   cursor: pointer;
   transition: all 0.2s;
   appearance: none;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2322c55e'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: right 1rem center;
-  background-size: 1rem;
+  background-size: 0.8rem;
 }
 
 .risk-select:focus {
@@ -756,15 +1351,15 @@ body::before {
 .risk-buttons {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
-  margin-top: 1rem;
+  gap: 0.6rem;
+  margin-top: 0.8rem;
 }
 
 .btn-risk-calculate {
   background: linear-gradient(135deg, #22c55e, #16a34a);
   border: none;
-  border-radius: 1rem;
-  padding: 0.875rem;
+  border-radius: 0.8rem;
+  padding: 0.7rem;
   font-weight: 700;
   color: white;
   cursor: pointer;
@@ -784,8 +1379,8 @@ body::before {
 .btn-risk-reset {
   background: linear-gradient(135deg, #475569, #334155);
   border: none;
-  border-radius: 1rem;
-  padding: 0.875rem;
+  border-radius: 0.8rem;
+  padding: 0.7rem;
   font-weight: 700;
   color: white;
   cursor: pointer;
@@ -803,32 +1398,32 @@ body::before {
 }
 
 .risk-result {
-  margin-top: 1.5rem;
-  padding-top: 1.5rem;
+  margin-top: 1rem;
+  padding-top: 1rem;
   border-top: 1px solid #334155;
 }
 
 .risk-result-title {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  font-size: 0.75rem;
+  gap: 0.4rem;
+  font-size: 0.65rem;
   color: #94a3b8;
   text-transform: uppercase;
   letter-spacing: 1.5px;
-  margin-bottom: 1rem;
+  margin-bottom: 0.8rem;
 }
 
 .risk-result-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 1rem;
+  gap: 0.8rem;
 }
 
 .risk-metric {
   background: rgba(0,0,0,0.3);
-  border-radius: 1rem;
-  padding: 1rem;
+  border-radius: 0.8rem;
+  padding: 0.8rem;
   text-align: center;
   transition: all 0.2s;
   border: 1px solid #334155;
@@ -840,22 +1435,22 @@ body::before {
 }
 
 .risk-metric-icon {
-  font-size: 1.25rem;
+  font-size: 1rem;
   color: #22c55e;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.3rem;
 }
 
 .risk-metric-label {
-  font-size: 0.65rem;
+  font-size: 0.55rem;
   color: #94a3b8;
   text-transform: uppercase;
   letter-spacing: 1px;
 }
 
 .risk-metric-value {
-  font-size: 1.1rem;
+  font-size: 0.9rem;
   font-weight: 700;
-  margin-top: 0.25rem;
+  margin-top: 0.2rem;
 }
 
 .risk-metric-value.positive {
@@ -870,13 +1465,13 @@ body::before {
 .stats-modern {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 1rem;
+  gap: 0.8rem;
 }
 
 .stat-card-interactive {
-  background: linear-gradient(145deg, #1e293b, #0f172a);
-  border-radius: 1rem;
-  padding: 1.2rem;
+  background: rgba(0,0,0,0.35);
+  border-radius: 0.8rem;
+  padding: 0.8rem;
   text-align: center;
   border: 1px solid rgba(34,197,94,0.2);
   transition: all 0.2s;
@@ -886,17 +1481,17 @@ body::before {
 .stat-card-interactive:hover {
   transform: translateY(-3px);
   border-color: #22c55e;
-  background: linear-gradient(145deg, #2a3a4e, #1a2538);
+  background: rgba(34,197,94,0.08);
 }
 
 .stat-icon {
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   color: #22c55e;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.3rem;
 }
 
 .stat-value {
-  font-size: 1.6rem;
+  font-size: 1.2rem;
   font-weight: 800;
   background: linear-gradient(135deg, #22c55e, #4ade80);
   -webkit-background-clip: text;
@@ -906,15 +1501,98 @@ body::before {
 }
 
 .stat-label {
-  font-size: 0.7rem;
+  font-size: 0.55rem;
   text-transform: uppercase;
   letter-spacing: 1.5px;
   color: #94a3b8;
-  margin-top: 0.5rem;
+  margin-top: 0.3rem;
 }
 
-/* ==================== MODAL PEMBELIAN LIMIT SUPER MODERN ==================== */
-/* Modal Container */
+/* ==================== SUPPORTED BY ==================== */
+.supported-section {
+  margin-bottom: 1rem;
+}
+
+.supported-title {
+  text-align: center;
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  color: #64748b;
+  margin-bottom: 1rem;
+  position: relative;
+}
+
+.supported-title::before,
+.supported-title::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  width: 60px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #22c55e, transparent);
+}
+
+.supported-title::before {
+  left: 15%;
+}
+
+.supported-title::after {
+  right: 15%;
+}
+
+.supported-grid {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.supported-card {
+  background: rgba(34,197,94,0.05);
+  border-radius: 0.8rem;
+  padding: 0.5rem 1rem;
+  text-align: center;
+  border: 1px solid rgba(34,197,94,0.15);
+  transition: all 0.3s;
+  cursor: pointer;
+}
+
+.supported-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(34,197,94,0.4);
+  background: rgba(34,197,94,0.1);
+}
+
+.supported-icon {
+  width: 35px;
+  height: 35px;
+  margin: 0 auto 0.4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.supported-icon img {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+  filter: drop-shadow(0 0 4px rgba(34,197,94,0.3));
+}
+
+.supported-name {
+  font-size: 0.6rem;
+  font-weight: 600;
+  color: #94a3b8;
+  letter-spacing: 0.5px;
+}
+
+.supported-card:hover .supported-name {
+  color: #22c55e;
+}
+
+/* ==================== MODAL PEMBELIAN LIMIT ==================== */
 .modern-modal {
   display: none;
   position: fixed;
@@ -930,7 +1608,6 @@ body::before {
 }
 .modern-modal.show { display: flex; align-items: center; justify-content: center; }
 
-/* Modal Inner */
 .modern-modal-content {
   max-width: 550px;
   width: 100%;
@@ -946,7 +1623,6 @@ body::before {
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* Modal Header */
 .modern-modal-header {
   padding: 1.5rem;
   background: linear-gradient(135deg, #22c55e15, #3b82f615);
@@ -984,7 +1660,6 @@ body::before {
   transform: rotate(90deg);
 }
 
-/* Step Progress */
 .step-progress {
   display: flex;
   justify-content: center;
@@ -1024,7 +1699,6 @@ body::before {
   color: white;
 }
 
-/* Quantity Selector Premium */
 .quantity-selector-premium {
   background: linear-gradient(145deg, #0f172a, #0a0f1e);
   border-radius: 1.25rem;
@@ -1081,7 +1755,6 @@ body::before {
   text-align: center;
 }
 
-/* Price Card */
 .price-card-premium {
   background: linear-gradient(135deg, #1e293b, #0f172a);
   border-radius: 1.25rem;
@@ -1128,7 +1801,6 @@ body::before {
   letter-spacing: 2px;
 }
 
-/* Form Container Modern */
 .form-container-modern {
   padding: 0 1.5rem 1.5rem 1.5rem;
 }
@@ -1185,7 +1857,6 @@ body::before {
   box-shadow: 0 0 0 3px rgba(34,197,94,0.1);
 }
 
-/* QR Container Premium */
 .qr-container-premium {
   background: linear-gradient(145deg, #0f172a, #0a0f1e);
   border-radius: 1.25rem;
@@ -1222,7 +1893,6 @@ body::before {
   object-fit: contain;
 }
 
-/* Guide Card */
 .guide-card {
   background: rgba(0,0,0,0.25);
   border-radius: 1rem;
@@ -1256,7 +1926,6 @@ body::before {
   border-color: #22c55e;
 }
 
-/* Buttons Modern */
 .btn-modern-primary {
   background: linear-gradient(135deg, #22c55e, #16a34a);
   border: none;
@@ -1298,7 +1967,6 @@ body::before {
   background: linear-gradient(135deg, #64748b, #475569);
 }
 
-/* Chart */
 .chart-float-btn {
   position: fixed;
   bottom: 80px;
@@ -1333,7 +2001,6 @@ body::before {
 }
 .chart-container-modern.show { transform: translateX(-50%) translateY(0); }
 
-/* Loading Overlay */
 .loading-overlay-premium {
   position: fixed;
   top: 0;
@@ -1361,7 +2028,6 @@ body::before {
 .loading-stats span { color: #22c55e; font-weight: 700; }
 .loading-text { font-size: 0.9rem; letter-spacing: 2px; color: #cbd5e1; }
 
-/* Toast */
 .toast-modern {
   position: fixed;
   bottom: 100px;
@@ -1380,32 +2046,51 @@ body::before {
   to { transform: translateX(0); opacity: 1; }
 }
 
+/* Responsive untuk HP dan Tablet */
 @media (max-width: 768px) {
   .stats-modern { grid-template-columns: repeat(2, 1fr); }
-  .quota-modern .quota-value { font-size: 2rem; }
-  .winrate-container { flex-direction: column; align-items: center; }
-  .level-cards { grid-template-columns: 1fr; }
-  .trading-style-card { flex-direction: column; text-align: center; }
-  .signal-header { flex-direction: column; text-align: center; }
+  .quota-modern .quota-value { font-size: 1.8rem; }
+  .confidence-wrapper { flex-direction: column; align-items: center; }
+  .confidence-levels-horizontal { width: 100%; justify-content: center; gap: 0.8rem; }
+  .signal-info-grid { 
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 0.6rem !important;
+  }
+  .levels-grid-2x2 {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 0.6rem !important;
+  }
+  .signal-info-card { padding: 0.6rem 0.4rem; }
+  .signal-info-icon { font-size: 1rem; }
+  .signal-info-value { font-size: 0.75rem; }
+  .level-card { padding: 0.6rem; }
+  .level-value { font-size: 0.75rem; }
   .risk-result-grid { grid-template-columns: 1fr; }
   .qr-code-wrapper img { width: 120px; height: 120px; }
   .quantity-btn { width: 40px; height: 40px; }
   .quantity-value { font-size: 1.5rem; min-width: 60px; }
   .step-progress { gap: 1rem; }
   .step-item span { display: none; }
+  .supported-grid { gap: 1rem; }
+  .supported-card { padding: 0.4rem 0.8rem; }
+  .supported-icon { width: 30px; height: 30px; }
+  .supported-icon img { width: 24px; height: 24px; }
 }
+
 .grid-responsive { display: grid; grid-template-columns: 1fr; gap: 1rem; }
 @media (min-width: 768px) { 
   .grid-responsive-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; align-items: start; }
 }
 
-.header-spacer { height: 80px; }
+.header-spacer { height: 100px; }
 @media (max-width: 768px) { .header-spacer { height: 120px; } }
 </style>
 </head>
 <body>
 
-<!-- HEADER -->
+<!-- HEADER ROUNDED OVERLAY -->
 <header class="header-premium">
   <div class="header-container">
     <div class="logo-area">
@@ -1414,18 +2099,21 @@ body::before {
       </div>
       <div class="logo-text">
         <h1>AI TRADING BASIC</h1>
-        <p>Advanced Crypto Forex Intelligence</p>
+        <p>Hunters Group</p>
       </div>
     </div>
     <div class="header-right">
-      <div class="header-stat"><i class="fas fa-trophy"></i><span class="stat-label">Akurasi</span><span class="stat-value">80%</span></div>
+      <div class="header-stat">
+        <i class="fas fa-trophy"></i>
+        <span class="stat-label">Akurasi</span>
+        <span class="stat-value">83.5%</span>
+      </div>
     </div>
   </div>
 </header>
 <div class="header-spacer"></div>
-
 <!-- DATA STATUS -->
-<div id="dataStatus" class="glass-card mb-4 flex items-center justify-center gap-2 text-sm p-3">
+<div id="dataStatus" class="uniform-card mb-4 flex items-center justify-center gap-2 text-sm p-3">
   <div class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></div>
   <span>Sistem Siap | Menunggu analisa</span>
 </div>
@@ -1454,7 +2142,7 @@ body::before {
 </div>
 
 <!-- TRADINGVIEW WIDGET -->
-<div class="glass-card mb-4 p-0 overflow-hidden">
+<div class="tradingview-wrapper mb-4">
   <div class="tradingview-widget-container">
     <div class="tradingview-widget-container__widget"></div>
     <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-market-overview.js" async>
@@ -1469,7 +2157,7 @@ body::before {
 
 <!-- KONDISI PASAR -->
 <div id="trendContainer" class="mb-4" style="display: none;">
-  <div class="glass-card">
+  <div class="uniform-card">
     <div class="trend-modern">
       <div class="trend-label">KONDISI PASAR SAAT INI</div>
       <div id="trendDisplay" class="trend-status">
@@ -1492,8 +2180,8 @@ body::before {
         <div class="analyzer-field">
           <div class="analyzer-label"><i class="fas fa-coins"></i> Pasangan</div>
           <select id="pair" class="analyzer-select">
-            <option value="BTC/USD">₿ BTC/USD - Bitcoin</option>
-            <option value="XAU/USD" selected>🥇 XAU/USD - Emas</option>
+            <option value="BTC/USD">BTC/USD - Bitcoin</option>
+            <option value="XAU/USD" selected>XAU/USD - Emas</option>
           </select>
         </div>
         <div class="analyzer-field">
@@ -1513,15 +2201,162 @@ body::before {
         </div>
       </div>
     </div>
+    
+    <!-- SIGNAL CARD PREMIUM -->
     <div id="signalCard" class="signal-premium" style="display: none;">
-      <div class="signal-header"><h3><i class="fas fa-chart-simple"></i> Rekomendasi Entry</h3><div id="signalBadge" class="signal-badge-premium signal-wait-premium"><i class="fas fa-clock"></i> TUNGGU</div></div>
-      <div class="signal-body">
-        <div class="winrate-container">
-          <div class="winrate-circle"><svg width="100" height="100" class="winrate-svg"><circle cx="50" cy="50" r="42" class="winrate-circle-bg"></circle><circle cx="50" cy="50" r="42" class="winrate-circle-fill" id="winrateCircle" stroke-dasharray="0, 264"></circle></svg><div class="winrate-text"><div class="winrate-percent" id="winratePercent">0%</div><div class="winrate-label">Akurasi</div></div></div>
-          <div class="winrate-legend"><div class="legend-item"><div class="legend-dot weak"></div><span>Lemah (&lt;40%)</span></div><div class="legend-item"><div class="legend-dot medium"></div><span>Sedang (40-60%)</span></div><div class="legend-item"><div class="legend-dot strong"></div><span>Kuat (&gt;60%)</span></div></div>
+      <div class="signal-header">
+        <h3><i class="fas fa-chart-simple"></i> REKOMENDASI ENTRY</h3>
+        <div id="signalBadge" class="signal-badge-premium signal-wait-premium">
+          <i class="fas fa-clock"></i> TUNGGU
         </div>
-        <div class="level-cards"><div class="level-card-premium"><div class="level-icon"><i class="fas fa-shield-haltered"></i></div><div class="level-title">Order Block (OB)</div><div class="level-value" id="obValue">—</div></div><div class="level-card-premium"><div class="level-icon"><i class="fas fa-chart-gantt"></i></div><div class="level-title">Fair Value Gap (FVG)</div><div class="level-value" id="fvgValue">—</div></div></div>
-        <div class="trading-style-card"><div class="trading-style-label"><i class="fas fa-flag-checkered"></i> Gaya Trading Rekomendasi</div><div class="trading-style-value" id="tradingStyleText">—</div></div>
+      </div>
+      <div class="signal-body">
+        <div class="confidence-super-modern">
+          <div class="confidence-wrapper">
+            <div class="modern-circle">
+              <svg viewBox="0 0 160 160">
+                <circle cx="80" cy="80" r="70" class="modern-circle-bg"></circle>
+                <circle cx="80" cy="80" r="70" class="modern-circle-fill" id="confidenceCircle" stroke-dasharray="0, 440"></circle>
+              </svg>
+              <div class="modern-circle-text">
+                <div class="modern-circle-percent" id="confidencePercent">0%</div>
+                <div class="modern-circle-label">Confidence</div>
+              </div>
+            </div>
+            
+            <div class="confidence-levels-horizontal">
+              <div class="confidence-level-indicator">
+                <div class="level-bullet low"></div>
+                <span class="level-text">Low</span>
+                <span class="level-range">&lt;40%</span>
+              </div>
+              <div class="confidence-level-indicator">
+                <div class="level-bullet medium"></div>
+                <span class="level-text">Medium</span>
+                <span class="level-range">40-60%</span>
+              </div>
+              <div class="confidence-level-indicator">
+                <div class="level-bullet high"></div>
+                <span class="level-text">High</span>
+                <span class="level-range">&gt;60%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="technical-section">
+          <div class="technical-header" id="technicalToggle">
+            <div class="section-label">
+              <i class="fas fa-chart-simple"></i>
+              <span>Technical Indicators</span>
+            </div>
+            <i class="fas fa-chevron-down toggle-icon" id="technicalToggleIcon"></i>
+          </div>
+          <div class="technical-content" id="technicalContent">
+            <div class="signal-info-grid">
+              <div class="market-trend-card" id="marketTrendCard">
+                <div class="trend-animation" id="trendAnimation">
+                  <i class="fas fa-chart-line" id="trendIconMain"></i>
+                </div>
+                <div class="signal-info-title">MARKET TREND</div>
+                <div class="market-trend-value" id="marketTrend">—</div>
+              </div>
+              
+              <div class="signal-info-card">
+                <div class="signal-info-icon rsi-icon">
+                  <i class="fas fa-waveform"></i>
+                </div>
+                <div class="signal-info-title">RSI</div>
+                <div class="rsi-chart-container">
+                  <div class="signal-info-value" id="rsiValue">—</div>
+                  <canvas id="rsiChart" class="rsi-chart-canvas" width="200" height="40"></canvas>
+                  <div class="rsi-indicator" id="rsiIndicator"></div>
+                </div>
+              </div>
+              
+              <div class="signal-info-card">
+                <div class="signal-info-icon macd-icon">
+                  <i class="fas fa-chart-simple"></i>
+                </div>
+                <div class="signal-info-title">MACD</div>
+                <div class="signal-info-value" id="macdValue">—</div>
+              </div>
+              
+              <div class="signal-info-card">
+                <div class="signal-info-icon obv-icon">
+                  <i class="fas fa-chart-column"></i>
+                </div>
+                <div class="signal-info-title">OBV</div>
+                <div class="signal-info-value" id="obvValue">—</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="key-levels-section">
+          <div class="key-levels-header" id="keyLevelsToggle">
+            <div class="section-label">
+              <i class="fas fa-bullseye"></i>
+              <span>Key Levels</span>
+            </div>
+            <i class="fas fa-chevron-down toggle-icon" id="keyLevelsToggleIcon"></i>
+          </div>
+          <div class="key-levels-content" id="keyLevelsContent">
+            <div class="levels-grid-2x2">
+              <div class="level-card support">
+                <div class="level-icon support">
+                  <div class="chart-line-icon support">
+                    <div class="line"></div>
+                    <div class="line"></div>
+                    <div class="line"></div>
+                    <div class="line"></div>
+                    <div class="line"></div>
+                  </div>
+                </div>
+                <div class="level-title">SUPPORT</div>
+                <div class="level-value" id="supportLevel">—</div>
+              </div>
+              <div class="level-card resistance">
+                <div class="level-icon resistance">
+                  <div class="chart-line-icon resistance">
+                    <div class="line"></div>
+                    <div class="line"></div>
+                    <div class="line"></div>
+                    <div class="line"></div>
+                    <div class="line"></div>
+                  </div>
+                </div>
+                <div class="level-title">RESISTANCE</div>
+                <div class="level-value" id="resistanceLevel">—</div>
+              </div>
+              <div class="level-card sl" id="stopLossCard" style="display: none;">
+                <div class="level-icon sl">
+                  <i class="fas fa-stop-circle"></i>
+                </div>
+                <div class="level-title">STOP LOSS</div>
+                <div class="level-value" id="stopLossValue">—</div>
+              </div>
+              <div class="level-card tp" id="takeProfitCard" style="display: none;">
+                <div class="level-icon tp">
+                  <i class="fas fa-flag-checkered"></i>
+                </div>
+                <div class="level-title">TAKE PROFIT</div>
+                <div class="level-value" id="takeProfitValue">—</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex justify-between items-center flex-wrap gap-2 pt-2">
+          <div class="trading-style-badge">
+            <i class="fas fa-flag-checkered"></i>
+            <span id="tradingStyleText">Menunggu analisa...</span>
+          </div>
+          <div class="trading-style-badge">
+            <i class="fas fa-microchip"></i>
+            <span id="scoreText">Score: —</span>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -1542,9 +2377,9 @@ body::before {
       <div class="risk-input-group">
         <label><i class="fas fa-chart-line"></i> Level Risiko</label>
         <select id="mmLevel" class="risk-select">
-          <option value="easy">🟢 Konservatif (1% per posisi)</option>
-          <option value="medium">🟡 Moderate (2% per posisi)</option>
-          <option value="aggressive">🔴 Agresif (5% per posisi)</option>
+          <option value="easy">Konservatif (1% per posisi)</option>
+          <option value="medium">Moderate (2% per posisi)</option>
+          <option value="aggressive">Agresif (5% per posisi)</option>
         </select>
       </div>
       <div class="risk-buttons">
@@ -1564,27 +2399,44 @@ body::before {
   </div>
 </div>
 
-<!-- ECONOMIC CALENDAR -->
-<div class="glass-card mb-4"><h3 class="font-bold mb-3 text-gray-300 flex items-center gap-2"><i class="fas fa-calendar-alt text-emerald-400"></i> Kalender Ekonomi</h3><div class="tradingview-widget-container"><div class="tradingview-widget-container__widget"></div><script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-events.js" async>{"colorTheme":"dark","isTransparent":true,"locale":"id","width":"100%","height":400}</script></div></div>
-
 <!-- STATISTIK REAL-TIME -->
-<div class="glass-card mb-4">
-  <h3 class="font-bold mb-4 text-gray-300 flex items-center gap-2"><i class="fas fa-chart-line text-emerald-400"></i> Statistik Real-Time</h3>
-  <div class="stats-modern">
-    <div class="stat-card-interactive"><div class="stat-icon"><i class="fas fa-users"></i></div><div class="stat-value" id="totalUsers">400</div><div class="stat-label">Total Pengguna</div></div>
-    <div class="stat-card-interactive"><div class="stat-icon"><i class="fas fa-circle-user"></i></div><div class="stat-value" id="onlineUsers">28</div><div class="stat-label">Online</div></div>
-    <div class="stat-card-interactive"><div class="stat-icon"><i class="fas fa-chart-line"></i></div><div class="stat-value" id="profitTotal">Rp8.2Jt</div><div class="stat-label">Total Profit</div></div>
-    <div class="stat-card-interactive"><div class="stat-icon"><i class="fas fa-repeat"></i></div><div class="stat-value" id="profitTransaksi">180</div><div class="stat-label">Transaksi</div></div>
+<div class="uniform-card mb-4">
+  <div class="risk-header">
+    <i class="fas fa-chart-line"></i>
+    <h3>Statistik Real-Time</h3>
+  </div>
+  <div class="risk-body">
+    <div class="stats-modern">
+      <div class="stat-card-interactive"><div class="stat-icon"><i class="fas fa-users"></i></div><div class="stat-value" id="totalUsers">400</div><div class="stat-label">Total Pengguna</div></div>
+      <div class="stat-card-interactive"><div class="stat-icon"><i class="fas fa-circle-user"></i></div><div class="stat-value" id="onlineUsers">28</div><div class="stat-label">Online</div></div>
+      <div class="stat-card-interactive"><div class="stat-icon"><i class="fas fa-chart-line"></i></div><div class="stat-value" id="profitTotal">Rp8.2Jt</div><div class="stat-label">Total Profit</div></div>
+      <div class="stat-card-interactive"><div class="stat-icon"><i class="fas fa-repeat"></i></div><div class="stat-value" id="profitTransaksi">180</div><div class="stat-label">Transaksi</div></div>
+    </div>
   </div>
 </div>
 
 <!-- SUPPORTED BY -->
-<div class="glass-card mb-4 text-center">
-  <h3 class="font-bold mb-3 text-gray-300">Didukung Oleh</h3>
-  <div class="flex justify-center items-center gap-6 flex-wrap">
-    <div class="flex flex-col items-center opacity-70 hover:opacity-100 transition"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjl1apjJhjfGFCzp4i3L_S4fRVYqTTWPqri-pjxGDHoUYiqbDENzGE415Kxx5EWLw8EovJN1GvZY-ZO4jr4cXO5WmnsFOFjffMx3AvneCM7dvlvsduWzCxzsnYIiMCFC8IoumwgZ_Ta8ZS164gXst0tneV2AtHL-4s7ZTaUtsz6UqdrkR3Mp3CsyddJYeO8/s300/1000626602.png" class="h-8"><span class="text-xs text-gray-500 mt-1">TradingView</span></div>
-    <div class="flex flex-col items-center opacity-70 hover:opacity-100 transition"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEj_-QcFdqt68PylKH-k7PUMiMJKC59Vo8DBeP5z6MSmNbbgp_tuV4b5KTUmp4FoWRZOP5VZ_s5jZI5fIz94es9miNr1jaR-Zo7GKvrKGaHHxT_yxCEgxI8PgvupINceiVGlQ_xQiaTHH7kjepI9agthr98xPo_KVuM2mPb100-cKYYiJJvIrvxDKQmL8Q_q/s509/1000626603.png" class="h-8"><span class="text-xs text-gray-500 mt-1">MetaTrader 5</span></div>
-    <div class="flex flex-col items-center opacity-70 hover:opacity-100 transition"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiEayCuw9T12qTYwYuYj-nq8B7H3czP9nLcQ53dT-fl_0ydkSrpYfsb1IWspeSeyRw-z1p9aVeZmlt0x4IR4us3xZWs0y3-Rb8aBiw0U3-P_vLXd0wB6i9KTELl0AyzMYdG-yF2FTXpex6QYQ1m32G3HC4s0SRZdV6fWSm7sCbMW16nHiqEMqsM3p2mcIdH/s2000/1000629390.png" class="h-8"><span class="text-xs text-gray-500 mt-1">Binance</span></div>
+<div class="supported-section mb-4">
+  <div class="supported-title">DIDUKUNG OLEH</div>
+  <div class="supported-grid">
+    <div class="supported-card">
+      <div class="supported-icon">
+        <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjl1apjJhjfGFCzp4i3L_S4fRVYqTTWPqri-pjxGDHoUYiqbDENzGE415Kxx5EWLw8EovJN1GvZY-ZO4jr4cXO5WmnsFOFjffMx3AvneCM7dvlvsduWzCxzsnYIiMCFC8IoumwgZ_Ta8ZS164gXst0tneV2AtHL-4s7ZTaUtsz6UqdrkR3Mp3CsyddJYeO8/s300/1000626602.png">
+      </div>
+      <div class="supported-name">TradingView</div>
+    </div>
+    <div class="supported-card">
+      <div class="supported-icon">
+        <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEj_-QcFdqt68PylKH-k7PUMiMJKC59Vo8DBeP5z6MSmNbbgp_tuV4b5KTUmp4FoWRZOP5VZ_s5jZI5fIz94es9miNr1jaR-Zo7GKvrKGaHHxT_yxCEgxI8PgvupINceiVGlQ_xQiaTHH7kjepI9agthr98xPo_KVuM2mPb100-cKYYiJJvIrvxDKQmL8Q_q/s509/1000626603.png">
+      </div>
+      <div class="supported-name">MetaTrader 5</div>
+    </div>
+    <div class="supported-card">
+      <div class="supported-icon">
+        <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiEayCuw9T12qTYwYuYj-nq8B7H3czP9nLcQ53dT-fl_0ydkSrpYfsb1IWspeSeyRw-z1p9aVeZmlt0x4IR4us3xZWs0y3-Rb8aBiw0U3-P_vLXd0wB6i9KTELl0AyzMYdG-yF2FTXpex6QYQ1m32G3HC4s0SRZdV6fWSm7sCbMW16nHiqEMqsM3p2mcIdH/s2000/1000629390.png">
+      </div>
+      <div class="supported-name">Binance</div>
+    </div>
   </div>
 </div>
 
@@ -1608,7 +2460,7 @@ body::before {
   </div>
 </footer>
 
-<!-- MODAL PEMBELIAN LIMIT SUPER MODERN -->
+<!-- MODAL PEMBELIAN LIMIT -->
 <div id="paymentModal" class="modern-modal">
   <div class="modern-modal-content">
     <div class="modern-modal-header">
@@ -1616,7 +2468,6 @@ body::before {
       <div class="modern-modal-close" id="closeModalBtn"><i class="fas fa-times"></i></div>
     </div>
     
-    <!-- Step Progress -->
     <div class="step-progress">
       <div class="step-item active" id="step1Indicator">
         <div class="step-number">1</div>
@@ -1632,7 +2483,6 @@ body::before {
       </div>
     </div>
     
-    <!-- STEP 1: Pilih Limit -->
     <div id="step1Panel">
       <div class="quantity-selector-premium">
         <div class="quantity-label"><i class="fas fa-chart-line"></i> Jumlah Limit yang Ingin Dibeli</div>
@@ -1641,7 +2491,7 @@ body::before {
           <div class="quantity-value" id="modalQuantity">1</div>
           <button id="incrementQtyModal" class="quantity-btn">+</button>
         </div>
-        <div class="text-xs text-gray-500 mt-3">Maksimal pembelian: <span id="maxCanBuyText">10</span> limit</div>
+        <div class="text-xs text-gray-500 mt-3">Maksimal <span id="maxPerTransaction">10</span> limit per transaksi</div>
       </div>
       
       <div class="price-card-premium">
@@ -1669,7 +2519,6 @@ body::before {
       </div>
     </div>
     
-    <!-- STEP 2: QRIS Payment -->
     <div id="step2Panel" style="display: none;">
       <div class="qr-container-premium">
         <p class="text-xs text-gray-400 mb-2 flex items-center justify-center gap-2"><i class="fas fa-qrcode text-emerald-400"></i> Scan QR Code untuk melakukan pembayaran</p>
@@ -1685,7 +2534,6 @@ body::before {
       </div>
     </div>
     
-    <!-- STEP 3: Konfirmasi Pembayaran -->
     <div id="step3Panel" style="display: none;">
       <div class="form-container-modern">
         <div class="form-group-modern">
@@ -1697,15 +2545,15 @@ body::before {
           <label class="form-label-modern"><i class="fas fa-university"></i> Sumber Dana</label>
           <select id="sourceFund" class="form-select-modern">
             <option value="">Pilih Bank / Wallet</option>
-            <option value="BCA">🏦 BCA</option>
-            <option value="Mandiri">🏦 Bank Mandiri</option>
-            <option value="BNI">🏦 BNI</option>
-            <option value="BRI">🏦 BRI</option>
-            <option value="CIMB Niaga">🏦 CIMB Niaga</option>
-            <option value="OVO">📱 OVO</option>
-            <option value="GoPay">📱 GoPay</option>
-            <option value="DANA">📱 DANA</option>
-            <option value="ShopeePay">📱 ShopeePay</option>
+            <option value="BCA">BCA</option>
+            <option value="Mandiri">Bank Mandiri</option>
+            <option value="BNI">BNI</option>
+            <option value="BRI">BRI</option>
+            <option value="CIMB Niaga">CIMB Niaga</option>
+            <option value="OVO">OVO</option>
+            <option value="GoPay">GoPay</option>
+            <option value="DANA">DANA</option>
+            <option value="ShopeePay">ShopeePay</option>
           </select>
         </div>
         
@@ -1742,8 +2590,108 @@ const apiKey = "6b80b1aab6174949bdf77eade950c8fa";
 const intervalMap = { "1m":"1min","5m":"5min","15m":"15min","1h":"1h","4h":"4h","1d":"1day" };
 const tvIntervalMap = { "1m":"1","5m":"5","15m":"15","1h":"60","4h":"240","1d":"D" };
 const HARGA_PER_LIMIT = 8499;
-const MAKSIMAL_BELI = 10;
+const MAKSIMAL_BELI_PER_TRANSAKSI = 10;
 const LIMIT_AWAL = 5;
+
+// RSI Chart
+let rsiChart = null;
+
+function initRSIChart(value) {
+  const ctx = document.getElementById('rsiChart').getContext('2d');
+  if (rsiChart) {
+    rsiChart.destroy();
+  }
+  
+  const dataPoints = [];
+  for (let i = 0; i < 20; i++) {
+    const variance = Math.sin(i * 0.5) * 15;
+    const pointValue = Math.min(100, Math.max(0, value + variance + (Math.random() * 10 - 5)));
+    dataPoints.push(pointValue);
+  }
+  
+  rsiChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: Array.from({length: 20}, (_, i) => i + 1),
+      datasets: [{
+        data: dataPoints,
+        borderColor: value > 70 ? '#ef4444' : (value < 30 ? '#22c55e' : '#3b82f6'),
+        backgroundColor: 'transparent',
+        borderWidth: 2,
+        pointRadius: 0,
+        pointHoverRadius: 3,
+        tension: 0.4,
+        fill: false
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: true,
+      plugins: {
+        legend: { display: false },
+        tooltip: { enabled: false }
+      },
+      scales: {
+        x: { display: false },
+        y: { 
+          display: false,
+          min: 0,
+          max: 100
+        }
+      },
+      elements: {
+        line: { borderJoin: 'round' }
+      }
+    }
+  });
+}
+
+function updateRSIIndicator(value) {
+  const container = document.getElementById('rsiIndicator');
+  let status = '';
+  let color = '';
+  if (value > 70) {
+    status = 'Overbought';
+    color = '#ef4444';
+  } else if (value < 30) {
+    status = 'Oversold';
+    color = '#22c55e';
+  } else {
+    status = 'Normal';
+    color = '#3b82f6';
+  }
+  container.innerHTML = `
+    <div style="display: flex; align-items: center; gap: 0.5rem;">
+      <div class="rsi-dot ${value > 70 ? 'overbought' : (value < 30 ? 'oversold' : 'normal')}"></div>
+      <span style="color: ${color};">${status}</span>
+    </div>
+  `;
+}
+
+// ==================== Toggle Functions ====================
+function setupToggles() {
+  const technicalToggle = document.getElementById('technicalToggle');
+  const technicalContent = document.getElementById('technicalContent');
+  const technicalIcon = document.getElementById('technicalToggleIcon');
+  
+  if (technicalToggle) {
+    technicalToggle.addEventListener('click', () => {
+      technicalContent.classList.toggle('collapsed');
+      technicalIcon.classList.toggle('rotated');
+    });
+  }
+  
+  const keyLevelsToggle = document.getElementById('keyLevelsToggle');
+  const keyLevelsContent = document.getElementById('keyLevelsContent');
+  const keyLevelsIcon = document.getElementById('keyLevelsToggleIcon');
+  
+  if (keyLevelsToggle) {
+    keyLevelsToggle.addEventListener('click', () => {
+      keyLevelsContent.classList.toggle('collapsed');
+      keyLevelsIcon.classList.toggle('rotated');
+    });
+  }
+}
 
 // ==================== SISTEM LIMIT ====================
 let remainingQuota = LIMIT_AWAL;
@@ -1826,11 +2774,8 @@ function useLimit() {
 
 function addPaidLimit(amount) {
   if (amount <= 0) return false;
-  const maxCanBuy = MAKSIMAL_BELI - purchasedQuota;
-  const actualAmount = Math.min(amount, maxCanBuy);
-  if (actualAmount <= 0) return false;
-  remainingQuota += actualAmount;
-  purchasedQuota += actualAmount;
+  remainingQuota += amount;
+  purchasedQuota += amount;
   saveLimitData();
   updateQuotaUI();
   return true;
@@ -1941,8 +2886,8 @@ function stopLoadingAnimation() {
   document.getElementById('loadingOverlay').classList.add('hidden');
 }
 
-// ==================== ANALISIS TRADING ====================
-async function fetchOHLC(pair, interval, output_size=100) {
+// ==================== ANALISIS TRADING ADVANCED ====================
+async function fetchOHLC(pair, interval, output_size=200) {
   const symbol = pair.replace("/","/");
   const url = `https://api.twelvedata.com/time_series?symbol=${encodeURIComponent(symbol)}&interval=${interval}&outputsize=${output_size}&apikey=${apiKey}`;
   const res = await fetch(url);
@@ -1951,75 +2896,272 @@ async function fetchOHLC(pair, interval, output_size=100) {
   throw new Error(data.message||"Gagal ambil data");
 }
 
-function analyzeSMC(ohlc){ if(!ohlc||ohlc.length<4) return "TUNGGU"; const last=ohlc[0].close, prevHigh=Math.max(...ohlc.slice(1,4).map(c=>c.high)); return last>prevHigh?"BELI":"JUAL"; }
-function analyzeCRT(ohlc){ if(!ohlc||ohlc.length<5) return "TUNGGU"; const avg=ohlc.slice(0,5).reduce((a,b)=>a+b.close,0)/5; return ohlc[0].close>avg?"BELI":"JUAL"; }
-function analyzeICT(ohlc){ if(!ohlc||ohlc.length<4) return "TUNGGU"; const last=ohlc[0].close, prevLow=Math.min(...ohlc.slice(1,4).map(c=>c.low)); return last<prevLow?"JUAL":"BELI"; }
-function analyzeVolume(ohlc){ if(!ohlc||ohlc.length<5) return "TUNGGU"; const lastVol=ohlc[0].volume||0, avgVol=ohlc.slice(1,15).reduce((a,b)=>a+(b.volume||0),0)/Math.min(14,ohlc.length-1); if(avgVol===0) return "TUNGGU"; if(lastVol>avgVol*1.2) return ohlc[0].close>ohlc[1].close?"BELI":"JUAL"; return "TUNGGU"; }
-
-function calculateWinrate(ohlc){ 
-  if(!ohlc||ohlc.length<20) return 0; 
-  let success=0,total=0; 
-  for(let i=1;i<=Math.min(ohlc.length-16,50);i++){ 
-    const slice=ohlc.slice(i,i+15); 
-    const smc=analyzeSMC(slice), crt=analyzeCRT(slice), ict=analyzeICT(slice), vol=analyzeVolume(slice); 
-    const votes=[smc,crt,ict,vol]; 
-    const buy=votes.filter(v=>v==="BELI").length, sell=votes.filter(v=>v==="JUAL").length; 
-    let pred="TUNGGU"; 
-    if(buy>=2) pred="BELI"; 
-    else if(sell>=2) pred="JUAL"; 
-    const next=ohlc[i-1].close; 
-    if(pred==="BELI"&&next>slice[0].close) success++; 
-    if(pred==="JUAL"&&next<slice[0].close) success++; 
-    if(pred!=="TUNGGU") total++; 
-  } 
-  return total>0?success/total*100:0; 
-}
-
-function getLevelPoints(ohlc){ 
-  let ob=null,fvg=null; 
-  for(let i=1;i<Math.min(ohlc.length,12);i++) 
-    if(ohlc[i].close<ohlc[i].open){ 
-      ob=`${ohlc[i].high.toFixed(2)} / ${ohlc[i].low.toFixed(2)}`; 
-      break; 
-    } 
-  for(let i=0;i<Math.min(ohlc.length-2,3);i++){ 
-    const s=ohlc[i+1], t=ohlc[i+2]; 
-    const sLow=Math.min(s.open,s.close), sHigh=Math.max(s.open,s.close), tLow=Math.min(t.open,t.close), tHigh=Math.max(t.open,t.close); 
-    if(sLow>tHigh) fvg=`${tHigh.toFixed(2)} - ${sLow.toFixed(2)}`; 
-    if(sHigh<tLow) fvg=`${sHigh.toFixed(2)} - ${tLow.toFixed(2)}`; 
-    if(fvg) break; 
-  } 
-  return {ob:ob||'—',fvg:fvg||'—'}; 
-}
-
-function updateSignalResult(finalSignal, winrate, levels){
-  const badge=document.getElementById('signalBadge'), circle=document.getElementById('winrateCircle'), circumference=2*Math.PI*42, offset=circumference-(winrate/100)*circumference;
-  circle.style.strokeDasharray=`${circumference} ${circumference}`; 
-  circle.style.strokeDashoffset=offset;
-  document.getElementById('winratePercent').innerHTML=`${Math.round(winrate)}%`;
-  document.getElementById('obValue').innerText=levels.ob; 
-  document.getElementById('fvgValue').innerText=levels.fvg;
-  if(finalSignal==='BELI'){ 
-    badge.className='signal-badge-premium signal-buy-premium'; 
-    badge.innerHTML='<i class="fas fa-arrow-up"></i> BELI'; 
-  } else if(finalSignal==='JUAL'){ 
-    badge.className='signal-badge-premium signal-sell-premium'; 
-    badge.innerHTML='<i class="fas fa-arrow-down"></i> JUAL'; 
-  } else { 
-    badge.className='signal-badge-premium signal-wait-premium'; 
-    badge.innerHTML='<i class="fas fa-clock"></i> TUNGGU'; 
+function detectTrend(ohlc) {
+  if (!ohlc || ohlc.length < 30) return 'SIDEWAYS';
+  
+  const closes = ohlc.slice(0, 30).map(c => c.close);
+  const highs = ohlc.slice(0, 30).map(c => c.high);
+  const lows = ohlc.slice(0, 30).map(c => c.low);
+  
+  const firstPrice = closes[closes.length - 1];
+  const lastPrice = closes[0];
+  const priceChange = ((lastPrice - firstPrice) / firstPrice) * 100;
+  
+  const ma10 = closes.slice(0, 10).reduce((a, b) => a + b, 0) / 10;
+  const ma20 = closes.slice(0, 20).reduce((a, b) => a + b, 0) / 20;
+  const maPosition = lastPrice > ma10 && ma10 > ma20 ? 'BULLISH' : 
+                     (lastPrice < ma10 && ma10 < ma20 ? 'BEARISH' : 'NEUTRAL');
+  
+  let higherHighs = 0, lowerLows = 0;
+  for (let i = 0; i < 4; i++) {
+    if (highs[i] > highs[i+1]) higherHighs++;
+    if (lows[i] < lows[i+1]) lowerLows++;
   }
-  let style='Scalping'; 
-  if(winrate>=60) style='Swing'; 
-  else if(winrate>=45) style='Day Trading'; 
-  document.getElementById('tradingStyleText').innerHTML=style;
+  
+  const ma50 = calculateEMA(closes, 20);
+  const priceVsMA = lastPrice > ma50 ? 1 : (lastPrice < ma50 ? -1 : 0);
+  
+  let trendScore = 0;
+  
+  if (priceChange > 0.5) trendScore += 30;
+  else if (priceChange > 0.2) trendScore += 15;
+  else if (priceChange < -0.5) trendScore -= 30;
+  else if (priceChange < -0.2) trendScore -= 15;
+  
+  if (maPosition === 'BULLISH') trendScore += 25;
+  else if (maPosition === 'BEARISH') trendScore -= 25;
+  
+  if (higherHighs >= 3) trendScore += 15;
+  if (lowerLows >= 3) trendScore -= 15;
+  
+  if (priceVsMA > 0) trendScore += 20;
+  else if (priceVsMA < 0) trendScore -= 20;
+  
+  if (trendScore >= 30) return 'BULLISH';
+  if (trendScore <= -30) return 'BEARISH';
+  return 'SIDEWAYS';
+}
+
+function calculateRSI(ohlc, period = 14) {
+  const closes = ohlc.slice(0, period + 1).map(c => c.close).reverse();
+  let gains = 0, losses = 0;
+  for (let i = 1; i < closes.length; i++) {
+    const diff = closes[i] - closes[i-1];
+    if (diff >= 0) gains += diff;
+    else losses -= diff;
+  }
+  const avgGain = gains / period;
+  const avgLoss = losses / period;
+  if (avgLoss === 0) return 100;
+  const rs = avgGain / avgLoss;
+  return 100 - (100 / (1 + rs));
+}
+
+function calculateMACD(ohlc) {
+  const closes = ohlc.slice(0, 50).map(c => c.close).reverse();
+  const ema12 = calculateEMA(closes, 12);
+  const ema26 = calculateEMA(closes, 26);
+  const macdLine = ema12 - ema26;
+  const signalLine = calculateEMA([macdLine], 9);
+  return { crossover: macdLine > signalLine ? 'BULLISH' : 'BEARISH' };
+}
+
+function calculateBollingerBands(ohlc, period = 20) {
+  const closes = ohlc.slice(0, period).map(c => c.close);
+  const sma = closes.reduce((a, b) => a + b, 0) / period;
+  const squaredDiffs = closes.map(close => Math.pow(close - sma, 2));
+  const stdDev = Math.sqrt(squaredDiffs.reduce((a, b) => a + b, 0) / period);
+  return {
+    position: ohlc[0].close > sma + stdDev ? 'OVERBOUGHT' : ohlc[0].close < sma - stdDev ? 'OVERSOLD' : 'NORMAL'
+  };
+}
+
+function calculateOBV(ohlc) {
+  let obv = 0;
+  let obvValues = [];
+  
+  for (let i = 1; i < Math.min(ohlc.length, 30); i++) {
+    const currentClose = ohlc[i].close;
+    const prevClose = ohlc[i-1].close;
+    const volume = ohlc[i].volume || 0;
+    
+    if (currentClose > prevClose) {
+      obv += volume;
+    } else if (currentClose < prevClose) {
+      obv -= volume;
+    }
+    obvValues.push(obv);
+  }
+  
+  if (obvValues.length === 0) return { trend: 'NEUTRAL', value: 0 };
+  
+  const recentOBV = obvValues[obvValues.length - 1];
+  const oldOBV = obvValues[0];
+  
+  let trend = 'NEUTRAL';
+  if (recentOBV > oldOBV * 1.05) trend = 'BULLISH';
+  else if (recentOBV < oldOBV * 0.95) trend = 'BEARISH';
+  
+  return { trend: trend, value: recentOBV };
+}
+
+function findSupportResistance(ohlc, type = 'support') {
+  const levels = [];
+  const period = 50;
+  for (let i = 5; i < period - 5 && i < ohlc.length; i++) {
+    const isLow = ohlc[i].low < ohlc[i-1].low && ohlc[i].low < ohlc[i-2].low && ohlc[i].low < ohlc[i+1].low && ohlc[i].low < ohlc[i+2].low;
+    const isHigh = ohlc[i].high > ohlc[i-1].high && ohlc[i].high > ohlc[i-2].high && ohlc[i].high > ohlc[i+1].high && ohlc[i].high > ohlc[i+2].high;
+    if (type === 'support' && isLow) levels.push(ohlc[i].low);
+    if (type === 'resistance' && isHigh) levels.push(ohlc[i].high);
+  }
+  const currentPrice = ohlc[0].close;
+  const nearest = levels.reduce((prev, curr) => Math.abs(curr - currentPrice) < Math.abs(prev - currentPrice) ? curr : prev, levels[0] || currentPrice);
+  return { nearest: nearest };
+}
+
+function calculateFibonacci(ohlc) {
+  const period = Math.min(100, ohlc.length);
+  const high = Math.max(...ohlc.slice(0, period).map(c => c.high));
+  const low = Math.min(...ohlc.slice(0, period).map(c => c.low));
+  const diff = high - low;
+  const currentPrice = ohlc[0].close;
+  let nearestSupport = null, nearestResistance = null;
+  const levels = { level382: high - (diff * 0.382), level618: high - (diff * 0.618) };
+  for (const [name, level] of Object.entries(levels)) {
+    if (level < currentPrice && (!nearestSupport || level > nearestSupport)) nearestSupport = { name, level };
+    if (level > currentPrice && (!nearestResistance || level < nearestResistance)) nearestResistance = { name, level };
+  }
+  return { nearestSupport, nearestResistance, retracement: ((high - currentPrice) / diff) * 100 };
+}
+
+function detectMarketStructureBreak(ohlc) {
+  let structure = 'CONSOLIDATION';
+  const swingHighs = [], swingLows = [];
+  for (let i = 5; i < ohlc.length - 5; i++) {
+    if (ohlc[i].high > ohlc[i-1].high && ohlc[i].high > ohlc[i-2].high && ohlc[i].high > ohlc[i+1].high && ohlc[i].high > ohlc[i+2].high) swingHighs.push(ohlc[i].high);
+    if (ohlc[i].low < ohlc[i-1].low && ohlc[i].low < ohlc[i-2].low && ohlc[i].low < ohlc[i+1].low && ohlc[i].low < ohlc[i+2].low) swingLows.push(ohlc[i].low);
+  }
+  const currentPrice = ohlc[0].close;
+  const lastSwingHigh = swingHighs[swingHighs.length - 1];
+  const lastSwingLow = swingLows[swingLows.length - 1];
+  if (currentPrice > lastSwingHigh && lastSwingHigh) structure = 'BULLISH_BREAK';
+  else if (currentPrice < lastSwingLow && lastSwingLow) structure = 'BEARISH_BREAK';
+  return { structure };
+}
+
+function detectDivergence(ohlc) {
+  const closes = ohlc.slice(0, 30).map(c => c.close);
+  const rsiValues = [];
+  for (let i = 0; i < closes.length - 14 && i + 14 < ohlc.length; i++) {
+    const segment = ohlc.slice(i, i + 15);
+    rsiValues.push(calculateRSI(segment));
+  }
+  let bullishDivergence = false, bearishDivergence = false;
+  if (rsiValues.length >= 2 && closes.length >= 2) {
+    if (closes[0] > closes[closes.length-1] && rsiValues[0] < rsiValues[rsiValues.length-1]) bullishDivergence = true;
+    if (closes[0] < closes[closes.length-1] && rsiValues[0] > rsiValues[rsiValues.length-1]) bearishDivergence = true;
+  }
+  return { bullishDivergence, bearishDivergence };
+}
+
+function calculateATR(ohlc, period = 14) {
+  let tr = [];
+  for (let i = 1; i <= period && i < ohlc.length; i++) {
+    const high = ohlc[i-1].high, low = ohlc[i-1].low, prevClose = ohlc[i].close;
+    tr.push(Math.max(high - low, Math.abs(high - prevClose), Math.abs(low - prevClose)));
+  }
+  return tr.reduce((a, b) => a + b, 0) / tr.length;
+}
+
+function calculateEMA(data, period) {
+  if (data.length === 0) return 0;
+  const multiplier = 2 / (period + 1);
+  let ema = data[0];
+  for (let i = 1; i < data.length; i++) ema = (data[i] - ema) * multiplier + ema;
+  return ema;
+}
+
+async function getAdvancedSignal(pair, timeframe) {
+  const apiInterval = intervalMap[timeframe];
+  const ohlc = await fetchOHLC(pair, apiInterval, 200);
+  if (!ohlc || ohlc.length < 50) throw new Error("Data tidak mencukupi");
+  
+  const trend = detectTrend(ohlc);
+  const rsi = calculateRSI(ohlc);
+  const macd = calculateMACD(ohlc);
+  const bollinger = calculateBollingerBands(ohlc);
+  const obv = calculateOBV(ohlc);
+  const fibonacci = calculateFibonacci(ohlc);
+  const structure = detectMarketStructureBreak(ohlc);
+  const divergence = detectDivergence(ohlc);
+  const atr = calculateATR(ohlc);
+  
+  let buyScore = 0, sellScore = 0;
+  if (trend === 'BULLISH') buyScore += 25;
+  else if (trend === 'BEARISH') sellScore += 25;
+  else { buyScore += 10; sellScore += 10; }
+  
+  if (rsi < 30) buyScore += 15;
+  else if (rsi > 70) sellScore += 15;
+  else if (rsi > 40 && rsi < 60) { buyScore += 5; sellScore += 5; }
+  
+  if (macd.crossover === 'BULLISH') buyScore += 20;
+  else if (macd.crossover === 'BEARISH') sellScore += 20;
+  
+  if (bollinger.position === 'OVERSOLD') buyScore += 10;
+  else if (bollinger.position === 'OVERBOUGHT') sellScore += 10;
+  
+  if (obv.trend === 'BULLISH') buyScore += 10;
+  else if (obv.trend === 'BEARISH') sellScore += 10;
+  
+  if (fibonacci.nearestSupport && fibonacci.retracement > 61.8) buyScore += 10;
+  if (fibonacci.nearestResistance && fibonacci.retracement < 38.2) sellScore += 10;
+  
+  if (structure.structure === 'BULLISH_BREAK') buyScore += 10;
+  else if (structure.structure === 'BEARISH_BREAK') sellScore += 10;
+  
+  if (divergence.bullishDivergence) buyScore += 15;
+  if (divergence.bearishDivergence) sellScore += 15;
+  
+  const totalScore = buyScore + sellScore;
+  const confidence = totalScore > 0 ? Math.abs(buyScore - sellScore) / totalScore * 100 : 0;
+  
+  let finalSignal = 'TUNGGU', signalStrength = 'LEMAH';
+  if (buyScore > sellScore && buyScore - sellScore >= 20) {
+    finalSignal = 'BELI';
+    if (buyScore - sellScore >= 40) signalStrength = 'KUAT';
+    else if (buyScore - sellScore >= 30) signalStrength = 'SEDANG';
+  } else if (sellScore > buyScore && sellScore - buyScore >= 20) {
+    finalSignal = 'JUAL';
+    if (sellScore - buyScore >= 40) signalStrength = 'KUAT';
+    else if (sellScore - buyScore >= 30) signalStrength = 'SEDANG';
+  }
+  
+  const support = findSupportResistance(ohlc, 'support');
+  const resistance = findSupportResistance(ohlc, 'resistance');
+  let stopLoss = ohlc[0].close, takeProfit = ohlc[0].close;
+  if (finalSignal === 'BELI') {
+    stopLoss = Math.min(ohlc[0].low - atr, support.nearest);
+    takeProfit = ohlc[0].close + (ohlc[0].close - stopLoss) * 2;
+  } else if (finalSignal === 'JUAL') {
+    stopLoss = Math.max(ohlc[0].high + atr, resistance.nearest);
+    takeProfit = ohlc[0].close - (stopLoss - ohlc[0].close) * 2;
+  }
+  
+  return {
+    signal: finalSignal, strength: signalStrength, confidence: Math.round(Math.min(confidence, 100)),
+    scores: { buy: Math.round(buyScore), sell: Math.round(sellScore) },
+    trend: trend, rsi: Math.round(rsi), macd: macd.crossover,
+    obv: obv.trend,
+    support: support.nearest, resistance: resistance.nearest,
+    currentPrice: ohlc[0].close, stopLoss: stopLoss.toFixed(2), takeProfit: takeProfit.toFixed(2)
+  };
 }
 
 async function fetchRealTimeMarketCondition() {
   const pair = document.getElementById('pair').value;
-  const tf = "15min";
   try {
-    const ohlc = await fetchOHLC(pair, tf, 20);
+    const ohlc = await fetchOHLC(pair, "15min", 20);
     if (ohlc && ohlc.length >= 5) {
       const closes = ohlc.slice(0,5).map(c => c.close);
       let naik = 0, turun = 0;
@@ -2029,7 +3171,6 @@ async function fetchRealTimeMarketCondition() {
       }
       if (naik > turun && naik >= 2) return "Bullish";
       if (turun > naik && turun >= 2) return "Bearish";
-      return "Sideways";
     }
   } catch(e) { console.warn(e); }
   return "Sideways";
@@ -2040,72 +3181,153 @@ function updateTrendDisplay(trend) {
   const displayDiv = document.getElementById('trendDisplay');
   const textSpan = document.getElementById('trendTextSimple');
   displayDiv.classList.remove('trend-bullish', 'trend-bearish', 'trend-sideways');
-  if (trend === 'Bullish') { 
-    displayDiv.classList.add('trend-bullish'); 
-    textSpan.innerHTML = '<i class="fas fa-arrow-up"></i> BULLISH'; 
-  } else if (trend === 'Bearish') { 
-    displayDiv.classList.add('trend-bearish'); 
-    textSpan.innerHTML = '<i class="fas fa-arrow-down"></i> BEARISH'; 
-  } else { 
-    displayDiv.classList.add('trend-sideways'); 
-    textSpan.innerHTML = '<i class="fas fa-minus"></i> SIDEWAYS'; 
-  }
+  if (trend === 'Bullish') { displayDiv.classList.add('trend-bullish'); textSpan.innerHTML = '<i class="fas fa-arrow-up"></i> BULLISH'; }
+  else if (trend === 'Bearish') { displayDiv.classList.add('trend-bearish'); textSpan.innerHTML = '<i class="fas fa-arrow-down"></i> BEARISH'; }
+  else { displayDiv.classList.add('trend-sideways'); textSpan.innerHTML = '<i class="fas fa-minus"></i> SIDEWAYS'; }
   if (container.style.display === 'none') container.style.display = 'block';
 }
 
-async function runAnalysis(){
+function updateAdvancedSignalUI(analysis) {
+  const badge = document.getElementById('signalBadge');
+  const circumference = 2 * Math.PI * 70;
+  const offset = circumference - (analysis.confidence / 100) * circumference;
+  const circle = document.getElementById('confidenceCircle');
+  
+  circle.classList.remove('low-confidence', 'medium-confidence', 'high-confidence');
+  const percentElement = document.querySelector('.modern-circle-percent');
+  percentElement.classList.remove('low-confidence', 'medium-confidence', 'high-confidence');
+  
+  if (analysis.confidence < 40) {
+    circle.classList.add('low-confidence');
+    percentElement.classList.add('low-confidence');
+  } else if (analysis.confidence >= 40 && analysis.confidence <= 60) {
+    circle.classList.add('medium-confidence');
+    percentElement.classList.add('medium-confidence');
+  } else {
+    circle.classList.add('high-confidence');
+    percentElement.classList.add('high-confidence');
+  }
+  
+  circle.style.strokeDasharray = `${circumference} ${circumference}`;
+  circle.style.strokeDashoffset = offset;
+  document.getElementById('confidencePercent').innerHTML = `${analysis.confidence}%`;
+  
+  if (analysis.signal === 'BELI') { 
+    badge.className = 'signal-badge-premium signal-buy-premium'; 
+    badge.innerHTML = `<i class="fas fa-arrow-up"></i> BELI (${analysis.strength})`; 
+    document.getElementById('stopLossCard').style.display = 'block';
+    document.getElementById('takeProfitCard').style.display = 'block';
+  } else if (analysis.signal === 'JUAL') { 
+    badge.className = 'signal-badge-premium signal-sell-premium'; 
+    badge.innerHTML = `<i class="fas fa-arrow-down"></i> JUAL (${analysis.strength})`; 
+    document.getElementById('stopLossCard').style.display = 'block';
+    document.getElementById('takeProfitCard').style.display = 'block';
+  } else { 
+    badge.className = 'signal-badge-premium signal-wait-premium'; 
+    badge.innerHTML = '<i class="fas fa-clock"></i> TUNGGU';
+    document.getElementById('stopLossCard').style.display = 'none';
+    document.getElementById('takeProfitCard').style.display = 'none';
+  }
+  
+  const trendElement = document.getElementById('marketTrend');
+  const trendAnimation = document.getElementById('trendAnimation');
+  
+  if (analysis.trend === 'BULLISH') {
+    trendElement.innerHTML = 'BULLISH';
+    trendElement.className = 'market-trend-value bullish';
+    trendAnimation.innerHTML = '<i class="fas fa-arrow-up trend-arrow-up"></i>';
+  } else if (analysis.trend === 'BEARISH') {
+    trendElement.innerHTML = 'BEARISH';
+    trendElement.className = 'market-trend-value bearish';
+    trendAnimation.innerHTML = '<i class="fas fa-arrow-down trend-arrow-down"></i>';
+  } else {
+    trendElement.innerHTML = 'SIDEWAYS';
+    trendElement.className = 'market-trend-value sideways';
+    trendAnimation.innerHTML = '<i class="fas fa-minus trend-minus"></i>';
+  }
+  
+  const rsiElement = document.getElementById('rsiValue');
+  rsiElement.innerHTML = analysis.rsi;
+  if (analysis.rsi > 70) {
+    rsiElement.className = 'signal-info-value rsi-high';
+  } else if (analysis.rsi < 30) {
+    rsiElement.className = 'signal-info-value rsi-low';
+  } else {
+    rsiElement.className = 'signal-info-value rsi-normal';
+  }
+  
+  initRSIChart(analysis.rsi);
+  updateRSIIndicator(analysis.rsi);
+  
+  const macdElement = document.getElementById('macdValue');
+  if (analysis.macd === 'BULLISH') {
+    macdElement.innerHTML = 'BULLISH';
+    macdElement.className = 'signal-info-value macd-bullish';
+  } else {
+    macdElement.innerHTML = 'BEARISH';
+    macdElement.className = 'signal-info-value macd-bearish';
+  }
+  
+  const obvElement = document.getElementById('obvValue');
+  if (analysis.obv === 'BULLISH') {
+    obvElement.innerHTML = 'BULLISH';
+    obvElement.className = 'signal-info-value obv-bullish';
+  } else if (analysis.obv === 'BEARISH') {
+    obvElement.innerHTML = 'BEARISH';
+    obvElement.className = 'signal-info-value obv-bearish';
+  } else {
+    obvElement.innerHTML = 'NEUTRAL';
+    obvElement.className = 'signal-info-value obv-neutral';
+  }
+  
+  document.getElementById('supportLevel').innerHTML = analysis.support ? analysis.support.toFixed(2) : '—';
+  document.getElementById('resistanceLevel').innerHTML = analysis.resistance ? analysis.resistance.toFixed(2) : '—';
+  document.getElementById('stopLossValue').innerHTML = analysis.stopLoss;
+  document.getElementById('takeProfitValue').innerHTML = analysis.takeProfit;
+  
+  let style = 'Scalping';
+  if (analysis.confidence >= 70) style = 'Swing Trading';
+  else if (analysis.confidence >= 55) style = 'Day Trading';
+  else if (analysis.confidence >= 40) style = 'Scalping';
+  else style = 'Wait for Setup';
+  document.getElementById('tradingStyleText').innerHTML = style;
+  document.getElementById('scoreText').innerHTML = `Score: ${analysis.scores.buy}/${analysis.scores.sell}`;
+}
+
+async function runAnalysis() {
   const remaining = getRemainingQuota();
   if (remaining <= 0) {
     showToast('Limit habis! Beli limit atau tunggu besok untuk limit gratis harian.', true);
-    Swal.fire({ 
-      title: 'Limit Habis', 
-      html: `Anda tidak memiliki limit.<br>Dapatkan limit gratis harian besok atau beli sekarang.<br>Harga: <strong class="text-orange-400">Rp${HARGA_PER_LIMIT.toLocaleString()}/limit</strong>`, 
-      icon: 'warning', 
-      confirmButtonText: 'Beli Limit', 
-      background: '#1e293b', 
-      confirmButtonColor: '#22c55e' 
-    }).then(() => document.getElementById('buyQuotaBtn').click());
+    Swal.fire({ title: 'Limit Habis', html: `Anda tidak memiliki limit.<br>Dapatkan limit gratis harian besok atau beli sekarang.<br>Harga: <strong>Rp${HARGA_PER_LIMIT.toLocaleString()}/limit</strong>`, icon: 'warning', confirmButtonText: 'Beli Limit', background: '#1e293b', confirmButtonColor: '#22c55e' }).then(() => document.getElementById('buyQuotaBtn').click());
     return;
   }
   
   const pair = document.getElementById('pair').value;
   const tf = document.getElementById('timeframe').value;
-  const apiInterval = intervalMap[tf] || "15min";
+  
   document.getElementById('signalCard').style.display = 'none';
   document.getElementById('loadingOverlay').classList.remove('hidden');
   startLoadingAnimation();
-  document.getElementById('dataStatus').innerHTML = '<div class="w-2 h-2 rounded-full bg-yellow-500 animate-pulse mr-2"></div><span>Menganalisa...</span>';
+  document.getElementById('dataStatus').innerHTML = '<div class="w-2 h-2 rounded-full bg-yellow-500 animate-pulse mr-2"></div><span>Menganalisa dengan AI Advanced...</span>';
   
   try {
-    const ohlc = await fetchOHLC(pair, apiInterval, 200);
-    if (!ohlc || ohlc.length < 10) throw new Error("Data tidak cukup");
-    
+    const analysis = await getAdvancedSignal(pair, tf);
     if (!useLimit()) throw new Error("Gagal menggunakan limit");
-    
-    const smc = analyzeSMC(ohlc), crt = analyzeCRT(ohlc), ict = analyzeICT(ohlc), vol = analyzeVolume(ohlc);
-    const votes = [smc, crt, ict, vol];
-    const buyCount = votes.filter(v => v === "BELI").length;
-    const sellCount = votes.filter(v => v === "JUAL").length;
-    let finalSignal = "TUNGGU";
-    if (buyCount >= 2) finalSignal = "BELI";
-    else if (sellCount >= 2) finalSignal = "JUAL";
-    const winrate = calculateWinrate(ohlc);
-    const levels = getLevelPoints(ohlc);
-    updateSignalResult(finalSignal, winrate, levels);
-    const marketTrend = await fetchRealTimeMarketCondition();
-    updateTrendDisplay(marketTrend);
+    updateAdvancedSignalUI(analysis);
+    let trendDisplay = analysis.trend;
+    if (trendDisplay === 'BULLISH') trendDisplay = 'Bullish';
+    else if (trendDisplay === 'BEARISH') trendDisplay = 'Bearish';
+    else trendDisplay = 'Sideways';
+    updateTrendDisplay(trendDisplay);
     document.getElementById('signalCard').style.display = 'block';
-    document.getElementById('dataStatus').innerHTML = `<div class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse mr-2"></div><span>Analisa selesai | Sisa limit: ${getRemainingQuota()}</span>`;
-    showToast(`Analisa berhasil! Sisa limit: ${getRemainingQuota()}`);
+    document.getElementById('dataStatus').innerHTML = `<div class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse mr-2"></div><span>Analisa selesai | Confidence: ${analysis.confidence}% | Sisa limit: ${getRemainingQuota()}</span>`;
+    showToast(`Analisa berhasil! Sinyal: ${analysis.signal} (${analysis.confidence}% confidence)`);
   } catch(e) { 
     showToast('Gagal: ' + e.message, true); 
     document.getElementById('dataStatus').innerHTML = '<div class="w-2 h-2 rounded-full bg-red-500 animate-pulse mr-2"></div><span>Gagal ambil data</span>';
-  } finally { 
-    stopLoadingAnimation(); 
-  }
+  } finally { stopLoadingAnimation(); }
 }
 
-// ==================== MANAJEMEN RISIKO ====================
 function calculateMM(){
   let capitalRaw = document.getElementById('mmCapital').value.replace(/\./g, "");
   const capital = parseFloat(capitalRaw);
@@ -2134,11 +3356,7 @@ function resetMM(){
   showToast('Form manajemen risiko direset');
 }
 
-// ==================== STATISTIK ====================
-let totalUsers=parseInt(localStorage.getItem('totalUsers'))||400, 
-    onlineUsers=parseInt(localStorage.getItem('onlineUsers'))||28, 
-    totalKeuntungan=parseInt(localStorage.getItem('totalKeuntungan'))||8200000, 
-    totalTransaksi=parseInt(localStorage.getItem('totalTransaksi'))||180;
+let totalUsers=parseInt(localStorage.getItem('totalUsers'))||400, onlineUsers=parseInt(localStorage.getItem('onlineUsers'))||28, totalKeuntungan=parseInt(localStorage.getItem('totalKeuntungan'))||8200000, totalTransaksi=parseInt(localStorage.getItem('totalTransaksi'))||180;
 
 function updateStats(){ 
   document.getElementById('totalUsers').innerText=totalUsers.toLocaleString(); 
@@ -2149,66 +3367,27 @@ function updateStats(){
 
 function startStatsSimulation(){ 
   updateStats(); 
-  setInterval(()=>{ 
-    totalUsers+=Math.floor(Math.random()*2)+1; 
-    localStorage.setItem('totalUsers',totalUsers); 
-    updateStats(); 
-  }, 60000); 
-  setInterval(()=>{ 
-    onlineUsers=Math.max(0,onlineUsers+(Math.floor(Math.random()*3)-1)); 
-    localStorage.setItem('onlineUsers',onlineUsers); 
-    updateStats(); 
-  }, 5000); 
-  setInterval(()=>{ 
-    totalKeuntungan+=Math.floor(Math.random()*30000)+5000; 
-    totalTransaksi+=1; 
-    localStorage.setItem('totalKeuntungan',totalKeuntungan); 
-    localStorage.setItem('totalTransaksi',totalTransaksi); 
-    updateStats(); 
-  }, 15000); 
+  setInterval(()=>{ totalUsers+=Math.floor(Math.random()*2)+1; localStorage.setItem('totalUsers',totalUsers); updateStats(); }, 60000); 
+  setInterval(()=>{ onlineUsers=Math.max(0,onlineUsers+(Math.floor(Math.random()*3)-1)); localStorage.setItem('onlineUsers',onlineUsers); updateStats(); }, 5000); 
+  setInterval(()=>{ totalKeuntungan+=Math.floor(Math.random()*30000)+5000; totalTransaksi+=1; localStorage.setItem('totalKeuntungan',totalKeuntungan); localStorage.setItem('totalTransaksi',totalTransaksi); updateStats(); }, 15000); 
 }
 
-// ==================== CHART ====================
 let tvWidget=null;
 function loadTradingViewChart(pair,timeframe){ 
-  try{ 
-    if(tvWidget&&typeof tvWidget.remove==='function') tvWidget.remove(); 
-  } catch(e){} 
+  try{ if(tvWidget&&typeof tvWidget.remove==='function') tvWidget.remove(); } catch(e){} 
   const tvSymbol=pair.includes("/")?`OANDA:${pair.replace("/","")}`:pair; 
-  try{ 
-    tvWidget=new TradingView.widget({
-      container_id:"tradingview_chart",
-      width:"100%",
-      height:"100%",
-      symbol:tvSymbol,
-      interval:tvIntervalMap[timeframe]||"15",
-      timezone:"Etc/UTC",
-      theme:"dark",
-      style:"1",
-      locale:"id",
-      toolbar_bg:"#0f172a",
-      allow_symbol_change:false,
-      enable_publishing:false,
-      details:true
-    }); 
-  } catch(e){ 
-    console.warn(e); 
-  } 
+  try{ tvWidget=new TradingView.widget({ container_id:"tradingview_chart", width:"100%", height:"100%", symbol:tvSymbol, interval:tvIntervalMap[timeframe]||"15", timezone:"Etc/UTC", theme:"dark", style:"1", locale:"id", toolbar_bg:"#0f172a", allow_symbol_change:false, enable_publishing:false, details:true }); } catch(e){ console.warn(e); } 
 }
 
-// ==================== MODAL PEMBELIAN MODERN ====================
 let pendingQuantity = 1;
 let generatedUniqueCode = '';
 
-function generateUniqueCode() { 
-  return Math.floor(Math.random() * 1000).toString().padStart(3, '0'); 
-}
+function generateUniqueCode() { return Math.floor(Math.random() * 1000).toString().padStart(3, '0'); }
 
 function updateModalPrice() {
   const subtotal = pendingQuantity * HARGA_PER_LIMIT;
   const uniqueCode = parseInt(generatedUniqueCode);
   const total = subtotal + uniqueCode;
-  
   document.getElementById('modalQuantity').innerText = pendingQuantity;
   document.getElementById('modalSubtotal').innerHTML = subtotal.toLocaleString('id-ID');
   document.getElementById('modalUniqueCode').innerHTML = generatedUniqueCode;
@@ -2219,11 +3398,9 @@ function resetModalToStep1() {
   pendingQuantity = 1;
   generatedUniqueCode = generateUniqueCode();
   updateModalPrice();
-  
   document.getElementById('step1Panel').style.display = 'block';
   document.getElementById('step2Panel').style.display = 'none';
   document.getElementById('step3Panel').style.display = 'none';
-  
   document.getElementById('step1Indicator').classList.add('active');
   document.getElementById('step2Indicator').classList.remove('active');
   document.getElementById('step3Indicator').classList.remove('active');
@@ -2232,132 +3409,22 @@ function resetModalToStep1() {
 }
 
 function openPaymentModal() {
-  const maxCanBuy = MAKSIMAL_BELI - getPurchasedQuota();
-  if (maxCanBuy <= 0) { 
-    showToast('Maksimal pembelian 10 limit!', true); 
-    return; 
-  }
-  
-  document.getElementById('maxCanBuyText').innerText = maxCanBuy;
   pendingQuantity = 1;
   generatedUniqueCode = generateUniqueCode();
   updateModalPrice();
-  
-  // Reset form fields
   document.getElementById('userEmail').value = '';
   document.getElementById('sourceFund').value = '';
   document.getElementById('transactionNo').value = '';
   document.getElementById('rrn').value = '';
-  
   resetModalToStep1();
   document.getElementById('paymentModal').classList.add('show');
 }
 
-// Event listeners untuk modal
-document.getElementById('buyQuotaBtn').onclick = openPaymentModal;
-document.getElementById('closeModalBtn').onclick = () => {
-  document.getElementById('paymentModal').classList.remove('show');
-  resetModalToStep1();
-};
-
-// Quantity controls
-document.getElementById('decrementQtyModal').onclick = () => {
-  const maxCanBuy = MAKSIMAL_BELI - getPurchasedQuota();
-  if (pendingQuantity > 1) {
-    pendingQuantity--;
-    updateModalPrice();
-  }
-};
-document.getElementById('incrementQtyModal').onclick = () => {
-  const maxCanBuy = MAKSIMAL_BELI - getPurchasedQuota();
-  if (pendingQuantity < maxCanBuy) {
-    pendingQuantity++;
-    updateModalPrice();
-  }
-};
-
-// Step navigation
-document.getElementById('nextToQRISBtn').onclick = () => {
-  if (pendingQuantity < 1) {
-    showToast('Pilih minimal 1 limit!', true);
-    return;
-  }
-  document.getElementById('step1Panel').style.display = 'none';
-  document.getElementById('step2Panel').style.display = 'block';
-  document.getElementById('step1Indicator').classList.remove('active');
-  document.getElementById('step2Indicator').classList.add('active');
-  document.getElementById('step1Indicator').classList.add('completed');
-};
-
-document.getElementById('backToStep1Btn').onclick = () => {
-  document.getElementById('step2Panel').style.display = 'none';
-  document.getElementById('step1Panel').style.display = 'block';
-  document.getElementById('step2Indicator').classList.remove('active');
-  document.getElementById('step1Indicator').classList.add('active');
-  document.getElementById('step1Indicator').classList.remove('completed');
-};
-
-document.getElementById('nextToConfirmBtn').onclick = () => {
-  document.getElementById('step2Panel').style.display = 'none';
-  document.getElementById('step3Panel').style.display = 'block';
-  document.getElementById('step2Indicator').classList.remove('active');
-  document.getElementById('step3Indicator').classList.add('active');
-  document.getElementById('step2Indicator').classList.add('completed');
-};
-
-document.getElementById('backToStep2Btn').onclick = () => {
-  document.getElementById('step3Panel').style.display = 'none';
-  document.getElementById('step2Panel').style.display = 'block';
-  document.getElementById('step3Indicator').classList.remove('active');
-  document.getElementById('step2Indicator').classList.add('active');
-  document.getElementById('step2Indicator').classList.remove('completed');
-};
-
-// Submit payment
-document.getElementById('submitPaymentBtn').onclick = async () => {
-  const email = document.getElementById('userEmail').value;
-  const sourceFund = document.getElementById('sourceFund').value;
-  const transactionNo = document.getElementById('transactionNo').value;
-  const rrn = document.getElementById('rrn').value;
-  
-  if (!email || !sourceFund || !transactionNo || !rrn) { 
-    showToast('Harap isi semua field!', true); 
-    return; 
-  }
-  
-  Swal.fire({ 
-    title: 'Memverifikasi...', 
-    timer: 2000, 
-    timerProgressBar: true, 
-    showConfirmButton: false, 
-    background:'#1e293b', 
-    didOpen:()=>Swal.showLoading() 
-  });
-  
-  setTimeout(() => { 
-    addPaidLimit(pendingQuantity); 
-    document.getElementById('paymentModal').classList.remove('show'); 
-    resetModalToStep1();
-    Swal.fire({ 
-      title: '<i class="fas fa-check-circle" style="color:#22c55e"></i><br>Berhasil!', 
-      html: `Anda membeli ${pendingQuantity} limit.<br>Sisa limit: ${getRemainingQuota()}`, 
-      icon:'success', 
-      confirmButtonText:'OK', 
-      background:'#1e293b', 
-      color:'#fff' 
-    }); 
-    showToast(`Berhasil membeli ${pendingQuantity} limit!`); 
-  }, 2000);
-};
-
-// ==================== INITIALIZATION ====================
 document.addEventListener('DOMContentLoaded', () => {
   loadLimitData();
   startStatsSimulation();
   document.getElementById('trendContainer').style.display = 'none';
-  
   document.getElementById('analyzeBtn').onclick = runAnalysis;
-  
   document.getElementById('resetAnalysisBtn').onclick = () => { 
     document.getElementById('pair').value = 'XAU/USD'; 
     document.getElementById('timeframe').value = '15m'; 
@@ -2368,27 +3435,23 @@ document.addEventListener('DOMContentLoaded', () => {
     updateQuotaUI(); 
     showToast('Reset berhasil!'); 
   };
-  
   document.getElementById('mmCalculateBtn').onclick = calculateMM;
   document.getElementById('mmResetBtn').onclick = resetMM;
+  document.getElementById('buyQuotaBtn').onclick = openPaymentModal;
+  document.getElementById('closeModalBtn').onclick = () => { document.getElementById('paymentModal').classList.remove('show'); resetModalToStep1(); };
+  document.getElementById('decrementQtyModal').onclick = () => { if (pendingQuantity > 1) { pendingQuantity--; updateModalPrice(); } };
+  document.getElementById('incrementQtyModal').onclick = () => { if (pendingQuantity < MAKSIMAL_BELI_PER_TRANSAKSI) { pendingQuantity++; updateModalPrice(); } };
+  document.getElementById('nextToQRISBtn').onclick = () => { if (pendingQuantity < 1) { showToast('Pilih minimal 1 limit!', true); return; } document.getElementById('step1Panel').style.display = 'none'; document.getElementById('step2Panel').style.display = 'block'; document.getElementById('step1Indicator').classList.remove('active'); document.getElementById('step2Indicator').classList.add('active'); document.getElementById('step1Indicator').classList.add('completed'); };
+  document.getElementById('backToStep1Btn').onclick = () => { document.getElementById('step2Panel').style.display = 'none'; document.getElementById('step1Panel').style.display = 'block'; document.getElementById('step2Indicator').classList.remove('active'); document.getElementById('step1Indicator').classList.add('active'); document.getElementById('step1Indicator').classList.remove('completed'); };
+  document.getElementById('nextToConfirmBtn').onclick = () => { document.getElementById('step2Panel').style.display = 'none'; document.getElementById('step3Panel').style.display = 'block'; document.getElementById('step2Indicator').classList.remove('active'); document.getElementById('step3Indicator').classList.add('active'); document.getElementById('step2Indicator').classList.add('completed'); };
+  document.getElementById('backToStep2Btn').onclick = () => { document.getElementById('step3Panel').style.display = 'none'; document.getElementById('step2Panel').style.display = 'block'; document.getElementById('step3Indicator').classList.remove('active'); document.getElementById('step2Indicator').classList.add('active'); document.getElementById('step2Indicator').classList.remove('completed'); };
+  document.getElementById('submitPaymentBtn').onclick = async () => { const email = document.getElementById('userEmail').value; const sourceFund = document.getElementById('sourceFund').value; const transactionNo = document.getElementById('transactionNo').value; const rrn = document.getElementById('rrn').value; if (!email || !sourceFund || !transactionNo || !rrn) { showToast('Harap isi semua field!', true); return; } Swal.fire({ title: 'Memverifikasi...', timer: 2000, timerProgressBar: true, showConfirmButton: false, background:'#1e293b', didOpen:()=>Swal.showLoading() }); setTimeout(() => { addPaidLimit(pendingQuantity); document.getElementById('paymentModal').classList.remove('show'); resetModalToStep1(); Swal.fire({ title: '<i class="fas fa-check-circle" style="color:#22c55e"></i><br>Berhasil!', html: `Anda membeli ${pendingQuantity} limit.<br>Sisa limit: ${getRemainingQuota()}`, icon:'success', confirmButtonText:'OK', background:'#1e293b', color:'#fff' }); showToast(`Berhasil membeli ${pendingQuantity} limit!`); }, 2000); };
+  const toggleBtn = document.getElementById('toggleChartBtn'), chartCont = document.getElementById('chartContainer');
+  toggleBtn.onclick = () => { chartCont.classList.toggle('show'); toggleBtn.innerHTML = chartCont.classList.contains('show') ? '<i class="fas fa-times mr-2"></i> Tutup Chart' : '<i class="fas fa-chart-line mr-2"></i> Buka Chart'; if (chartCont.classList.contains('show')) loadTradingViewChart(document.getElementById('pair').value, document.getElementById('timeframe').value); };
+  document.getElementById('pair').onchange = () => { if (chartCont.classList.contains('show')) loadTradingViewChart(document.getElementById('pair').value, document.getElementById('timeframe').value); };
+  document.getElementById('timeframe').onchange = () => { if (chartCont.classList.contains('show')) loadTradingViewChart(document.getElementById('pair').value, document.getElementById('timeframe').value); };
   
-  const toggleBtn = document.getElementById('toggleChartBtn'), 
-        chartCont = document.getElementById('chartContainer');
-  toggleBtn.onclick = () => { 
-    chartCont.classList.toggle('show'); 
-    toggleBtn.innerHTML = chartCont.classList.contains('show') ? '<i class="fas fa-times mr-2"></i> Tutup Chart' : '<i class="fas fa-chart-line mr-2"></i> Buka Chart'; 
-    if (chartCont.classList.contains('show')) 
-      loadTradingViewChart(document.getElementById('pair').value, document.getElementById('timeframe').value); 
-  };
-  
-  document.getElementById('pair').onchange = () => { 
-    if (chartCont.classList.contains('show')) 
-      loadTradingViewChart(document.getElementById('pair').value, document.getElementById('timeframe').value); 
-  };
-  document.getElementById('timeframe').onchange = () => { 
-    if (chartCont.classList.contains('show')) 
-      loadTradingViewChart(document.getElementById('pair').value, document.getElementById('timeframe').value); 
-  };
+  setupToggles();
 });
 </script>
 </body>
