@@ -415,6 +415,22 @@ body::before {
   background: linear-gradient(135deg, #16a34a, #15803d);
 }
 
+/* ==================== TRADINGVIEW MARKET OVERVIEW WIDGET (CHARTLINE) ==================== */
+.tradingview-wrapper {
+  background: linear-gradient(145deg, #1e293b, #0f172a);
+  border-radius: 1.5rem;
+  border: 1px solid rgba(34,197,94,0.2);
+  overflow: hidden;
+  transition: all 0.3s;
+  margin-bottom: 1rem;
+}
+
+.tradingview-wrapper:hover {
+  transform: translateY(-4px);
+  border-color: rgba(34,197,94,0.5);
+  box-shadow: 0 15px 35px -10px rgba(0,0,0,0.5);
+}
+
 /* ==================== KONDISI PASAR ==================== */
 .trend-modern {
   background: linear-gradient(135deg, rgba(34,197,94,0.05), rgba(59,130,246,0.05));
@@ -1995,7 +2011,7 @@ body::before {
   to { transform: translateX(0); opacity: 1; }
 }
 
-/* ==================== CHART CONTAINER ==================== */
+/* ==================== CHART CONTAINER UNTUK ADVANCED CHART ==================== */
 .chart-container-modern {
   position: fixed;
   bottom: 20px;
@@ -2149,6 +2165,43 @@ body::before {
     <div class="quota-stat-item"><div class="quota-stat-label">Dibeli</div><div class="quota-stat-number" id="purchasedQuota">0</div></div>
   </div>
   <button id="buyQuotaBtn" class="btn-buy-premium"><i class="fas fa-plus-circle"></i> Tambah Limit</button>
+</div>
+
+<!-- TRADINGVIEW MARKET OVERVIEW WIDGET (CHARTLINE) - WARNA HIJAU -->
+<div class="tradingview-wrapper">
+  <div class="tradingview-widget-container">
+    <div class="tradingview-widget-container__widget"></div>
+    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-market-overview.js" async>
+    {
+      "colorTheme": "dark",
+      "dateRange": "12M",
+      "locale": "id",
+      "largeChartUrl": "",
+      "isTransparent": true,
+      "showFloatingTooltip": true,
+      "width": "100%",
+      "height": 400,
+      "tabs": [
+        {
+          "title": "Market",
+          "symbols": [
+            {"s": "OANDA:XAUUSD", "d": "Gold"},
+            {"s": "BITSTAMP:BTCUSD", "d": "Bitcoin"}
+          ]
+        }
+      ],
+      "backgroundColor": "transparent",
+      "gridLineColor": "rgba(34,197,94,0.1)",
+      "lineColor": "#22c55e",
+      "topLineColor": "#22c55e",
+      "bottomLineColor": "#22c55e",
+      "symbolColor": "#22c55e",
+      "showSymbolLogo": true,
+      "showChart": true,
+      "chartLineColor": "#22c55e"
+    }
+    </script>
+  </div>
 </div>
 
 <!-- KONDISI PASAR -->
@@ -2436,7 +2489,7 @@ body::before {
   </div>
 </div>
 
-<!-- CHART BUTTON & CONTAINER - POLOSAN TANPA INDIKATOR -->
+<!-- CHART BUTTON & CONTAINER -->
 <div class="chart-float-btn">
   <button id="toggleChartBtn"><i class="fas fa-chart-line mr-2"></i> Buka Chart</button>
 </div>
@@ -2702,7 +2755,7 @@ function setupToggles() {
   }
 }
 
-// ==================== FUNGSI CHART TRADINGVIEW POLOSAN ====================
+// ==================== FUNGSI CHART TRADINGVIEW ====================
 let chartVisible = false;
 
 function getTradingViewSymbol(pair) {
