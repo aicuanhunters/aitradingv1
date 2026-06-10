@@ -2920,14 +2920,16 @@ async function getAdvancedSignal(pair, timeframe) {
     if (confidence > 30) confidence = 30;
   }
 
-  // STOP LOSS DAN TAKE PROFIT DENGAN RASIO 1:1 (jarak diperdekat)
+  // STOP LOSS DAN TAKE PROFIT DENGAN RASIO 1:1 (jarak diperdekat menjadi 0.8:0.8)
+  // Menggunakan faktor ATR 0.8 untuk SL dan jarak yang sama untuk TP (1:1)
   let stopLoss = currentPrice, takeProfit = currentPrice;
+  const distance = atr * 0.8; // jarak SL dan TP sama-sama 0.8 x ATR
   if (finalSignal === 'BELI') {
-    stopLoss = Math.min(currentPrice - atr * 1.5, nearestSupport);
-    takeProfit = currentPrice + (currentPrice - stopLoss) * 1; // 1:1 risk reward
+    stopLoss = currentPrice - distance;
+    takeProfit = currentPrice + distance;
   } else if (finalSignal === 'JUAL') {
-    stopLoss = Math.max(currentPrice + atr * 1.5, nearestResistance);
-    takeProfit = currentPrice - (stopLoss - currentPrice) * 1; // 1:1 risk reward
+    stopLoss = currentPrice + distance;
+    takeProfit = currentPrice - distance;
   }
 
   let trend = market.structure;
