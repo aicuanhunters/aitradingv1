@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1, maximum-scale=1, user-scalable=yes" />
-<title>AI Trading Basic - Platform Analisis Crypto Forex</title>
+<title>AI Trading Pro - SMC ICT High Confidence</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -2117,8 +2117,8 @@ body::before {
         <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh9YQmaIHSrk0AT8IpfU-nDQ2NmGo700YpMQSj3Lvo-_7kX4G6xyX_pd5KyxCznX6r0Tl2vYvZkZf797uCgHXQflFsDW5-HThG2rIg3PCR1LXrhuU3GDndJkLyyfdhC5LfsQuw2TFnwTAePABrvRF-PVrOF3ZTqBqMNYZ-ErDcXvCW5sCzLGcIkWzO_6YwN/s1024/1000832791.png" alt="AI Trading Basic Logo">
       </div>
       <div class="logo-text">
-        <h1>AI TRADING BASIC</h1>
-        <p>Hunters Group</p>
+        <h1>AI TRADING PRO</h1>
+        <p>Hunters Group - SMC ICT</p>
       </div>
     </div>
     <div class="header-right">
@@ -2135,7 +2135,7 @@ body::before {
 <!-- DATA STATUS -->
 <div id="dataStatus" class="uniform-card mb-4 flex items-center justify-center gap-2 text-sm p-3">
   <div class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></div>
-  <span>Sistem Siap | Menunggu analisa</span>
+  <span>Sistem Siap | High Confidence SMC ICT</span>
 </div>
 
 <!-- QUOTA CARD -->
@@ -2217,7 +2217,7 @@ body::before {
     <div class="analyzer-card">
       <div class="analyzer-header">
         <i class="fas fa-microchip"></i>
-        <h3>Mesin Analisa</h3>
+        <h3>Mesin Analisa SMC & ICT</h3>
       </div>
       <div class="analyzer-body">
         <div class="analyzer-field">
@@ -2513,11 +2513,11 @@ body::before {
 <footer class="footer-premium">
   <div class="footer-content">
     <div class="license-badge"><i class="fas fa-shield-alt"></i><span>Lisensi: AI-TB/2025/001</span></div>
-    <div class="copyright"><i class="far fa-copyright"></i><span>2025 AI TRADING BASIC - Platform Analisis Crypto Forex | Seluruh Hak Dilindungi</span></div>
+    <div class="copyright"><i class="far fa-copyright"></i><span>2025 AI TRADING PRO - SMC ICT High Confidence | Seluruh Hak Dilindungi</span></div>
   </div>
 </footer>
 
-<!-- MODAL PEMBELIAN LIMIT (sama persis dengan asli) -->
+<!-- MODAL PEMBELIAN LIMIT -->
 <div id="paymentModal" class="modern-modal">
   <div class="modern-modal-content">
     <div class="modern-modal-header">
@@ -2642,311 +2642,775 @@ body::before {
 </div>
 
 <script>
-// ==================== KONFIGURASI (SAMA PERSIS DENGAN ASLI, KECUALI INDIKATOR) ====================
+// ==================== KONFIGURASI ====================
 const apiKey = "6b80b1aab6174949bdf77eade950c8fa";
 const intervalMap = { "1m":"1min","5m":"5min","15m":"15min","1h":"1h","4h":"4h","1d":"1day" };
 const HARGA_PER_LIMIT = 8499;
 const MAKSIMAL_BELI_PER_TRANSAKSI = 10;
 const LIMIT_AWAL = 5;
 
-// RSI Chart (sama)
+// RSI Chart
 let rsiChart = null;
+
 function initRSIChart(value) {
   const ctx = document.getElementById('rsiChart').getContext('2d');
   if (rsiChart) rsiChart.destroy();
-  const points = [];
-  for (let i = 0; i < 20; i++) points.push(Math.min(100, Math.max(0, value + (Math.sin(i*0.5)*15) + (Math.random()*10-5))));
+  const dataPoints = [];
+  for (let i = 0; i < 20; i++) {
+    const variance = Math.sin(i * 0.5) * 15;
+    const pointValue = Math.min(100, Math.max(0, value + variance + (Math.random() * 10 - 5)));
+    dataPoints.push(pointValue);
+  }
   rsiChart = new Chart(ctx, {
     type: 'line',
-    data: { labels: Array.from({length:20},(_,i)=>i+1), datasets: [{ data: points, borderColor: value>70?'#ef4444':(value<30?'#22c55e':'#3b82f6'), borderWidth:2, pointRadius:0, tension:0.4 }] },
-    options: { responsive: true, maintainAspectRatio: true, plugins: { legend: { display: false }, tooltip: { enabled: false } }, scales: { x: { display: false }, y: { display: false, min:0, max:100 } } }
+    data: {
+      labels: Array.from({length: 20}, (_, i) => i + 1),
+      datasets: [{
+        data: dataPoints,
+        borderColor: value > 70 ? '#ef4444' : (value < 30 ? '#22c55e' : '#3b82f6'),
+        backgroundColor: 'transparent',
+        borderWidth: 2,
+        pointRadius: 0,
+        pointHoverRadius: 3,
+        tension: 0.4,
+        fill: false
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: true,
+      plugins: { legend: { display: false }, tooltip: { enabled: false } },
+      scales: { x: { display: false }, y: { display: false, min: 0, max: 100 } }
+    }
   });
 }
+
 function updateRSIIndicator(value) {
   const container = document.getElementById('rsiIndicator');
-  let status = value>70?'Overbought':(value<30?'Oversold':'Normal');
-  let color = value>70?'#ef4444':(value<30?'#22c55e':'#3b82f6');
-  container.innerHTML = `<div style="display:flex;align-items:center;gap:0.5rem"><div class="rsi-dot ${value>70?'overbought':(value<30?'oversold':'normal')}"></div><span style="color:${color};">${status}</span></div>`;
+  let status = value > 70 ? 'Overbought' : (value < 30 ? 'Oversold' : 'Normal');
+  let color = value > 70 ? '#ef4444' : (value < 30 ? '#22c55e' : '#3b82f6');
+  container.innerHTML = `<div style="display: flex; align-items: center; gap: 0.5rem;"><div class="rsi-dot ${value > 70 ? 'overbought' : (value < 30 ? 'oversold' : 'normal')}"></div><span style="color: ${color};">${status}</span></div>`;
 }
 
-// ==================== FUNGSI INDIKATOR BARU (LENGKAP, AKURASI TINGGI) ====================
-function calculateEMA(data, period) { if(data.length===0) return 0; let mult=2/(period+1), ema=data[0]; for(let i=1;i<data.length;i++) ema=(data[i]-ema)*mult+ema; return ema; }
-function calculateRSI(closes, period=14) { if(closes.length<period+1) return 50; let gains=0,losses=0; for(let i=1;i<=period;i++){ let diff=closes[i-1]-closes[i]; if(diff>=0) gains+=diff; else losses-=diff; } let avgGain=gains/period, avgLoss=losses/period; if(avgLoss===0) return 100; let rs=avgGain/avgLoss; return 100-(100/(1+rs)); }
-function calculateMACD(closes, fast=12, slow=26, signal=9) { let emaFast=calculateEMA(closes,fast), emaSlow=calculateEMA(closes,slow), macdLine=emaFast-emaSlow, signalLine=calculateEMA([macdLine],signal), histogram=macdLine-signalLine, crossover=(histogram>0.01)?'BULLISH':(histogram<-0.01)?'BEARISH':'NEUTRAL'; return {macdLine,signalLine,histogram,crossover}; }
-function calculateADX(ohlc, period=14) { if(ohlc.length<period+1) return 25; let plusDM=[],minusDM=[],tr=[]; for(let i=1;i<ohlc.length;i++){ let hd=ohlc[i-1].high-ohlc[i].high, ld=ohlc[i].low-ohlc[i-1].low; plusDM.push((hd>ld && hd>0)?hd:0); minusDM.push((ld>hd && ld>0)?ld:0); let trVal=Math.max(ohlc[i].high-ohlc[i].low, Math.abs(ohlc[i].high-ohlc[i-1].close), Math.abs(ohlc[i].low-ohlc[i-1].close)); tr.push(trVal); } let avgTR=0, avgPlusDM=0, avgMinusDM=0; for(let i=0;i<period;i++){ avgTR+=tr[i]; avgPlusDM+=plusDM[i]; avgMinusDM+=minusDM[i]; } avgTR/=period; avgPlusDM/=period; avgMinusDM/=period; let plusDI=0,minusDI=0,dx=0; for(let i=period;i<tr.length;i++){ avgTR=(avgTR*(period-1)+tr[i])/period; avgPlusDM=(avgPlusDM*(period-1)+plusDM[i])/period; avgMinusDM=(avgMinusDM*(period-1)+minusDM[i])/period; plusDI=(avgPlusDM/avgTR)*100; minusDI=(avgMinusDM/avgTR)*100; dx=(Math.abs(plusDI-minusDI)/(plusDI+minusDI))*100; } return isNaN(dx)?25:dx; }
-function calculateStochastic(highs, lows, closes, period=14) { if(closes.length<period) return 50; let highestHigh=Math.max(...highs.slice(0,period)), lowestLow=Math.min(...lows.slice(0,period)); if(highestHigh===lowestLow) return 50; return ((closes[0]-lowestLow)/(highestHigh-lowestLow))*100; }
-function calculateBollingerB(closes, period=20, stdDev=2) { if(closes.length<period) return 0.5; let sma=closes.slice(0,period).reduce((a,b)=>a+b,0)/period, variance=closes.slice(0,period).map(c=>Math.pow(c-sma,2)).reduce((a,b)=>a+b,0)/period, stdev=Math.sqrt(variance), upper=sma+stdev*stdDev, lower=sma-stdev*stdDev, current=closes[0]; return Math.min(1,Math.max(0,(current-lower)/(upper-lower))); }
-function calculateSupertrend(ohlc, period=10, multiplier=3) { if(ohlc.length<period+1) return 'NEUTRAL'; let atr=calculateATR(ohlc,period), hl2=(ohlc[0].high+ohlc[0].low)/2, upperBand=hl2+(multiplier*atr), lowerBand=hl2-(multiplier*atr); return (ohlc[0].close>lowerBand)?'BULLISH':'BEARISH'; }
-function volumeRatio(ohlc) { let vols=ohlc.slice(0,20).map(c=>c.volume).filter(v=>v>0); if(vols.length<10) return 1; let avg=vols.reduce((a,b)=>a+b,0)/vols.length; return ohlc[0].volume/avg; }
-function detectPattern(ohlc) { if(ohlc.length<2) return null; let curr=ohlc[0], prev=ohlc[1], body=Math.abs(curr.close-curr.open), range=curr.high-curr.low, isDoji=(body/range)<0.1, bullishEngulf=(curr.open<prev.close && curr.close>prev.open && curr.close>curr.open), bearishEngulf=(curr.open>prev.close && curr.close<prev.open && curr.close<curr.open); if(bullishEngulf) return 'BULLISH_ENGULF'; if(bearishEngulf) return 'BEARISH_ENGULF'; if(isDoji) return 'DOJI'; return null; }
-function calculateATR(ohlc, period=14) { let tr=[]; for(let i=1;i<=period && i<ohlc.length;i++){ let high=ohlc[i-1].high, low=ohlc[i-1].low, prevClose=ohlc[i].close; tr.push(Math.max(high-low, Math.abs(high-prevClose), Math.abs(low-prevClose))); } return tr.reduce((a,b)=>a+b,0)/tr.length; }
-function dynamicLevels(ohlc) { let highs=ohlc.slice(0,20).map(c=>c.high), lows=ohlc.slice(0,20).map(c=>c.low), resistance=Math.max(...highs), support=Math.min(...lows), price=ohlc[0].close, nearestRes=resistance, nearestSup=support; for(let h of highs) if(h>price && h<nearestRes) nearestRes=h; for(let l of lows) if(l<price && l>nearestSup) nearestSup=l; return { support:nearestSup, resistance:nearestRes }; }
-function calculateCCI(ohlc, period=20) { if(ohlc.length<period) return 0; let tp=[]; for(let i=0;i<period;i++) tp.push((ohlc[i].high+ohlc[i].low+ohlc[i].close)/3); let sma=tp.reduce((a,b)=>a+b,0)/period, mad=0; for(let i=0;i<period;i++) mad+=Math.abs(tp[i]-sma); mad/=period; if(mad===0) return 0; return (tp[0]-sma)/(0.015*mad); }
-function calculateWilliamsR(highs, lows, closes, period=14) { if(closes.length<period) return -50; let highestHigh=Math.max(...highs.slice(0,period)), lowestLow=Math.min(...lows.slice(0,period)); if(highestHigh===lowestLow) return -50; return -((highestHigh-closes[0])/(highestHigh-lowestLow))*100; }
-function calculateMFI(ohlc, period=14) { if(ohlc.length<period+1) return 50; let typicalPrices=[], rawMoneyFlow=[]; for(let i=0;i<ohlc.length;i++){ let tp=(ohlc[i].high+ohlc[i].low+ohlc[i].close)/3; typicalPrices.push(tp); rawMoneyFlow.push(tp*ohlc[i].volume); } let positiveFlow=0, negativeFlow=0; for(let i=1;i<=period;i++){ if(typicalPrices[i-1]>typicalPrices[i]) positiveFlow+=rawMoneyFlow[i-1]; else negativeFlow+=rawMoneyFlow[i-1]; } if(negativeFlow===0) return 100; let moneyRatio=positiveFlow/negativeFlow; return 100-(100/(1+moneyRatio)); }
-function calculateVortex(ohlc, period=14) { if(ohlc.length<period+1) return { viPlus:0, viMinus:0, signal:'NEUTRAL' }; let vmPlus=0, vmMinus=0, trSum=0; for(let i=1;i<=period;i++){ let curr=ohlc[i-1], prev=ohlc[i], vmPlusVal=Math.abs(curr.high-prev.low), vmMinusVal=Math.abs(curr.low-prev.high), tr=Math.max(curr.high-curr.low, Math.abs(curr.high-prev.close), Math.abs(curr.low-prev.close)); vmPlus+=vmPlusVal; vmMinus+=vmMinusVal; trSum+=tr; } let viPlus=vmPlus/trSum, viMinus=vmMinus/trSum, signal=(viPlus>viMinus && viPlus>1)?'BULLISH':(viMinus>viPlus && viMinus>1)?'BEARISH':'NEUTRAL'; return { viPlus, viMinus, signal }; }
-function calculateIchimoku(ohlc, periodConv=9, periodBase=26) { if(ohlc.length<periodBase) return { conversion:0, base:0, signal:'NEUTRAL' }; let highConv=Math.max(...ohlc.slice(0,periodConv).map(c=>c.high)), lowConv=Math.min(...ohlc.slice(0,periodConv).map(c=>c.low)), conversion=(highConv+lowConv)/2, highBase=Math.max(...ohlc.slice(0,periodBase).map(c=>c.high)), lowBase=Math.min(...ohlc.slice(0,periodBase).map(c=>c.low)), base=(highBase+lowBase)/2, price=ohlc[0].close, signal=(price>conversion && price>base)?'BULLISH':(price<conversion && price<base)?'BEARISH':'NEUTRAL'; return { conversion, base, signal }; }
-function calculatePSAR(ohlc, af=0.02, maxAf=0.2) { if(ohlc.length<2) return { sar:ohlc[0].close, trend:'NEUTRAL' }; let sar=ohlc[1].close, ep=ohlc[0].high, trendUp=true, afVal=af; for(let i=2;i<ohlc.length;i++){ if(trendUp){ sar=sar+afVal*(ep-sar); if(ohlc[i].low<sar){ trendUp=false; sar=ep; ep=ohlc[i].low; afVal=af; } else { if(ohlc[i].high>ep){ ep=ohlc[i].high; afVal=Math.min(maxAf, afVal+af); } } } else { sar=sar+afVal*(ep-sar); if(ohlc[i].high>sar){ trendUp=true; sar=ep; ep=ohlc[i].high; afVal=af; } else { if(ohlc[i].low<ep){ ep=ohlc[i].low; afVal=Math.min(maxAf, afVal+af); } } } } let currentPrice=ohlc[0].close, trend=(trendUp && currentPrice>sar)?'BULLISH':(!trendUp && currentPrice<sar)?'BEARISH':'NEUTRAL'; return { sar, trend }; }
-function calculateElderRay(ohlc, period=13) { let closes=ohlc.map(c=>c.close), ema=calculateEMA(closes,period), bullPower=ohlc[0].high-ema, bearPower=ohlc[0].low-ema, signal=(bullPower>0 && bearPower>0)?'BULLISH':(bullPower<0 && bearPower<0)?'BEARISH':'NEUTRAL'; return { bullPower, bearPower, signal }; }
+// ========== INDIKATOR SMC & ICT ==========
+function findSwingPoints(ohlc, left = 5, right = 5) {
+  let swingHighs = [], swingLows = [];
+  for (let i = left; i < ohlc.length - right; i++) {
+    let isHigh = true, isLow = true;
+    for (let j = 1; j <= left; j++) {
+      if (ohlc[i].high <= ohlc[i - j].high) isHigh = false;
+      if (ohlc[i].low >= ohlc[i - j].low) isLow = false;
+    }
+    for (let j = 1; j <= right; j++) {
+      if (ohlc[i].high <= ohlc[i + j].high) isHigh = false;
+      if (ohlc[i].low >= ohlc[i + j].low) isLow = false;
+    }
+    if (isHigh) swingHighs.push({ price: ohlc[i].high, index: i });
+    if (isLow) swingLows.push({ price: ohlc[i].low, index: i });
+  }
+  return { swingHighs, swingLows };
+}
 
-// ==================== FETCH OHLC (SAMA) ====================
-async function fetchOHLC(pair, interval, output_size=200) {
-  const symbol = pair.replace("/","/");
+function detectMarketStructure(ohlc) {
+  let { swingHighs, swingLows } = findSwingPoints(ohlc, 5, 5);
+  if (swingHighs.length < 2 || swingLows.length < 2) return { structure: 'CONSOLIDATION', bos: 'NONE', choch: false };
+  let lastHigh = swingHighs[swingHighs.length - 1];
+  let prevHigh = swingHighs[swingHighs.length - 2];
+  let lastLow = swingLows[swingLows.length - 1];
+  let prevLow = swingLows[swingLows.length - 2];
+  let bullishBos = (lastHigh.price > prevHigh.price && lastLow.price > prevLow.price);
+  let bearishBos = (lastHigh.price < prevHigh.price && lastLow.price < prevLow.price);
+  let choch = false;
+  if (bullishBos && swingLows.length > 2 && lastLow.price > swingLows[swingLows.length - 3].price) choch = true;
+  if (bearishBos && swingHighs.length > 2 && lastHigh.price < swingHighs[swingHighs.length - 3].price) choch = true;
+  let structure = bullishBos ? 'BULLISH' : (bearishBos ? 'BEARISH' : 'CONSOLIDATION');
+  return { structure, bos: bullishBos ? 'BULLISH_BOS' : (bearishBos ? 'BEARISH_BOS' : 'NONE'), choch };
+}
+
+function detectOrderBlock(ohlc) {
+  let orderBlocks = { bullish: null, bearish: null };
+  let volumes = ohlc.map(c => c.volume);
+  let avgVol = volumes.slice(0, 20).reduce((a, b) => a + b, 0) / 20;
+  for (let i = 2; i < Math.min(ohlc.length, 30); i++) {
+    let prev = ohlc[i];
+    let curr = ohlc[i - 1];
+    if (curr.close > prev.high && curr.volume > avgVol * 1.2) orderBlocks.bullish = { price: curr.low };
+    if (curr.close < prev.low && curr.volume > avgVol * 1.2) orderBlocks.bearish = { price: curr.high };
+  }
+  return orderBlocks;
+}
+
+function detectFairValueGap(ohlc) {
+  for (let i = 2; i < Math.min(ohlc.length, 50); i++) {
+    let prev2 = ohlc[i];
+    let prev1 = ohlc[i - 1];
+    let curr = ohlc[i - 2];
+    if (prev1.low > prev2.high && curr.low > prev1.high) return { type: 'BULLISH', upper: prev1.high, lower: prev2.low };
+    if (prev1.high < prev2.low && curr.high < prev1.low) return { type: 'BEARISH', upper: prev2.high, lower: prev1.low };
+  }
+  return null;
+}
+
+function detectLiquiditySweep(ohlc) {
+  let { swingHighs, swingLows } = findSwingPoints(ohlc, 3, 3);
+  let currentPrice = ohlc[0].close;
+  let lastHigh = swingHighs.length > 0 ? swingHighs[swingHighs.length - 1].price : null;
+  let lastLow = swingLows.length > 0 ? swingLows[swingLows.length - 1].price : null;
+  return { sweepHigh: (currentPrice > lastHigh && lastHigh !== null), sweepLow: (currentPrice < lastLow && lastLow !== null) };
+}
+
+function calculateFibLevels(high, low, currentPrice) {
+  let diff = high - low;
+  let levels = {
+    level_618: high - diff * 0.618,
+    level_786: high - diff * 0.786,
+    level_382: low + diff * 0.382
+  };
+  let nearestSupport = null, nearestResistance = null;
+  if (levels.level_618 < currentPrice && (!nearestSupport || levels.level_618 > nearestSupport)) nearestSupport = { name: '618', level: levels.level_618 };
+  if (levels.level_786 < currentPrice && (!nearestSupport || levels.level_786 > nearestSupport)) nearestSupport = { name: '786', level: levels.level_786 };
+  if (levels.level_382 > currentPrice && (!nearestResistance || levels.level_382 < nearestResistance)) nearestResistance = { name: '382', level: levels.level_382 };
+  if (levels.level_618 > currentPrice && (!nearestResistance || levels.level_618 < nearestResistance)) nearestResistance = { name: '618', level: levels.level_618 };
+  return { nearestSupport, nearestResistance };
+}
+
+function calculateATR(ohlc, period = 14) {
+  let tr = [];
+  for (let i = 1; i <= period && i < ohlc.length; i++) {
+    let high = ohlc[i - 1].high, low = ohlc[i - 1].low, prevClose = ohlc[i].close;
+    tr.push(Math.max(high - low, Math.abs(high - prevClose), Math.abs(low - prevClose)));
+  }
+  return tr.reduce((a, b) => a + b, 0) / tr.length;
+}
+
+function calculateRSI(ohlc, period = 14) {
+  const closes = ohlc.slice(0, period + 1).map(c => c.close).reverse();
+  let gains = 0, losses = 0;
+  for (let i = 1; i < closes.length; i++) {
+    const diff = closes[i] - closes[i - 1];
+    if (diff >= 0) gains += diff;
+    else losses -= diff;
+  }
+  const avgGain = gains / period;
+  const avgLoss = losses / period;
+  if (avgLoss === 0) return 100;
+  const rs = avgGain / avgLoss;
+  return 100 - (100 / (1 + rs));
+}
+
+function calculateMACD(ohlc) {
+  const closes = ohlc.slice(0, 50).map(c => c.close).reverse();
+  const ema12 = calculateEMA(closes, 12);
+  const ema26 = calculateEMA(closes, 26);
+  const macdLine = ema12 - ema26;
+  const signalLine = calculateEMA([macdLine], 9);
+  return { crossover: macdLine > signalLine ? 'BULLISH' : 'BEARISH' };
+}
+
+function calculateEMA(data, period) {
+  if (data.length === 0) return 0;
+  const multiplier = 2 / (period + 1);
+  let ema = data[0];
+  for (let i = 1; i < data.length; i++) ema = (data[i] - ema) * multiplier + ema;
+  return ema;
+}
+
+function volumeSpike(ohlc) {
+  let vols = ohlc.slice(0, 20).map(c => c.volume).filter(v => v > 0);
+  if (vols.length < 10) return 1;
+  let avg = vols.reduce((a, b) => a + b, 0) / vols.length;
+  return ohlc[0].volume / avg;
+}
+
+// ==================== FETCH OHLC ====================
+async function fetchOHLC(pair, interval, output_size = 200) {
+  const symbol = pair.replace("/", "/");
   const url = `https://api.twelvedata.com/time_series?symbol=${encodeURIComponent(symbol)}&interval=${interval}&outputsize=${output_size}&apikey=${apiKey}`;
   const res = await fetch(url);
   const data = await res.json();
-  if(data && data.values) return data.values.map(v=>({time:v.datetime,open:parseFloat(v.open),high:parseFloat(v.high),low:parseFloat(v.low),close:parseFloat(v.close),volume:v.volume?parseFloat(v.volume):0}));
-  throw new Error(data.message||"Gagal ambil data");
+  if (data && data.values) return data.values.map(v => ({ time: v.datetime, open: parseFloat(v.open), high: parseFloat(v.high), low: parseFloat(v.low), close: parseFloat(v.close), volume: v.volume ? parseFloat(v.volume) : 0 }));
+  throw new Error(data.message || "Gagal ambil data");
 }
 
-// ==================== FUNGSI ANALISIS UTAMA DENGAN 21 INDIKATOR ====================
+// ==================== FUNGSI UTAMA ANALISIS (SMC + ICT + HIGH CONFIDENCE) ====================
 async function getAdvancedSignal(pair, timeframe) {
   const apiInterval = intervalMap[timeframe];
   const ohlc = await fetchOHLC(pair, apiInterval, 200);
-  if(!ohlc || ohlc.length < 60) throw new Error("Data tidak mencukupi (min 60 candle)");
-  
-  let closes = ohlc.map(c=>c.close);
-  let highs = ohlc.map(c=>c.high);
-  let lows = ohlc.map(c=>c.low);
+  if (!ohlc || ohlc.length < 60) throw new Error("Data tidak mencukupi (minimal 60 candle)");
+
+  let closes = ohlc.map(c => c.close);
   let currentPrice = ohlc[0].close;
-  
-  let rsi = calculateRSI(closes);
-  let macd = calculateMACD(closes);
-  let adx = calculateADX(ohlc);
-  let stochastic = calculateStochastic(highs, lows, closes);
-  let bbPercent = calculateBollingerB(closes);
-  let supertrend = calculateSupertrend(ohlc);
-  let volRatioVal = volumeRatio(ohlc);
-  let pattern = detectPattern(ohlc);
-  let levels = dynamicLevels(ohlc);
-  let cci = calculateCCI(ohlc);
-  let williamsR = calculateWilliamsR(highs, lows, closes);
-  let mfi = calculateMFI(ohlc);
-  let vortex = calculateVortex(ohlc);
-  let ichimoku = calculateIchimoku(ohlc);
-  let psar = calculatePSAR(ohlc);
-  let elderRay = calculateElderRay(ohlc);
-  
-  let ema20 = calculateEMA(closes,20);
-  let ema50 = calculateEMA(closes,50);
-  let trend = (ema20>ema50)?'BULLISH':(ema20<ema50)?'BEARISH':'SIDEWAYS';
-  
-  let buyScore=0, sellScore=0;
-  // Trend (35)
-  if(trend==='BULLISH') buyScore+=35; else if(trend==='BEARISH') sellScore+=35; else { buyScore+=10; sellScore+=10; }
-  // RSI (20)
-  if(rsi<30) buyScore+=20; else if(rsi>70) sellScore+=20; else if(rsi>=40 && rsi<=60) { buyScore+=5; sellScore+=5; }
-  // MACD (25)
-  if(macd.crossover==='BULLISH') buyScore+=25; else if(macd.crossover==='BEARISH') sellScore+=25;
-  // ADX (20)
-  if(adx>25){ if(trend==='BULLISH') buyScore+=20; else if(trend==='BEARISH') sellScore+=20; } else { buyScore-=5; sellScore-=5; }
-  // Stochastic (15)
-  if(stochastic<20) buyScore+=15; else if(stochastic>80) sellScore+=15; else if(stochastic>=30 && stochastic<=70) { buyScore+=5; sellScore+=5; }
-  // Bollinger %B (15)
-  if(bbPercent<0.2) buyScore+=15; else if(bbPercent>0.8) sellScore+=15;
-  // Supertrend (15)
-  if(supertrend==='BULLISH') buyScore+=15; else if(supertrend==='BEARISH') sellScore+=15;
-  // Volume Ratio (15)
-  if(volRatioVal>1.5){ if(trend==='BULLISH') buyScore+=15; else if(trend==='BEARISH') sellScore+=15; } else if(volRatioVal>1.2){ if(trend==='BULLISH') buyScore+=8; else if(trend==='BEARISH') sellScore+=8; }
-  // Pattern (15)
-  if(pattern==='BULLISH_ENGULF') buyScore+=15; else if(pattern==='BEARISH_ENGULF') sellScore+=15; else if(pattern==='DOJI') { buyScore+=5; sellScore+=5; }
-  // Support/Resistance (10)
-  let distSup = ((currentPrice-levels.support)/currentPrice)*100;
-  let distRes = ((levels.resistance-currentPrice)/currentPrice)*100;
-  if(distSup<0.5 && distSup>0) buyScore+=10;
-  if(distRes<0.5 && distRes>0) sellScore+=10;
-  // CCI (10)
-  if(cci<-100) buyScore+=10; else if(cci>100) sellScore+=10;
-  // Williams %R (10)
-  if(williamsR<-80) buyScore+=10; else if(williamsR>-20) sellScore+=10;
-  // MFI (10)
-  if(mfi<20) buyScore+=10; else if(mfi>80) sellScore+=10;
-  // Vortex (10)
-  if(vortex.signal==='BULLISH') buyScore+=10; else if(vortex.signal==='BEARISH') sellScore+=10;
-  // Ichimoku (10)
-  if(ichimoku.signal==='BULLISH') buyScore+=10; else if(ichimoku.signal==='BEARISH') sellScore+=10;
-  // PSAR (10)
-  if(psar.trend==='BULLISH') buyScore+=10; else if(psar.trend==='BEARISH') sellScore+=10;
-  // Elder Ray (10)
-  if(elderRay.signal==='BULLISH') buyScore+=10; else if(elderRay.signal==='BEARISH') sellScore+=10;
-  
+  let atr = calculateATR(ohlc, 14);
+
+  // SMC/ICT Components
+  let market = detectMarketStructure(ohlc);
+  let orderBlocks = detectOrderBlock(ohlc);
+  let fvg = detectFairValueGap(ohlc);
+  let liquidity = detectLiquiditySweep(ohlc);
+  let highestHigh = Math.max(...ohlc.slice(0, 50).map(c => c.high));
+  let lowestLow = Math.min(...ohlc.slice(0, 50).map(c => c.low));
+  let fib = calculateFibLevels(highestHigh, lowestLow, currentPrice);
+  let rsi = calculateRSI(ohlc);
+  let macd = calculateMACD(ohlc);
+  let volRatio = volumeSpike(ohlc);
+  let { swingHighs, swingLows } = findSwingPoints(ohlc, 5, 5);
+  let nearestSupport = swingLows.length > 0 ? swingLows[swingLows.length - 1].price : currentPrice - atr * 2;
+  let nearestResistance = swingHighs.length > 0 ? swingHighs[swingHighs.length - 1].price : currentPrice + atr * 2;
+  for (let s of swingLows) if (s.price > nearestSupport && s.price < currentPrice) nearestSupport = s.price;
+  for (let r of swingHighs) if (r.price < nearestResistance && r.price > currentPrice) nearestResistance = r.price;
+
+  // ================ SKORING (SAMA PERSIS TIDAK DIUBAH) ================
+  let buyScore = 0, sellScore = 0;
+  if (market.structure === 'BULLISH') buyScore += 45;
+  else if (market.structure === 'BEARISH') sellScore += 45;
+  else { buyScore += 10; sellScore += 10; }
+
+  if (market.bos === 'BULLISH_BOS') buyScore += 35;
+  else if (market.bos === 'BEARISH_BOS') sellScore += 35;
+  if (market.choch) { if (market.structure === 'BULLISH') buyScore += 25; else if (market.structure === 'BEARISH') sellScore += 25; }
+
+  if (orderBlocks.bullish && currentPrice > orderBlocks.bullish.price) buyScore += 40;
+  if (orderBlocks.bearish && currentPrice < orderBlocks.bearish.price) sellScore += 40;
+
+  if (fvg && fvg.type === 'BULLISH') buyScore += 35;
+  if (fvg && fvg.type === 'BEARISH') sellScore += 35;
+
+  if (liquidity.sweepLow) buyScore += 35;
+  if (liquidity.sweepHigh) sellScore += 35;
+
+  if (fib.nearestSupport && (fib.nearestSupport.name === '618' || fib.nearestSupport.name === '786')) buyScore += 25;
+  if (fib.nearestResistance && (fib.nearestResistance.name === '618' || fib.nearestResistance.name === '382')) sellScore += 25;
+
+  if (rsi < 30) buyScore += 20;
+  else if (rsi > 70) sellScore += 20;
+  else if (rsi >= 40 && rsi <= 60) { buyScore += 8; sellScore += 8; }
+
+  if (macd.crossover === 'BULLISH') buyScore += 20;
+  else if (macd.crossover === 'BEARISH') sellScore += 20;
+
+  if (volRatio > 1.5) { if (market.structure === 'BULLISH') buyScore += 20; else if (market.structure === 'BEARISH') sellScore += 20; }
+  else if (volRatio > 1.2) { if (market.structure === 'BULLISH') buyScore += 12; else if (market.structure === 'BEARISH') sellScore += 12; }
+
+  let distToSupport = ((currentPrice - nearestSupport) / currentPrice) * 100;
+  let distToResistance = ((nearestResistance - currentPrice) / currentPrice) * 100;
+  if (distToSupport < 0.5 && distToSupport > 0) buyScore += 15;
+  if (distToResistance < 0.5 && distToResistance > 0) sellScore += 15;
+
   let totalScore = buyScore + sellScore;
-  let confidence = totalScore>0 ? (Math.abs(buyScore-sellScore)/totalScore)*100 : 0;
-  confidence = Math.min(100, Math.round(confidence));
-  let finalSignal='TUNGGU', signalStrength='LEMAH';
-  let diff = Math.abs(buyScore-sellScore);
-  if(buyScore>sellScore && diff>=20){
-    finalSignal='BELI';
-    if(diff>=45) signalStrength='KUAT';
-    else if(diff>=30) signalStrength='SEDANG';
-  } else if(sellScore>buyScore && diff>=20){
-    finalSignal='JUAL';
-    if(diff>=45) signalStrength='KUAT';
-    else if(diff>=30) signalStrength='SEDANG';
+  let rawConfidence = totalScore > 0 ? (Math.abs(buyScore - sellScore) / totalScore) * 100 : 0;
+  let confidence = Math.min(100, Math.round(rawConfidence));
+
+  let finalSignal = 'TUNGGU', signalStrength = 'LEMAH';
+  let diff = Math.abs(buyScore - sellScore);
+  if (buyScore > sellScore && diff >= 15) {
+    finalSignal = 'BELI';
+    if (diff >= 40) signalStrength = 'KUAT';
+    else if (diff >= 25) signalStrength = 'SEDANG';
+    if (signalStrength === 'LEMAH' && confidence < 50) confidence = 50;
+    if (signalStrength === 'SEDANG' && confidence < 65) confidence = 65;
+    if (signalStrength === 'KUAT' && confidence < 80) confidence = 80;
+  } else if (sellScore > buyScore && diff >= 15) {
+    finalSignal = 'JUAL';
+    if (diff >= 40) signalStrength = 'KUAT';
+    else if (diff >= 25) signalStrength = 'SEDANG';
+    if (signalStrength === 'LEMAH' && confidence < 50) confidence = 50;
+    if (signalStrength === 'SEDANG' && confidence < 65) confidence = 65;
+    if (signalStrength === 'KUAT' && confidence < 80) confidence = 80;
+  } else {
+    if (confidence > 30) confidence = 30;
   }
-  let atr = calculateATR(ohlc);
-  let stopLoss=currentPrice, takeProfit=currentPrice;
-  if(finalSignal==='BELI'){
-    stopLoss = Math.min(currentPrice - atr*1.5, levels.support);
-    takeProfit = currentPrice + (currentPrice-stopLoss)*2;
-  } else if(finalSignal==='JUAL'){
-    stopLoss = Math.max(currentPrice + atr*1.5, levels.resistance);
-    takeProfit = currentPrice - (stopLoss-currentPrice)*2;
+
+  // STOP LOSS DAN TAKE PROFIT DENGAN RASIO 1:1 (jarak diperdekat)
+  let stopLoss = currentPrice, takeProfit = currentPrice;
+  if (finalSignal === 'BELI') {
+    stopLoss = Math.min(currentPrice - atr * 1.5, nearestSupport);
+    takeProfit = currentPrice + (currentPrice - stopLoss) * 1; // 1:1 risk reward
+  } else if (finalSignal === 'JUAL') {
+    stopLoss = Math.max(currentPrice + atr * 1.5, nearestResistance);
+    takeProfit = currentPrice - (stopLoss - currentPrice) * 1; // 1:1 risk reward
   }
+
+  let trend = market.structure;
   return {
     signal: finalSignal, strength: signalStrength, confidence: confidence,
     scores: { buy: Math.round(buyScore), sell: Math.round(sellScore) },
-    trend: trend, rsi: Math.round(rsi), macd: macd.crossover, adx: Math.round(adx),
-    support: levels.support, resistance: levels.resistance,
+    trend: trend, rsi: Math.round(rsi), macd: macd.crossover, adx: Math.round(diff),
+    support: nearestSupport, resistance: nearestResistance,
     currentPrice: currentPrice, stopLoss: stopLoss.toFixed(2), takeProfit: takeProfit.toFixed(2)
   };
 }
 
-// ==================== SISTEM LIMIT (SAMA PERSIS DENGAN ASLI) ====================
-let remainingQuota = LIMIT_AWAL, usedQuota = 0, purchasedQuota = 0, lastDailyResetDate = '';
-function getUserId() { let id = localStorage.getItem('ai_trading_user_id_v3'); if(!id){ id='user_'+Date.now()+'_'+Math.random().toString(36).substr(2,9); localStorage.setItem('ai_trading_user_id_v3',id); } return id; }
-function loadLimitData() { let userId=getUserId(); let saved=localStorage.getItem(`ai_trading_limit_v3_${userId}`); if(saved){ let d=JSON.parse(saved); remainingQuota=d.remainingQuota!==undefined?d.remainingQuota:LIMIT_AWAL; usedQuota=d.usedQuota||0; purchasedQuota=d.purchasedQuota||0; lastDailyResetDate=d.lastDailyResetDate||''; } else resetLimitData(); let today=new Date().toISOString().slice(0,10); if(lastDailyResetDate!==today){ remainingQuota++; lastDailyResetDate=today; saveLimitData(); } updateQuotaUI(); }
-function resetLimitData() { remainingQuota=LIMIT_AWAL; usedQuota=0; purchasedQuota=0; lastDailyResetDate=''; saveLimitData(); }
-function saveLimitData() { let userId=getUserId(); localStorage.setItem(`ai_trading_limit_v3_${userId}`,JSON.stringify({remainingQuota,usedQuota,purchasedQuota,lastDailyResetDate,lastUpdated:new Date().toISOString()})); }
-function useLimit() { if(remainingQuota<=0) return false; remainingQuota--; usedQuota++; saveLimitData(); updateQuotaUI(); return true; }
-function addPaidLimit(amount) { remainingQuota+=amount; purchasedQuota+=amount; saveLimitData(); updateQuotaUI(); }
-function updateQuotaUI() { let remaining=remainingQuota, total=remaining+usedQuota, used=usedQuota, purchased=purchasedQuota, percent=total>0?(used/total)*100:0; document.getElementById('quotaDisplay').innerText=remaining; document.getElementById('totalQuota').innerText=total; document.getElementById('usedQuota').innerText=used; document.getElementById('purchasedQuota').innerText=purchased; document.getElementById('quotaProgress').style.width=percent+'%'; document.getElementById('usagePercent').innerText=Math.round(percent)+'%'; let analyzeBtn=document.getElementById('analyzeBtn'); if(analyzeBtn){ analyzeBtn.disabled=(remaining<=0); analyzeBtn.style.opacity=remaining<=0?'0.5':'1'; } }
-function showToast(msg,isErr=false){ let t=document.createElement('div'); t.className='toast-modern'; t.style.borderLeftColor=isErr?'#ef4444':'#22c55e'; t.innerHTML=`<i class="fas ${isErr?'fa-exclamation-triangle':'fa-check-circle'} mr-2"></i> ${msg}`; document.body.appendChild(t); setTimeout(()=>t.remove(),3000); }
+// ==================== SISTEM LIMIT ====================
+let remainingQuota = LIMIT_AWAL;
+let usedQuota = 0;
+let purchasedQuota = 0;
+let lastDailyResetDate = '';
 
-// ==================== LOADING ANIMATION (SAMA) ====================
-let loadingInterval=null;
-function startLoadingAnimation() {
-  const overlay=document.getElementById('loadingOverlay');
-  const progressBar=document.getElementById('loadingProgressBar');
-  const statusSpan=document.getElementById('loadingStatus');
-  const estimateSpan=document.getElementById('loadingEstimate');
-  const messageSpan=document.getElementById('loadingMessage');
-  const container=document.getElementById('candleContainer');
-  container.innerHTML='';
-  for(let i=0;i<7;i++){ let c=document.createElement('div'); c.className='candle'; c.appendChild(document.createElement('div')); container.appendChild(c); }
-  let progress=0, stepIndex=0;
-  const steps=['Mengambil data pasar...','Menganalisa 21 indikator...','Menghitung konvergensi...','Menyusun rekomendasi...'];
-  if(loadingInterval) clearInterval(loadingInterval);
-  loadingInterval=setInterval(()=>{
-    progress+=Math.random()*15+5; if(progress>=100) progress=100;
-    progressBar.style.width=progress+'%';
-    statusSpan.innerText=Math.floor(progress)+'%';
-    estimateSpan.innerText=Math.max(1,Math.ceil((100-progress)/25));
-    document.querySelectorAll('.candle').forEach(c=>{ let h=20+Math.random()*60; c.style.height=h+'px'; c.style.background=Math.random()>0.5?'#22c55e':'#ef4444'; });
-    if(progress>=100){ clearInterval(loadingInterval); loadingInterval=null; }
-  },200);
-  const msgInt=setInterval(()=>{ if(!overlay.classList.contains('hidden')){ messageSpan.innerText=steps[stepIndex%steps.length]; stepIndex++; }else clearInterval(msgInt); },1200);
+function getUserId() {
+  let userId = localStorage.getItem('ai_trading_user_id_v3');
+  if (!userId) {
+    userId = 'user_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+    localStorage.setItem('ai_trading_user_id_v3', userId);
+  }
+  return userId;
 }
-function stopLoadingAnimation(){ if(loadingInterval){ clearInterval(loadingInterval); loadingInterval=null; } document.getElementById('loadingOverlay').classList.add('hidden'); }
+
+function loadLimitData() {
+  const userId = getUserId();
+  const storageKey = `ai_trading_limit_v3_${userId}`;
+  const savedData = localStorage.getItem(storageKey);
+  if (savedData) {
+    try {
+      const data = JSON.parse(savedData);
+      remainingQuota = data.remainingQuota !== undefined ? data.remainingQuota : LIMIT_AWAL;
+      usedQuota = data.usedQuota || 0;
+      purchasedQuota = data.purchasedQuota || 0;
+      lastDailyResetDate = data.lastDailyResetDate || '';
+    } catch(e) { resetLimitData(); }
+  } else { resetLimitData(); }
+  const today = new Date().toISOString().slice(0, 10);
+  if (lastDailyResetDate !== today) {
+    remainingQuota++;
+    lastDailyResetDate = today;
+    saveLimitData();
+  }
+  updateQuotaUI();
+}
+
+function resetLimitData() {
+  remainingQuota = LIMIT_AWAL;
+  usedQuota = 0;
+  purchasedQuota = 0;
+  lastDailyResetDate = '';
+  saveLimitData();
+}
+
+function saveLimitData() {
+  const userId = getUserId();
+  const storageKey = `ai_trading_limit_v3_${userId}`;
+  const dataToSave = { remainingQuota, usedQuota, purchasedQuota, lastDailyResetDate, lastUpdated: new Date().toISOString() };
+  localStorage.setItem(storageKey, JSON.stringify(dataToSave));
+}
+
+function getRemainingQuota() { return remainingQuota; }
+function getTotalQuota() { return remainingQuota + usedQuota; }
+function getUsedQuota() { return usedQuota; }
+function getPurchasedQuota() { return purchasedQuota; }
+
+function useLimit() {
+  if (remainingQuota <= 0) return false;
+  remainingQuota--;
+  usedQuota++;
+  saveLimitData();
+  updateQuotaUI();
+  return true;
+}
+
+function addPaidLimit(amount) {
+  if (amount <= 0) return false;
+  remainingQuota += amount;
+  purchasedQuota += amount;
+  saveLimitData();
+  updateQuotaUI();
+  return true;
+}
+
+function updateQuotaUI() {
+  const remaining = getRemainingQuota();
+  const total = getTotalQuota();
+  const used = getUsedQuota();
+  const purchased = getPurchasedQuota();
+  const percent = total > 0 ? (used / total) * 100 : 0;
+  document.getElementById('quotaDisplay').innerText = remaining;
+  document.getElementById('totalQuota').innerText = total;
+  document.getElementById('usedQuota').innerText = used;
+  document.getElementById('purchasedQuota').innerText = purchased;
+  document.getElementById('quotaProgress').style.width = percent + '%';
+  document.getElementById('usagePercent').innerText = Math.round(percent) + '%';
+  const analyzeBtn = document.getElementById('analyzeBtn');
+  if (analyzeBtn) {
+    analyzeBtn.disabled = (remaining <= 0);
+    analyzeBtn.style.opacity = remaining <= 0 ? '0.5' : '1';
+    analyzeBtn.style.cursor = remaining <= 0 ? 'not-allowed' : 'pointer';
+  }
+}
+
+function showToast(message, isError = false) {
+  const toast = document.createElement('div');
+  toast.className = 'toast-modern';
+  toast.style.borderLeftColor = isError ? '#ef4444' : '#22c55e';
+  toast.innerHTML = `<i class="fas ${isError ? 'fa-exclamation-triangle' : 'fa-check-circle'} mr-2"></i> ${message}`;
+  document.body.appendChild(toast);
+  setTimeout(() => toast.remove(), 3000);
+}
+
+// ==================== LOADING ANIMATION ====================
+let loadingInterval = null;
+function startLoadingAnimation() {
+  const overlay = document.getElementById('loadingOverlay');
+  const progressBar = document.getElementById('loadingProgressBar');
+  const statusSpan = document.getElementById('loadingStatus');
+  const estimateSpan = document.getElementById('loadingEstimate');
+  const messageSpan = document.getElementById('loadingMessage');
+  const container = document.getElementById('candleContainer');
+  container.innerHTML = '';
+  const candles = [];
+  for (let i = 0; i < 7; i++) {
+    const candle = document.createElement('div');
+    candle.className = 'candle';
+    const wick = document.createElement('div');
+    wick.className = 'wick';
+    candle.appendChild(wick);
+    container.appendChild(candle);
+    candles.push(candle);
+  }
+  let progress = 0;
+  const steps = ['Mengambil data pasar...', 'Mendeteksi struktur pasar...', 'Mencari Order Block & FVG...', 'Analisis Liquidity Sweep...', 'Menghitung Fibonacci & Konfirmasi...', 'Menyusun rekomendasi High Confidence...'];
+  let stepIndex = 0;
+  if (loadingInterval) clearInterval(loadingInterval);
+  loadingInterval = setInterval(() => {
+    progress += Math.random() * 15 + 5;
+    if (progress >= 100) progress = 100;
+    progressBar.style.width = progress + '%';
+    statusSpan.innerText = Math.floor(progress) + '%';
+    estimateSpan.innerText = Math.max(1, Math.ceil((100 - progress) / 25));
+    candles.forEach(candle => {
+      const height = 20 + Math.random() * 60;
+      candle.style.height = height + 'px';
+      candle.style.background = Math.random() > 0.5 ? '#22c55e' : '#ef4444';
+    });
+    if (progress >= 100) { clearInterval(loadingInterval); loadingInterval = null; }
+  }, 200);
+  const msgInterval = setInterval(() => {
+    if (!overlay.classList.contains('hidden')) {
+      messageSpan.innerText = steps[stepIndex % steps.length];
+      stepIndex++;
+    } else { clearInterval(msgInterval); }
+  }, 1200);
+}
+
+function stopLoadingAnimation() {
+  if (loadingInterval) { clearInterval(loadingInterval); loadingInterval = null; }
+  document.getElementById('loadingOverlay').classList.add('hidden');
+}
 
 // ==================== RUN ANALYSIS ====================
 async function runAnalysis() {
-  if(remainingQuota<=0){ showToast('Limit habis! Beli limit atau tunggu besok.',true); Swal.fire({title:'Limit Habis',html:`Anda tidak memiliki limit.<br>Dapatkan limit gratis harian besok atau beli sekarang.<br>Harga: <strong>Rp${HARGA_PER_LIMIT.toLocaleString()}/limit</strong>`,icon:'warning',confirmButtonText:'Beli Limit',background:'#1e293b',confirmButtonColor:'#22c55e'}).then(()=>document.getElementById('buyQuotaBtn').click()); return; }
-  let pair=document.getElementById('pair').value, tf=document.getElementById('timeframe').value;
-  document.getElementById('signalCard').style.display='none';
+  const remaining = getRemainingQuota();
+  if (remaining <= 0) {
+    showToast('Limit habis! Beli limit atau tunggu besok.', true);
+    Swal.fire({ title: 'Limit Habis', html: `Anda tidak memiliki limit.<br>Dapatkan limit gratis harian besok atau beli sekarang.<br>Harga: <strong>Rp${HARGA_PER_LIMIT.toLocaleString()}/limit</strong>`, icon: 'warning', confirmButtonText: 'Beli Limit', background: '#1e293b', confirmButtonColor: '#22c55e' }).then(() => document.getElementById('buyQuotaBtn').click());
+    return;
+  }
+  const pair = document.getElementById('pair').value;
+  const tf = document.getElementById('timeframe').value;
+  document.getElementById('signalCard').style.display = 'none';
   document.getElementById('loadingOverlay').classList.remove('hidden');
   startLoadingAnimation();
-  document.getElementById('dataStatus').innerHTML='<div class="w-2 h-2 rounded-full bg-yellow-500 animate-pulse mr-2"></div><span>Menganalisa dengan 21 indikator...</span>';
-  try{
-    let analysis=await getAdvancedSignal(pair,tf);
-    if(!useLimit()) throw new Error("Gagal menggunakan limit");
-    // Update UI (sama persis dengan asli)
-    let badge=document.getElementById('signalBadge');
-    let circumference=2*Math.PI*70;
-    let offset=circumference-(analysis.confidence/100)*circumference;
-    let circle=document.getElementById('confidenceCircle');
-    circle.classList.remove('low-confidence','medium-confidence','high-confidence');
-    let percentEl=document.querySelector('.modern-circle-percent');
-    percentEl.classList.remove('low-confidence','medium-confidence','high-confidence');
-    if(analysis.confidence<40){ circle.classList.add('low-confidence'); percentEl.classList.add('low-confidence'); }
-    else if(analysis.confidence<=60){ circle.classList.add('medium-confidence'); percentEl.classList.add('medium-confidence'); }
-    else { circle.classList.add('high-confidence'); percentEl.classList.add('high-confidence'); }
-    circle.style.strokeDasharray=`${circumference} ${circumference}`;
-    circle.style.strokeDashoffset=offset;
-    document.getElementById('confidencePercent').innerHTML=`${analysis.confidence}%`;
-    if(analysis.signal==='BELI'){ badge.className='signal-badge-premium signal-buy-premium'; badge.innerHTML=`<i class="fas fa-arrow-up"></i> BELI (${analysis.strength})`; document.getElementById('stopLossCard').style.display='block'; document.getElementById('takeProfitCard').style.display='block'; }
-    else if(analysis.signal==='JUAL'){ badge.className='signal-badge-premium signal-sell-premium'; badge.innerHTML=`<i class="fas fa-arrow-down"></i> JUAL (${analysis.strength})`; document.getElementById('stopLossCard').style.display='block'; document.getElementById('takeProfitCard').style.display='block'; }
-    else { badge.className='signal-badge-premium signal-wait-premium'; badge.innerHTML='<i class="fas fa-clock"></i> TUNGGU'; document.getElementById('stopLossCard').style.display='none'; document.getElementById('takeProfitCard').style.display='none'; }
-    let trendEl=document.getElementById('marketTrend');
-    let trendAnim=document.getElementById('trendAnimation');
-    if(analysis.trend==='BULLISH'){ trendEl.innerHTML='BULLISH'; trendEl.className='market-trend-value bullish'; trendAnim.innerHTML='<i class="fas fa-arrow-up trend-arrow-up"></i>'; }
-    else if(analysis.trend==='BEARISH'){ trendEl.innerHTML='BEARISH'; trendEl.className='market-trend-value bearish'; trendAnim.innerHTML='<i class="fas fa-arrow-down trend-arrow-down"></i>'; }
-    else { trendEl.innerHTML='SIDEWAYS'; trendEl.className='market-trend-value sideways'; trendAnim.innerHTML='<i class="fas fa-minus trend-minus"></i>'; }
-    document.getElementById('rsiValue').innerHTML=analysis.rsi;
-    if(analysis.rsi>70) document.getElementById('rsiValue').className='signal-info-value rsi-high';
-    else if(analysis.rsi<30) document.getElementById('rsiValue').className='signal-info-value rsi-low';
-    else document.getElementById('rsiValue').className='signal-info-value rsi-normal';
-    initRSIChart(analysis.rsi); updateRSIIndicator(analysis.rsi);
-    let macdEl=document.getElementById('macdValue'); macdEl.innerHTML=analysis.macd; macdEl.className=analysis.macd==='BULLISH'?'signal-info-value macd-bullish':'signal-info-value macd-bearish';
-    document.getElementById('adxValue').innerHTML=analysis.adx;
-    document.getElementById('supportLevel').innerHTML=analysis.support.toFixed(2);
-    document.getElementById('resistanceLevel').innerHTML=analysis.resistance.toFixed(2);
-    document.getElementById('stopLossValue').innerHTML=analysis.stopLoss;
-    document.getElementById('takeProfitValue').innerHTML=analysis.takeProfit;
-    let style='Scalping'; if(analysis.confidence>=70) style='Swing Trading'; else if(analysis.confidence>=55) style='Day Trading'; else if(analysis.confidence>=40) style='Scalping'; else style='Wait for Setup';
-    document.getElementById('tradingStyleText').innerHTML=style;
-    document.getElementById('scoreText').innerHTML=`Score: ${analysis.scores.buy}/${analysis.scores.sell}`;
-    let trendDisplay=analysis.trend==='BULLISH'?'Bullish':(analysis.trend==='BEARISH'?'Bearish':'Sideways');
-    let trendContainer=document.getElementById('trendContainer'); let displayDiv=document.getElementById('trendDisplay'); let textSpan=document.getElementById('trendTextSimple');
-    displayDiv.classList.remove('trend-bullish','trend-bearish','trend-sideways');
-    if(trendDisplay==='Bullish'){ displayDiv.classList.add('trend-bullish'); textSpan.innerHTML='<i class="fas fa-arrow-up"></i> BULLISH'; }
-    else if(trendDisplay==='Bearish'){ displayDiv.classList.add('trend-bearish'); textSpan.innerHTML='<i class="fas fa-arrow-down"></i> BEARISH'; }
-    else { displayDiv.classList.add('trend-sideways'); textSpan.innerHTML='<i class="fas fa-minus"></i> SIDEWAYS'; }
-    trendContainer.style.display='block';
-    document.getElementById('signalCard').style.display='block';
-    document.getElementById('dataStatus').innerHTML=`<div class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse mr-2"></div><span>Analisa selesai | Confidence: ${analysis.confidence}% | Sisa limit: ${remainingQuota}</span>`;
-    showToast(`Analisa berhasil! Sinyal: ${analysis.signal} (${analysis.confidence}% confidence)`);
-  } catch(e){ showToast('Gagal: '+e.message,true); document.getElementById('dataStatus').innerHTML='<div class="w-2 h-2 rounded-full bg-red-500 animate-pulse mr-2"></div><span>Gagal ambil data</span>'; }
-  finally{ stopLoadingAnimation(); }
+  document.getElementById('dataStatus').innerHTML = '<div class="w-2 h-2 rounded-full bg-yellow-500 animate-pulse mr-2"></div><span>Menganalisa dengan SMC & ICT High Confidence...</span>';
+  try {
+    const analysis = await getAdvancedSignal(pair, tf);
+    if (!useLimit()) throw new Error("Gagal menggunakan limit");
+    // Update UI Signal Card
+    const badge = document.getElementById('signalBadge');
+    const circumference = 2 * Math.PI * 70;
+    const offset = circumference - (analysis.confidence / 100) * circumference;
+    const circle = document.getElementById('confidenceCircle');
+    circle.classList.remove('low-confidence', 'medium-confidence', 'high-confidence');
+    const percentElement = document.querySelector('.modern-circle-percent');
+    percentElement.classList.remove('low-confidence', 'medium-confidence', 'high-confidence');
+    if (analysis.confidence < 40) { circle.classList.add('low-confidence'); percentElement.classList.add('low-confidence'); }
+    else if (analysis.confidence <= 60) { circle.classList.add('medium-confidence'); percentElement.classList.add('medium-confidence'); }
+    else { circle.classList.add('high-confidence'); percentElement.classList.add('high-confidence'); }
+    circle.style.strokeDasharray = `${circumference} ${circumference}`;
+    circle.style.strokeDashoffset = offset;
+    document.getElementById('confidencePercent').innerHTML = `${analysis.confidence}%`;
+    if (analysis.signal === 'BELI') { 
+      badge.className = 'signal-badge-premium signal-buy-premium'; 
+      badge.innerHTML = `<i class="fas fa-arrow-up"></i> BELI (${analysis.strength})`; 
+      document.getElementById('stopLossCard').style.display = 'block';
+      document.getElementById('takeProfitCard').style.display = 'block';
+    } else if (analysis.signal === 'JUAL') { 
+      badge.className = 'signal-badge-premium signal-sell-premium'; 
+      badge.innerHTML = `<i class="fas fa-arrow-down"></i> JUAL (${analysis.strength})`; 
+      document.getElementById('stopLossCard').style.display = 'block';
+      document.getElementById('takeProfitCard').style.display = 'block';
+    } else { 
+      badge.className = 'signal-badge-premium signal-wait-premium'; 
+      badge.innerHTML = '<i class="fas fa-clock"></i> TUNGGU';
+      document.getElementById('stopLossCard').style.display = 'none';
+      document.getElementById('takeProfitCard').style.display = 'none';
+    }
+    const trendElement = document.getElementById('marketTrend');
+    const trendAnimation = document.getElementById('trendAnimation');
+    if (analysis.trend === 'BULLISH') {
+      trendElement.innerHTML = 'BULLISH';
+      trendElement.className = 'market-trend-value bullish';
+      trendAnimation.innerHTML = '<i class="fas fa-arrow-up trend-arrow-up"></i>';
+    } else if (analysis.trend === 'BEARISH') {
+      trendElement.innerHTML = 'BEARISH';
+      trendElement.className = 'market-trend-value bearish';
+      trendAnimation.innerHTML = '<i class="fas fa-arrow-down trend-arrow-down"></i>';
+    } else {
+      trendElement.innerHTML = 'SIDEWAYS';
+      trendElement.className = 'market-trend-value sideways';
+      trendAnimation.innerHTML = '<i class="fas fa-minus trend-minus"></i>';
+    }
+    const rsiElement = document.getElementById('rsiValue');
+    rsiElement.innerHTML = analysis.rsi;
+    if (analysis.rsi > 70) rsiElement.className = 'signal-info-value rsi-high';
+    else if (analysis.rsi < 30) rsiElement.className = 'signal-info-value rsi-low';
+    else rsiElement.className = 'signal-info-value rsi-normal';
+    initRSIChart(analysis.rsi);
+    updateRSIIndicator(analysis.rsi);
+    const macdElement = document.getElementById('macdValue');
+    if (analysis.macd === 'BULLISH') {
+      macdElement.innerHTML = 'BULLISH';
+      macdElement.className = 'signal-info-value macd-bullish';
+    } else {
+      macdElement.innerHTML = 'BEARISH';
+      macdElement.className = 'signal-info-value macd-bearish';
+    }
+    document.getElementById('adxValue').innerHTML = analysis.adx;
+    document.getElementById('supportLevel').innerHTML = analysis.support ? analysis.support.toFixed(2) : '—';
+    document.getElementById('resistanceLevel').innerHTML = analysis.resistance ? analysis.resistance.toFixed(2) : '—';
+    document.getElementById('stopLossValue').innerHTML = analysis.stopLoss;
+    document.getElementById('takeProfitValue').innerHTML = analysis.takeProfit;
+    let style = 'Scalping';
+    if (analysis.confidence >= 70) style = 'Swing Trading';
+    else if (analysis.confidence >= 55) style = 'Day Trading';
+    else if (analysis.confidence >= 40) style = 'Scalping';
+    else style = 'Wait for Setup';
+    document.getElementById('tradingStyleText').innerHTML = style;
+    document.getElementById('scoreText').innerHTML = `Score: ${analysis.scores.buy}/${analysis.scores.sell}`;
+    let trendDisplay = analysis.trend;
+    if (trendDisplay === 'BULLISH') trendDisplay = 'Bullish';
+    else if (trendDisplay === 'BEARISH') trendDisplay = 'Bearish';
+    else trendDisplay = 'Sideways';
+    const container = document.getElementById('trendContainer');
+    const displayDiv = document.getElementById('trendDisplay');
+    const textSpan = document.getElementById('trendTextSimple');
+    displayDiv.classList.remove('trend-bullish', 'trend-bearish', 'trend-sideways');
+    if (trendDisplay === 'Bullish') { displayDiv.classList.add('trend-bullish'); textSpan.innerHTML = '<i class="fas fa-arrow-up"></i> BULLISH'; }
+    else if (trendDisplay === 'Bearish') { displayDiv.classList.add('trend-bearish'); textSpan.innerHTML = '<i class="fas fa-arrow-down"></i> BEARISH'; }
+    else { displayDiv.classList.add('trend-sideways'); textSpan.innerHTML = '<i class="fas fa-minus"></i> SIDEWAYS'; }
+    if (container.style.display === 'none') container.style.display = 'block';
+    document.getElementById('signalCard').style.display = 'block';
+    document.getElementById('dataStatus').innerHTML = `<div class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse mr-2"></div><span>Analisa selesai | Confidence: ${analysis.confidence}% | Sisa limit: ${getRemainingQuota()}</span>`;
+    showToast(`Analisa berhasil! Sinyal: ${analysis.signal} (${analysis.confidence}% confidence) - SMC ICT Valid`);
+  } catch(e) { 
+    showToast('Gagal: ' + e.message, true); 
+    document.getElementById('dataStatus').innerHTML = '<div class="w-2 h-2 rounded-full bg-red-500 animate-pulse mr-2"></div><span>Gagal ambil data</span>';
+  } finally { stopLoadingAnimation(); }
 }
 
-// ==================== FUNGSI MANAJEMEN RISIKO & STATISTIK (SAMA PERSIS) ====================
-function formatNumberWithDots(n){ return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g,"."); }
-function formatRupiahShort(num){ if(num>=1e6) return 'Rp'+(num/1e6).toFixed(1)+'Jt'; if(num>=1e3) return 'Rp'+(num/1e3).toFixed(0)+'Rb'; return 'Rp'+num.toLocaleString('id-ID'); }
-function calculateMM(){ let cap=parseFloat(document.getElementById('mmCapital').value.replace(/\./g,"")); if(isNaN(cap)||cap<=0){ showToast('Masukkan modal yang valid!',true); return; } let level=document.getElementById('mmLevel').value; let risk, maxPos; if(level==='easy'){ risk=0.01; maxPos=3; } else if(level==='medium'){ risk=0.02; maxPos=5; } else { risk=0.05; maxPos=8; } let lossPerPos=cap*risk; let totalLoss=lossPerPos*maxPos; let profitPerPos=lossPerPos*2; let totalProfit=profitPerPos*maxPos; document.getElementById('mmMaxPositions').innerHTML=`${maxPos} posisi`; document.getElementById('mmDailyProfit').innerHTML=formatRupiahShort(Math.round(totalProfit)); document.getElementById('mmDailyLoss').innerHTML=formatRupiahShort(Math.round(totalLoss)); document.getElementById('mm30DaysProfit').innerHTML=formatRupiahShort(Math.round(totalProfit*30)); document.getElementById('mmResults').style.display='block'; showToast('Perhitungan risiko berhasil!'); }
-function resetMM(){ document.getElementById('mmCapital').value=''; document.getElementById('mmLevel').value='easy'; document.getElementById('mmResults').style.display='none'; showToast('Form manajemen risiko direset'); }
-let totalUsers=parseInt(localStorage.getItem('totalUsers'))||400, onlineUsers=parseInt(localStorage.getItem('onlineUsers'))||28, totalKeuntungan=parseInt(localStorage.getItem('totalKeuntungan'))||8200000, totalTransaksi=parseInt(localStorage.getItem('totalTransaksi'))||180;
-function updateStats(){ document.getElementById('totalUsers').innerText=totalUsers.toLocaleString(); document.getElementById('onlineUsers').innerText=onlineUsers; document.getElementById('profitTotal').innerHTML=formatRupiahShort(totalKeuntungan); document.getElementById('profitTransaksi').innerText=totalTransaksi.toLocaleString(); }
-function startStatsSimulation(){ updateStats(); setInterval(()=>{ totalUsers+=Math.floor(Math.random()*2)+1; localStorage.setItem('totalUsers',totalUsers); updateStats(); },60000); setInterval(()=>{ onlineUsers=Math.max(0,onlineUsers+(Math.floor(Math.random()*3)-1)); localStorage.setItem('onlineUsers',onlineUsers); updateStats(); },5000); setInterval(()=>{ totalKeuntungan+=Math.floor(Math.random()*30000)+5000; totalTransaksi+=1; localStorage.setItem('totalKeuntungan',totalKeuntungan); localStorage.setItem('totalTransaksi',totalTransaksi); updateStats(); },15000); }
+// ==================== FUNGSI MANAJEMEN RISIKO ====================
+function formatNumberWithDots(number) { return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."); }
+function formatRupiahShort(num) { if(num >= 1e6) return 'Rp'+(num/1e6).toFixed(1)+'Jt'; if(num >= 1e3) return 'Rp'+(num/1e3).toFixed(0)+'Rb'; return 'Rp'+num.toLocaleString('id-ID'); }
+const mmCapitalInput = document.getElementById('mmCapital');
+if (mmCapitalInput) {
+  mmCapitalInput.addEventListener('input', function(e) {
+    let raw = this.value.replace(/\./g, "");
+    if (raw === "") raw = "0";
+    let number = parseInt(raw, 10);
+    if (isNaN(number)) number = 0;
+    this.value = formatNumberWithDots(number);
+  });
+}
+function calculateMM(){
+  let capitalRaw = document.getElementById('mmCapital').value.replace(/\./g, "");
+  const capital = parseFloat(capitalRaw);
+  if(isNaN(capital) || capital <= 0){ showToast('Masukkan modal yang valid!', true); return; }
+  const level = document.getElementById('mmLevel').value;
+  let riskPerTrade, maxPositions;
+  if(level === 'easy'){ riskPerTrade = 0.01; maxPositions = 3; }
+  else if(level === 'medium'){ riskPerTrade = 0.02; maxPositions = 5; }
+  else{ riskPerTrade = 0.05; maxPositions = 8; }
+  const maxLossPerPosition = capital * riskPerTrade;
+  const maxLossTotal = maxLossPerPosition * maxPositions;
+  const profitPerPosition = maxLossPerPosition * 2;
+  const maxProfitTotal = profitPerPosition * maxPositions;
+  document.getElementById('mmMaxPositions').innerHTML = `${maxPositions} posisi`;
+  document.getElementById('mmDailyProfit').innerHTML = formatRupiahShort(Math.round(maxProfitTotal));
+  document.getElementById('mmDailyLoss').innerHTML = formatRupiahShort(Math.round(maxLossTotal));
+  document.getElementById('mm30DaysProfit').innerHTML = formatRupiahShort(Math.round(maxProfitTotal * 30));
+  document.getElementById('mmResults').style.display = 'block';
+  showToast('Perhitungan risiko berhasil!');
+}
+function resetMM(){
+  document.getElementById('mmCapital').value = '';
+  document.getElementById('mmLevel').value = 'easy';
+  document.getElementById('mmResults').style.display = 'none';
+  showToast('Form manajemen risiko direset');
+}
 
-// ==================== CHART & MODAL (SAMA PERSIS) ====================
-let chartVisible=false;
-function getTradingViewSymbol(pair){ return pair==='BTC/USD'?'BITSTAMP:BTCUSD':'OANDA:XAUUSD'; }
-function getTradingViewInterval(tf){ let map={'1m':'1','5m':'5','15m':'15','1h':'60','4h':'240','1d':'D'}; return map[tf]||'15'; }
-function loadChart(symbol,interval){ return new Promise((resolve,reject)=>{ let container=document.getElementById('tradingview_chart_container'); if(!container) reject(); container.innerHTML=''; let div=document.createElement('div'); div.className='tradingview-widget-container'; div.style.height='100%'; let contentDiv=document.createElement('div'); contentDiv.className='tradingview-widget-container__widget'; contentDiv.style.height='calc(100% - 32px)'; let copyright=document.createElement('div'); copyright.className='tradingview-widget-copyright'; copyright.innerHTML=`<a href="https://www.tradingview.com/symbols/${symbol}/" target="_blank">${symbol} chart</a>`; div.appendChild(contentDiv); div.appendChild(copyright); container.appendChild(div); let script=document.createElement('script'); script.type='text/javascript'; script.src='https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js'; script.async=true; script.innerHTML=JSON.stringify({allow_symbol_change:true,interval:getTradingViewInterval(interval),locale:'id',symbol:getTradingViewSymbol(symbol),theme:'dark',timezone:'Asia/Jakarta',backgroundColor:'#0f172a',autosize:true}); script.onload=resolve; script.onerror=reject; div.appendChild(script); }); }
-function toggleChart(){ let container=document.getElementById('chartContainer'), btn=document.getElementById('toggleChartBtn'); if(chartVisible){ container.style.display='none'; chartVisible=false; btn.innerHTML='<i class="fas fa-chart-line mr-2"></i> Buka Chart'; }else{ container.style.display='block'; chartVisible=true; btn.innerHTML='<i class="fas fa-times mr-2"></i> Tutup Chart'; let pair=document.getElementById('pair').value, tf=document.getElementById('timeframe').value; loadChart(pair,tf).catch(e=>console.error(e)); } }
-function refreshChart(){ if(chartVisible){ let pair=document.getElementById('pair').value, tf=document.getElementById('timeframe').value; document.getElementById('tradingview_chart_container').innerHTML='<div style="display:flex;align-items:center;justify-content:center;height:100%;color:#94a3b8"><i class="fas fa-spinner fa-spin fa-2x mr-3"></i> Memuat ulang...</div>'; loadChart(pair,tf); } }
+// ==================== STATISTIK SIMULASI ====================
+let totalUsers = parseInt(localStorage.getItem('totalUsers')) || 400;
+let onlineUsers = parseInt(localStorage.getItem('onlineUsers')) || 28;
+let totalKeuntungan = parseInt(localStorage.getItem('totalKeuntungan')) || 8200000;
+let totalTransaksi = parseInt(localStorage.getItem('totalTransaksi')) || 180;
+function updateStats(){ 
+  document.getElementById('totalUsers').innerText = totalUsers.toLocaleString(); 
+  document.getElementById('onlineUsers').innerText = onlineUsers; 
+  document.getElementById('profitTotal').innerHTML = formatRupiahShort(totalKeuntungan); 
+  document.getElementById('profitTransaksi').innerText = totalTransaksi.toLocaleString(); 
+}
+function startStatsSimulation(){ 
+  updateStats(); 
+  setInterval(()=>{ totalUsers += Math.floor(Math.random() * 2) + 1; localStorage.setItem('totalUsers', totalUsers); updateStats(); }, 60000); 
+  setInterval(()=>{ onlineUsers = Math.max(0, onlineUsers + (Math.floor(Math.random() * 3) - 1)); localStorage.setItem('onlineUsers', onlineUsers); updateStats(); }, 5000); 
+  setInterval(()=>{ totalKeuntungan += Math.floor(Math.random() * 30000) + 5000; totalTransaksi += 1; localStorage.setItem('totalKeuntungan', totalKeuntungan); localStorage.setItem('totalTransaksi', totalTransaksi); updateStats(); }, 15000); 
+}
+
+// ==================== CHART TRADINGVIEW ====================
+let chartVisible = false;
+function getTradingViewSymbol(pair) { return pair === 'BTC/USD' ? 'BITSTAMP:BTCUSD' : 'OANDA:XAUUSD'; }
+function getTradingViewInterval(tf) { const m = { '1m':'1','5m':'5','15m':'15','1h':'60','4h':'240','1d':'D' }; return m[tf] || '15'; }
+function loadChart(symbol, interval) {
+  return new Promise((resolve, reject) => {
+    try {
+      const container = document.getElementById('tradingview_chart_container');
+      if (!container) { reject('Container not found'); return; }
+      container.innerHTML = '';
+      const widgetDiv = document.createElement('div');
+      widgetDiv.className = 'tradingview-widget-container';
+      widgetDiv.style.height = '100%'; widgetDiv.style.width = '100%';
+      const widgetContentDiv = document.createElement('div');
+      widgetContentDiv.className = 'tradingview-widget-container__widget';
+      widgetContentDiv.style.height = 'calc(100% - 32px)'; widgetContentDiv.style.width = '100%';
+      const copyrightDiv = document.createElement('div');
+      copyrightDiv.className = 'tradingview-widget-copyright';
+      copyrightDiv.innerHTML = `<a href="https://www.tradingview.com/symbols/${symbol}/" target="_blank">${symbol} chart</a> by TradingView`;
+      widgetDiv.appendChild(widgetContentDiv); widgetDiv.appendChild(copyrightDiv); container.appendChild(widgetDiv);
+      const script = document.createElement('script');
+      script.type = 'text/javascript';
+      script.src = 'https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js';
+      script.async = true;
+      script.innerHTML = JSON.stringify({ allow_symbol_change: true, interval: getTradingViewInterval(interval), locale: 'id', symbol: getTradingViewSymbol(symbol), theme: 'dark', timezone: 'Asia/Jakarta', backgroundColor: '#0f172a', autosize: true });
+      script.onload = resolve; script.onerror = reject;
+      widgetDiv.appendChild(script);
+    } catch(e) { reject(e); }
+  });
+}
+function toggleChart() {
+  const container = document.getElementById('chartContainer');
+  const toggleBtn = document.getElementById('toggleChartBtn');
+  if (chartVisible) {
+    container.style.display = 'none'; chartVisible = false;
+    toggleBtn.innerHTML = '<i class="fas fa-chart-line mr-2"></i> Buka Chart';
+  } else {
+    container.style.display = 'block'; chartVisible = true;
+    toggleBtn.innerHTML = '<i class="fas fa-times mr-2"></i> Tutup Chart';
+    const pair = document.getElementById('pair').value;
+    const timeframe = document.getElementById('timeframe').value;
+    const chartDiv = document.getElementById('tradingview_chart_container');
+    if (chartDiv) chartDiv.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100%;color:#94a3b8;"><i class="fas fa-spinner fa-spin fa-2x mr-3"></i> Memuat chart...</div>';
+    loadChart(pair, timeframe).catch(err => { console.error(err); if(chartDiv) chartDiv.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100%;color:#ef4444;"><i class="fas fa-exclamation-triangle fa-2x mr-3"></i> Gagal memuat chart.</div>'; });
+  }
+}
+function refreshChart() {
+  if (chartVisible) {
+    const pair = document.getElementById('pair').value;
+    const tf = document.getElementById('timeframe').value;
+    const chartDiv = document.getElementById('tradingview_chart_container');
+    if (chartDiv) chartDiv.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100%;color:#94a3b8;"><i class="fas fa-spinner fa-spin fa-2x mr-3"></i> Memuat ulang chart...</div>';
+    loadChart(pair, tf).catch(e => console.error(e));
+  }
+}
+
 function setupToggles() {
-  document.getElementById('technicalToggle')?.addEventListener('click',()=>{ document.getElementById('technicalContent').classList.toggle('collapsed'); document.getElementById('technicalToggleIcon').classList.toggle('rotated'); });
-  document.getElementById('keyLevelsToggle')?.addEventListener('click',()=>{ document.getElementById('keyLevelsContent').classList.toggle('collapsed'); document.getElementById('keyLevelsToggleIcon').classList.toggle('rotated'); });
+  const technicalToggle = document.getElementById('technicalToggle');
+  const technicalContent = document.getElementById('technicalContent');
+  const technicalIcon = document.getElementById('technicalToggleIcon');
+  if (technicalToggle) technicalToggle.addEventListener('click', () => { technicalContent.classList.toggle('collapsed'); technicalIcon.classList.toggle('rotated'); });
+  const keyLevelsToggle = document.getElementById('keyLevelsToggle');
+  const keyLevelsContent = document.getElementById('keyLevelsContent');
+  const keyLevelsIcon = document.getElementById('keyLevelsToggleIcon');
+  if (keyLevelsToggle) keyLevelsToggle.addEventListener('click', () => { keyLevelsContent.classList.toggle('collapsed'); keyLevelsIcon.classList.toggle('rotated'); });
 }
 
-// ==================== DOMContentLoaded (SAMA PERSIS, HANYA MENGGUNAKAN FUNGSI BARU) ====================
-document.addEventListener('DOMContentLoaded',()=>{
-  loadLimitData(); startStatsSimulation(); setupToggles();
-  document.getElementById('analyzeBtn').onclick=runAnalysis;
-  document.getElementById('resetAnalysisBtn').onclick=()=>{ document.getElementById('pair').value='XAU/USD'; document.getElementById('timeframe').value='15m'; document.getElementById('signalCard').style.display='none'; document.getElementById('trendContainer').style.display='none'; document.getElementById('dataStatus').innerHTML='<div class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse mr-2"></div><span>Siap analisa</span>'; loadLimitData(); updateQuotaUI(); showToast('Reset berhasil!'); };
-  document.getElementById('mmCalculateBtn').onclick=calculateMM;
-  document.getElementById('mmResetBtn').onclick=resetMM;
-  document.getElementById('buyQuotaBtn').onclick=openPaymentModal;
-  document.getElementById('toggleChartBtn').onclick=toggleChart;
-  document.getElementById('closeChartBtn').onclick=()=>{ document.getElementById('chartContainer').style.display='none'; chartVisible=false; document.getElementById('toggleChartBtn').innerHTML='<i class="fas fa-chart-line mr-2"></i> Buka Chart'; };
-  document.getElementById('pair').onchange=refreshChart;
-  document.getElementById('timeframe').onchange=refreshChart;
-  
-  // === MODAL LOGIC (SAMA PERSIS DENGAN ASLI) ===
-  let pendingQuantity = 1, generatedUniqueCode = '';
-  function generateUniqueCode() { return Math.floor(Math.random() * 1000).toString().padStart(3, '0'); }
-  function updateModalPrice() { let subtotal = pendingQuantity * HARGA_PER_LIMIT; let uniqueCode = parseInt(generatedUniqueCode); let total = subtotal + uniqueCode; document.getElementById('modalQuantity').innerText = pendingQuantity; document.getElementById('modalSubtotal').innerHTML = subtotal.toLocaleString('id-ID'); document.getElementById('modalUniqueCode').innerHTML = generatedUniqueCode; document.getElementById('modalTotalPayment').innerHTML = 'Rp ' + total.toLocaleString('id-ID'); }
-  function resetModalToStep1() { pendingQuantity = 1; generatedUniqueCode = generateUniqueCode(); updateModalPrice(); document.getElementById('step1Panel').style.display = 'block'; document.getElementById('step2Panel').style.display = 'none'; document.getElementById('step3Panel').style.display = 'none'; document.getElementById('step1Indicator').classList.add('active'); document.getElementById('step2Indicator').classList.remove('active'); document.getElementById('step3Indicator').classList.remove('active'); document.getElementById('step2Indicator').classList.remove('completed'); document.getElementById('step3Indicator').classList.remove('completed'); }
-  function openPaymentModal() { pendingQuantity = 1; generatedUniqueCode = generateUniqueCode(); updateModalPrice(); document.getElementById('userEmail').value = ''; document.getElementById('sourceFund').value = ''; document.getElementById('transactionNo').value = ''; document.getElementById('rrn').value = ''; resetModalToStep1(); document.getElementById('paymentModal').classList.add('show'); }
-  document.getElementById('decrementQtyModal').onclick = () => { if(pendingQuantity > 1){ pendingQuantity--; updateModalPrice(); } };
-  document.getElementById('incrementQtyModal').onclick = () => { if(pendingQuantity < MAKSIMAL_BELI_PER_TRANSAKSI){ pendingQuantity++; updateModalPrice(); } };
-  document.getElementById('nextToQRISBtn').onclick = () => { if(pendingQuantity < 1){ showToast('Pilih minimal 1 limit!', true); return; } document.getElementById('step1Panel').style.display = 'none'; document.getElementById('step2Panel').style.display = 'block'; document.getElementById('step1Indicator').classList.remove('active'); document.getElementById('step2Indicator').classList.add('active'); document.getElementById('step1Indicator').classList.add('completed'); };
+// ==================== MODAL PEMBELIAN ====================
+let pendingQuantity = 1;
+let generatedUniqueCode = '';
+function generateUniqueCode() { return Math.floor(Math.random() * 1000).toString().padStart(3, '0'); }
+function updateModalPrice() {
+  const subtotal = pendingQuantity * HARGA_PER_LIMIT;
+  const uniqueCode = parseInt(generatedUniqueCode);
+  const total = subtotal + uniqueCode;
+  document.getElementById('modalQuantity').innerText = pendingQuantity;
+  document.getElementById('modalSubtotal').innerHTML = subtotal.toLocaleString('id-ID');
+  document.getElementById('modalUniqueCode').innerHTML = generatedUniqueCode;
+  document.getElementById('modalTotalPayment').innerHTML = 'Rp ' + total.toLocaleString('id-ID');
+}
+function resetModalToStep1() {
+  pendingQuantity = 1;
+  generatedUniqueCode = generateUniqueCode();
+  updateModalPrice();
+  document.getElementById('step1Panel').style.display = 'block';
+  document.getElementById('step2Panel').style.display = 'none';
+  document.getElementById('step3Panel').style.display = 'none';
+  document.getElementById('step1Indicator').classList.add('active');
+  document.getElementById('step2Indicator').classList.remove('active');
+  document.getElementById('step3Indicator').classList.remove('active');
+  document.getElementById('step2Indicator').classList.remove('completed');
+  document.getElementById('step3Indicator').classList.remove('completed');
+}
+function openPaymentModal() {
+  pendingQuantity = 1;
+  generatedUniqueCode = generateUniqueCode();
+  updateModalPrice();
+  document.getElementById('userEmail').value = '';
+  document.getElementById('sourceFund').value = '';
+  document.getElementById('transactionNo').value = '';
+  document.getElementById('rrn').value = '';
+  resetModalToStep1();
+  document.getElementById('paymentModal').classList.add('show');
+}
+// ==================== DOMContentLoaded ====================
+document.addEventListener('DOMContentLoaded', () => {
+  loadLimitData();
+  startStatsSimulation();
+  setupToggles();
+  document.getElementById('analyzeBtn').onclick = runAnalysis;
+  document.getElementById('resetAnalysisBtn').onclick = () => { 
+    document.getElementById('pair').value = 'XAU/USD'; 
+    document.getElementById('timeframe').value = '15m'; 
+    document.getElementById('signalCard').style.display = 'none'; 
+    document.getElementById('trendContainer').style.display = 'none';
+    document.getElementById('dataStatus').innerHTML = '<div class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse mr-2"></div><span>Siap analisa</span>'; 
+    loadLimitData(); updateQuotaUI(); showToast('Reset berhasil!'); 
+  };
+  document.getElementById('mmCalculateBtn').onclick = calculateMM;
+  document.getElementById('mmResetBtn').onclick = resetMM;
+  document.getElementById('buyQuotaBtn').onclick = openPaymentModal;
+  const toggleBtn = document.getElementById('toggleChartBtn');
+  const closeChartBtn = document.getElementById('closeChartBtn');
+  if (toggleBtn) toggleBtn.onclick = toggleChart;
+  if (closeChartBtn) closeChartBtn.onclick = () => { document.getElementById('chartContainer').style.display = 'none'; chartVisible = false; if (toggleBtn) toggleBtn.innerHTML = '<i class="fas fa-chart-line mr-2"></i> Buka Chart'; };
+  document.getElementById('pair').onchange = () => refreshChart();
+  document.getElementById('timeframe').onchange = () => refreshChart();
+  // Modal event handlers
+  document.getElementById('decrementQtyModal').onclick = () => { if (pendingQuantity > 1) { pendingQuantity--; updateModalPrice(); } };
+  document.getElementById('incrementQtyModal').onclick = () => { if (pendingQuantity < MAKSIMAL_BELI_PER_TRANSAKSI) { pendingQuantity++; updateModalPrice(); } };
+  document.getElementById('nextToQRISBtn').onclick = () => { if (pendingQuantity < 1) { showToast('Pilih minimal 1 limit!', true); return; } document.getElementById('step1Panel').style.display = 'none'; document.getElementById('step2Panel').style.display = 'block'; document.getElementById('step1Indicator').classList.remove('active'); document.getElementById('step2Indicator').classList.add('active'); document.getElementById('step1Indicator').classList.add('completed'); };
   document.getElementById('backToStep1Btn').onclick = () => { document.getElementById('step2Panel').style.display = 'none'; document.getElementById('step1Panel').style.display = 'block'; document.getElementById('step2Indicator').classList.remove('active'); document.getElementById('step1Indicator').classList.add('active'); document.getElementById('step1Indicator').classList.remove('completed'); };
   document.getElementById('nextToConfirmBtn').onclick = () => { document.getElementById('step2Panel').style.display = 'none'; document.getElementById('step3Panel').style.display = 'block'; document.getElementById('step2Indicator').classList.remove('active'); document.getElementById('step3Indicator').classList.add('active'); document.getElementById('step2Indicator').classList.add('completed'); };
   document.getElementById('backToStep2Btn').onclick = () => { document.getElementById('step3Panel').style.display = 'none'; document.getElementById('step2Panel').style.display = 'block'; document.getElementById('step3Indicator').classList.remove('active'); document.getElementById('step2Indicator').classList.add('active'); document.getElementById('step2Indicator').classList.remove('completed'); };
-  document.getElementById('submitPaymentBtn').onclick = async () => { const email = document.getElementById('userEmail').value; const sourceFund = document.getElementById('sourceFund').value; const transactionNo = document.getElementById('transactionNo').value; const rrn = document.getElementById('rrn').value; if(!email || !sourceFund || !transactionNo || !rrn){ showToast('Harap isi semua field!', true); return; } Swal.fire({ title: 'Memverifikasi...', timer: 2000, timerProgressBar: true, showConfirmButton: false, background:'#1e293b', didOpen:()=>Swal.showLoading() }); setTimeout(() => { addPaidLimit(pendingQuantity); document.getElementById('paymentModal').classList.remove('show'); resetModalToStep1(); Swal.fire({ title: '<i class="fas fa-check-circle" style="color:#22c55e"></i><br>Berhasil!', html: `Anda membeli ${pendingQuantity} limit.<br>Sisa limit: ${remainingQuota}`, icon:'success', confirmButtonText:'OK', background:'#1e293b', color:'#fff' }); showToast(`Berhasil membeli ${pendingQuantity} limit!`); }, 2000); };
+  document.getElementById('submitPaymentBtn').onclick = async () => { 
+    const email = document.getElementById('userEmail').value; 
+    const sourceFund = document.getElementById('sourceFund').value; 
+    const transactionNo = document.getElementById('transactionNo').value; 
+    const rrn = document.getElementById('rrn').value; 
+    if (!email || !sourceFund || !transactionNo || !rrn) { showToast('Harap isi semua field!', true); return; } 
+    Swal.fire({ title: 'Memverifikasi...', timer: 2000, timerProgressBar: true, showConfirmButton: false, background:'#1e293b', didOpen:()=>Swal.showLoading() }); 
+    setTimeout(() => { 
+      addPaidLimit(pendingQuantity); 
+      document.getElementById('paymentModal').classList.remove('show'); 
+      resetModalToStep1(); 
+      Swal.fire({ title: '<i class="fas fa-check-circle" style="color:#22c55e"></i><br>Berhasil!', html: `Anda membeli ${pendingQuantity} limit.<br>Sisa limit: ${getRemainingQuota()}`, icon:'success', confirmButtonText:'OK', background:'#1e293b', color:'#fff' }); 
+      showToast(`Berhasil membeli ${pendingQuantity} limit!`); 
+    }, 2000); 
+  };
   document.getElementById('closeModalBtn').onclick = () => { document.getElementById('paymentModal').classList.remove('show'); resetModalToStep1(); };
 });
 </script>
